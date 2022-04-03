@@ -1,6 +1,6 @@
 baseURL = "https://jmpa.io"
 languageCode = "en-us"
-title = "my new hugo website!"
+title = "jmpa.io"
 theme = "jmpa"
 
 [menu]
@@ -10,9 +10,9 @@ theme = "jmpa"
     url = "/"
     weight = 1
   [[menu.main]]
-    name = "Posts"
+    name = "Courses"
     pre = "pen-tool"
-    url = "/posts/"
+    url = "/courses/"
     weight = 2
   [[menu.main]]
     name = "Tags"
