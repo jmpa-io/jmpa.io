@@ -24,5 +24,5 @@ docker run --rm -it \
   -v "$PWD:/app" \
   -p "1313:1313" \
   --entrypoint sh \
-  klakegg/hugo:0.78.2-alpine \
+  klakegg/hugo:0.93.2-alpine \
   || die "failed to docker run"
