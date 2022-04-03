@@ -13,3 +13,7 @@ super-linter.log
 /bin/[0-9][0-9]-*.sh
 /cf/[0-9][0-9]-*.yml
 /.github/templates/[0-9][0-9]-*
+
+# ignore generated files.
+/resources
+/public
