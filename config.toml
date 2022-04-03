@@ -1,11 +1,12 @@
-baseURL="https://jmpa.io"
+baseURL = "https://jmpa.io"
 languageCode = "en-us"
-title="Welcome to jmpa.io"
+title = "my new hugo website!"
+theme = "jmpa"
 
-[[menu]]
+[menu]
   [[menu.main]]
     name = "Home"
-    pre = "Home"
+    pre = "home"
     url = "/"
     weight = 1
   [[menu.main]]
