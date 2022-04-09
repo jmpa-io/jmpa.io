@@ -1,17 +1,10 @@
 ---
 title: 1. Basics.
-images: [https://www.nme.com/wp-content/uploads/2021/07/RickAstley2021.jpg]
+images: [https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo-2013-2015.png]
 ---
 
-Hello World
+From your `terminal`, run:
+
 ```bash
-#!/usr/bin/env bash
-
-echo "hello world"
-# this is a test
-echo "yolo"
-
-docker run -it alpine sh
+docker run --entrypoint echo alpine "Coming Soon! "
 ```
-
-

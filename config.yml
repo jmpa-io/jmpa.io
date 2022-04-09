@@ -1,17 +1,17 @@
-baseURL: 'https://jmpa.io'
+baseURL: https://jmpa.io
 languageCode: en-us
 title: jmpa.io
 theme: jmpa
 
 Params:
-  description: Hello World?
+  logo: https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
+  favicon: ./favicon.ico
+  description: A
   images:
     - >-
-      https://raw.githubusercontent.com/apvarun/digital-garden-hugo-theme/main/images/digital-garden-logo.png
+      https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
   custom_css:
     - css/style.css
-  logo: 'https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png'
-  favicon: ./favicon.ico
 
 # menu.
 menu:
@@ -19,18 +19,26 @@ menu:
     - name: Home
       url: /
       weight: 1
-    - name: "\U0001F4E6 Stack"
+
+    - name: 📦 Tech Stack
       url: /stack
       weight: 2
-    - name: "\U0001F40B Docker-101"
+
+    - name: 🐋 Docker-101
       url: /docker-101
       weight: 3
+
+    - name: 🥠 Bash-101
+      url: /bash-101
+      weight: 4
+
   social:
     - name: GitHub
-      url: 'https://github.com/jmpa-io'
+      url: https://github.com/jmpa-io
       weight: 1
+
     - name: Email
-      url: 'mailto:support@jmpa.io'
+      url: mailto:support@jmpa.io
       weight: 2
 
 # syntax highlighting.
@@ -41,7 +49,7 @@ markup:
     renderer:
       unsafe: true
 
-# setup 404s
+# setup 404s.
 # https://moonbooth.com/hugo/custom-404/
 redirects:
   - from: /*
