@@ -1,0 +1,51 @@
+baseURL: 'https://jmpa.io'
+languageCode: en-us
+title: jmpa.io
+theme: jmpa
+
+Params:
+  description: Hello World?
+  images:
+    - >-
+      https://raw.githubusercontent.com/apvarun/digital-garden-hugo-theme/main/images/digital-garden-logo.png
+  custom_css:
+    - css/style.css
+  logo: 'https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png'
+
+# menu.
+menu:
+  main:
+    - name: Home
+      url: /
+      weight: 1
+    - name: "\U0001F4E6 Stack"
+      url: /stack
+      weight: 2
+    - name: "\U0001F40B Docker-101"
+      url: /docker-101
+      weight: 3
+  social:
+    - name: GitHub
+      url: 'https://github.com/jmpa-io'
+      weight: 1
+    - name: Email
+      url: 'mailto:support@jmpa.io'
+      weight: 2
+
+# syntax highlighting.
+markup:
+  highlight:
+    style: dracula
+  goldmark:
+    renderer:
+      unsafe: true
+
+# setup 404s
+# https://moonbooth.com/hugo/custom-404/
+redirects:
+  - from: /*
+    to: /404/
+    status: 404
+
+# remove s's in titles.
+pluralizeListTitles: false
