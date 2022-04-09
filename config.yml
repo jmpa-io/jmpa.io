@@ -11,6 +11,7 @@ Params:
   custom_css:
     - css/style.css
   logo: 'https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png'
+  favicon: ./favicon.ico
 
 # menu.
 menu:
