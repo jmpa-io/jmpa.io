@@ -1,4 +1,4 @@
 ---
-title: Stack 👇
-description: Here are the tools we use for our tech stack.
+title: Tech Stack 👇
+description: "Here are the things we use for in our tech stack:"
 ---
