@@ -4,6 +4,6 @@ title: Homepage
 
 # Welcome 👋
 
-This website is dedicated to...
+This website is still under development.
 
 {{< youtube dQw4w9WgXcQ >}}
