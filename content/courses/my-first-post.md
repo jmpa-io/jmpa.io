@@ -1,6 +1,0 @@
-+++
-+++
-
-Hello World!
-
-{{< checkout-button >}}

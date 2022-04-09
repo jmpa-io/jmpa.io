@@ -1,21 +1,47 @@
 baseURL = "https://jmpa.io"
 languageCode = "en-us"
 title = "jmpa.io"
-theme = "jmpa"
+theme = "digitalgarden"
+
+[Params]
+  description = "This is a description"
+  images = ["https://raw.githubusercontent.com/apvarun/digital-garden-hugo-theme/main/images/digital-garden-logo.png"]
 
 [menu]
   [[menu.main]]
     name = "Home"
-    pre = "home"
     url = "/"
     weight = 1
   [[menu.main]]
-    name = "Courses"
-    pre = "pen-tool"
-    url = "/courses/"
+    name = "Articles"
+    url = "/articles"
     weight = 2
   [[menu.main]]
-    name = "Tags"
-    pre = "tag"
-    url = "/tags/"
+    name = "Portfolio"
+    url = "/portfolio"
     weight = 3
+  [[menu.main]]
+    name = "Stack"
+    url = "/stack"
+    weight = 4
+  [[menu.main]]
+    name = "Tags"
+    url = "/tags"
+    weight = 5
+
+  [[menu.social]]
+    name = "GitHub"
+    url = "https://github.com/jmpa-io"
+    weight = 1
+  [[menu.social]]
+    name = "Email"
+    url = "mailto:support@jmpa.io"
+    weight = 2
+
+# syntax highlighting.
+[markup]
+  [markup.highlight]
+    style = "dracula"
+  [markup.goldmark.renderer]
+    # Enable to include inline HTML
+    unsafe = true
