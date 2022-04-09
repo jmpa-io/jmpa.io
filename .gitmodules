@@ -1,3 +1,3 @@
-[submodule "themes/digitalgarden"]
-	path = themes/digitalgarden
-	url = https://github.com/apvarun/digital-garden-hugo-theme.git
+[submodule "themes/jmpa"]
+	path = themes/jmpa
+	url = https://github.com/jmpa-io/jmpa-theme.git
