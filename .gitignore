@@ -16,5 +16,6 @@ super-linter.log
 
 # ignore generated files.
 /resources
-/public
+/public/*
+!/public/.gitkeep
 /.hugo_build.lock
