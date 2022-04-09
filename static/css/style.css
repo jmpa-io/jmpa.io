@@ -1,0 +1,30 @@
+.detail-tag:hover {
+  cursor: pointer;
+}
+
+.logo {
+  border-radius: 50%;
+}
+
+.border-l {
+  border-left-width: 1px
+}
+
+.border-b {
+  border-bottom-width: 1px
+}
+
+.stack-logo {
+  padding: 10px;
+}
+
+.stack-logo-circle {
+  border-radius: 20%;
+  border-width: 0.5px;
+  border-color: #4e4848;
+}
+
+.dark .stack-logo-circle {
+  background-color: rgb(248, 250, 252);
+  border-color: rgb(248, 250, 252);
+}

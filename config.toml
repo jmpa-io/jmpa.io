@@ -1,11 +1,15 @@
 baseURL = "https://jmpa.io"
 languageCode = "en-us"
 title = "jmpa.io"
-theme = "digitalgarden"
+theme = "jmpa"
 
 [Params]
-  description = "This is a description"
+  description = "Hello World?"
   images = ["https://raw.githubusercontent.com/apvarun/digital-garden-hugo-theme/main/images/digital-garden-logo.png"]
+
+  # custom params.
+  custom_css = ["css/style.css"]
+  logo = "https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png"
 
 [menu]
   [[menu.main]]
@@ -13,21 +17,13 @@ theme = "digitalgarden"
     url = "/"
     weight = 1
   [[menu.main]]
-    name = "Articles"
-    url = "/articles"
+    name = "Courses"
+    url = "/courses"
     weight = 2
-  [[menu.main]]
-    name = "Portfolio"
-    url = "/portfolio"
-    weight = 3
   [[menu.main]]
     name = "Stack"
     url = "/stack"
-    weight = 4
-  [[menu.main]]
-    name = "Tags"
-    url = "/tags"
-    weight = 5
+    weight = 3
 
   [[menu.social]]
     name = "GitHub"
@@ -45,3 +41,9 @@ theme = "digitalgarden"
   [markup.goldmark.renderer]
     # Enable to include inline HTML
     unsafe = true
+
+# setup 404.
+[[redirects]]
+	from = "/*"
+	to = "/404/"
+	status = 404
