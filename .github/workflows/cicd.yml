@@ -27,6 +27,9 @@ jobs:
       - name: Checkout.
         uses: actions/checkout@v2
 
+      - name: Compile website.
+        run: bin/compile.sh
+
       - name: Upload artifact.
         uses: actions/upload-artifact@v3
         with:
