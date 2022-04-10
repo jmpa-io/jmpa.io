@@ -1,0 +1,9 @@
+---
+# https://pandoc.org/MANUAL.html#variables-for-latex
+geometry: margin=20mm
+title-meta: jmpa.io
+author: jmpa.io
+fontsize: 10pt
+papersize: a4
+urlcolor: blue
+colorlinks: yes

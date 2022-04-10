@@ -1,16 +1,16 @@
 ---
-title: 1. Basics.
+title: 2. This is a test.
 images: [https://miro.medium.com/max/1400/0*jdx5-Ww6NH3ozn0Z.png]
 ---
 
-# Part 1.
+# Part 2.
 
 From your `terminal`, run:
 ```bash
-cat <<@ > run.sh
+cat <<@ > run2.sh
 #!/usr/bin/env bash
-echo "Coming Soon!"
+echo "Coming Soon, again!"
 @
-chmod +x run.sh
-./run.sh
+chmod +x run2.sh
+./run2.sh
 ```

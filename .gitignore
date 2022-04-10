@@ -19,3 +19,4 @@ super-linter.log
 /public/*
 !/public/.gitkeep
 /.hugo_build.lock
+*.pdf
