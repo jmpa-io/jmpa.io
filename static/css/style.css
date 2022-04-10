@@ -28,3 +28,32 @@
   background-color: rgb(248, 250, 252);
   border-color: rgb(248, 250, 252);
 }
+
+
+.dark .bg-slate-50 {
+  background-color: #434343
+}
+
+.dark body {
+  background-color: #333333
+}
+
+.dark .dark\:text-slate-500 {
+  color: #B0FA63;
+}
+
+.dark .dark\:border-slate-600 {
+  border-color: #637377
+}
+
+.dark .dark\:border-slate-700 {
+  border-color: #637377
+}
+
+.dark .dark\:hover\:bg-slate-700:hover {
+  background-color: #272727;
+}
+
+.dark .dark\:text-slate-700 {
+  color: rgb(148 163 184/var(--tw-text-opacity))
+}
