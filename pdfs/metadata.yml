@@ -6,7 +6,7 @@
 title-meta: jmpa.io
 author: "Author: jmpa.io"
 # date: # replaced in script.
-subtitle: "Here is the subtitle. It is a nice subtitle"
+# subtitle: "Here is the subtitle. It is a nice subtitle"
 geometry: margin=20mm
 fontsize: 10pt
 papersize: a4
@@ -16,24 +16,24 @@ documentclass: report
 mainfont: FiraCode-Regular
 
 # titlepage.
-titlepage: true
-titlepage-color: 232323
-titlepage-ruler-color: CCCCCC
-titlepage-ruler-height: 4
-logo-width: 10
-page-background:
-page-background-opacity:
-links-as-notes: true
+# titlepage: true
+# titlepage-color: 232323
+# titlepage-ruler-color: CCCCCC
+# titlepage-ruler-height: 4
+# logo-width: 10
+# page-background:
+# page-background-opacity:
+# links-as-notes: true
 # lot: true
 # lof: true
-listings-disable-line-numbers: true
-listings-no-page-break: false
-disable-header-and-footer: false
-header-left:
-header-center:
-header-right:
-footer-left: "© jmpa.io"
-footer-center: "Licence: WTFPL"
-footer-right:
-subparagraph: true
-lang: en-US
+# listings-disable-line-numbers: true
+# listings-no-page-break: false
+# disable-header-and-footer: false
+# header-left:
+# header-center:
+# header-right:
+# footer-left: "© jmpa.io"
+# footer-center: "Licence: WTFPL"
+# footer-right:
+# subparagraph: true
+# lang: en-US

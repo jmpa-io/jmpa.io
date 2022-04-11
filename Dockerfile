@@ -26,3 +26,6 @@ RUN mkdir -p /root/.config/pandoc/ \
 #     && unzip eisvogel.zip -d eisvogel \
 #     && mv eisvogel/eisvogel.latex /root/.pandoc/templates/ \
 #     && rm -rf eisvogel.zip eisvogel
+
+# # install my-template for pandoc / latex.
+# COPY pdfs/my-template.latex /root/.pandoc/templates/
