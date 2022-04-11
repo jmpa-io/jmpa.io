@@ -1,11 +1,39 @@
 ---
 # https://pandoc.org/MANUAL.html#variables-for-latex
-geometry: margin=20mm
+# https://github.com/alexeygumirov/pandoc-for-pdf-how-to
+
+# title: # replaced in script.
 title-meta: jmpa.io
-author: jmpa.io
+author: "Author: jmpa.io"
+# date: # replaced in script.
+subtitle: "Here is the subtitle. It is a nice subtitle"
+geometry: margin=20mm
 fontsize: 10pt
 papersize: a4
 urlcolor: blue
 colorlinks: yes
-documentclass: book
+documentclass: report
 mainfont: FiraCode-Regular
+
+# titlepage.
+titlepage: true
+titlepage-color: 232323
+titlepage-ruler-color: CCCCCC
+titlepage-ruler-height: 4
+logo-width: 10
+page-background:
+page-background-opacity:
+links-as-notes: true
+# lot: true
+# lof: true
+listings-disable-line-numbers: true
+listings-no-page-break: false
+disable-header-and-footer: false
+header-left:
+header-center:
+header-right:
+footer-left: "© jmpa.io"
+footer-center: "Licence: WTFPL"
+footer-right:
+subparagraph: true
+lang: en-US
