@@ -13,5 +13,6 @@
 script|description
 ---|---
 [bin/compile.sh](bin/compile.sh) | Compile the static website using docker + hugo.
+[bin/generate-pdfs.sh](bin/generate-pdfs.sh) | Coverts the raw markdown for courses to pdfs.
 [bin/local.sh](bin/local.sh) | Run this repository inside a docker container.
 
