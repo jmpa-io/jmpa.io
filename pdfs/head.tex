@@ -1,11 +1,11 @@
-% change background color for inline code in
-% markdown files. The following code does not work well for
-% long text as the text will exceed the page boundary
-\definecolor{bgcolor}{HTML}{E0E0E0}
-\let\oldtexttt\texttt
-\renewcommand{\texttt}[1]{
-\colorbox{bgcolor}{\oldtexttt{#1}}
-}
+% % change background color for inline code in
+% % markdown files. The following code does not work well for
+% % long text as the text will exceed the page boundary
+% \definecolor{bgcolor}{HTML}{E0E0E0}
+% \let\oldtexttt\texttt
+% \renewcommand{\texttt}[1]{
+% \colorbox{bgcolor}{\oldtexttt{#1}}
+% }
 
 % split headings into separate files, including TOC.
 % \usepackage{titlesec}
@@ -14,3 +14,10 @@
 % start a new page only after TOC.
 \let\oldtoc\tableofcontents
 \renewcommand{\tableofcontents}{\oldtoc\newpage}
+
+% enable font ligatures.
+\usepackage{fontspec}
+\setmonofont[Ligatures=TeX]{FiraCode-Regular}
+
+% removes double pages, in the case of the content being rendered as a book.
+\let\cleardoublepage\clearpage
