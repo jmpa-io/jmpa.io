@@ -1,9 +1,6 @@
 ---
-title: 2. This is a test.
-images: [https://miro.medium.com/max/1400/0*jdx5-Ww6NH3ozn0Z.png]
+title: 2. Setup.
 ---
-
-# Part 2.
 
 From your `terminal`, run:
 ```bash
@@ -13,4 +10,11 @@ echo "Coming Soon, again!"
 @
 chmod +x run2.sh
 ./run2.sh
+```
+
+## Creating files.
+
+From your `terminal`, run:
+```bash
+touch test
 ```

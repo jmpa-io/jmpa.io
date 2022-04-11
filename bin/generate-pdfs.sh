@@ -50,18 +50,25 @@ for dir in $dirs; do
   [[ -z "$files" ]] && { continue; }
   files="$(<<< "$files" sort | tr '\n' ' ')"
 
+  # TODO need to take the title of files that are NOT _index and then add them to the top of each file, so they are read in. Not sure how to do this currently with pandoc.
+
   # generate pdf.
   # https://pandoc.org/demos.html
   name="${dir//$contentDir\//}"
   file="$name.pdf"
+  # shellcheck disable=SC2086
   docker run -it --rm \
     -w /app \
     -v "$PWD:/app" \
-    "$repo" --toc -N --pdf-engine=xelatex --highlight-style zenburn --metadata title="$name" --metadata-file ./pdfs/metadata.yml -H ./pdfs/head.tex -o "$file" -V subparagraph $files \
+    --entrypoint pandoc \
+    "$repo" \
+      --pdf-engine=xelatex \
+      --toc -N -V subparagraph \
+      --metadata title="$name" \
+      --metadata-file ./pdfs/metadata.yml \
+      -H ./pdfs/head.tex \
+      -o "$file" \
+      --defaults /root/.config/pandoc/dracula.yaml \
+      $files \
     || die "failed to create $file using pandoc"
 done
-
-# # chown file.
-# # FIXME is this really needed?
-# sudo chown "$(whoami)" "$file" \
-#   || die "failed to chown $file"

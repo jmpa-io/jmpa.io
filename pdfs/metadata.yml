@@ -7,3 +7,5 @@ fontsize: 10pt
 papersize: a4
 urlcolor: blue
 colorlinks: yes
+documentclass: book
+mainfont: FiraCode-Regular
