@@ -12,8 +12,8 @@ fontsize: 10pt
 papersize: a4
 urlcolor: blue
 colorlinks: yes
-documentclass: report
-mainfont: FiraCode-Regular
+documentclass: book
+mainfont: FiraCode-Retina
 
 # titlepage.
 # titlepage: true

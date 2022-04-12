@@ -18,14 +18,3 @@ RUN mkdir -p /root/.config/pandoc/ \
     && sed -i 's/\/full\/path\/to\/dracula\.theme/\/root\/\.config\/pandoc\/dracula.theme/g' /root/.config/pandoc/dracula.yaml \
     && sed -i 's/\/full\/path\/to\/draculatheme/\/root\/\.config\/pandoc\/draculatheme/g' /root/.config/pandoc/dracula.yaml \
     && rm -rf dracula.zip pandoc-master dracula-latex.zip latex-master
-
-# # install eisvogel template for pandoc.
-# # https://github.com/Wandmalfarbe/pandoc-latex-template
-# RUN mkdir -p /root/.pandoc/templates/ \
-#     && curl -sL https://github.com/Wandmalfarbe/pandoc-latex-template/releases/download/v2.0.0/Eisvogel-2.0.0.zip -o eisvogel.zip \
-#     && unzip eisvogel.zip -d eisvogel \
-#     && mv eisvogel/eisvogel.latex /root/.pandoc/templates/ \
-#     && rm -rf eisvogel.zip eisvogel
-
-# # install my-template for pandoc / latex.
-# COPY pdfs/my-template.latex /root/.pandoc/templates/
