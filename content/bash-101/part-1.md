@@ -1,7 +1,8 @@
 ---
 title: 1. Basics.
-images: [/img/docker-101/docker-logo.jpg]
+images: [/img/bash-101/logo.png]
 ---
+# Basics.
 
 From your `terminal`, run:
 ```bash

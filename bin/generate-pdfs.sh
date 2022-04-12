@@ -111,7 +111,7 @@ for dir in $dirs; do
       --metadata date="$(date "+%A %d$(daySuffix), %B %Y")" \
       --metadata-file ./pdfs/metadata.yml \
       --include-in-header ./pdfs/head.tex \
-      --include-before-body ./pdfs/about.md \
+      --dpi=192 \
       -o "$file" \
       $files \
     || die "failed to create $file using pandoc"

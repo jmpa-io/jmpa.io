@@ -1,3 +1,4 @@
 ---
-title: bash-101
+title: |
+  Bash-101
 ---
