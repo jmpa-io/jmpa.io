@@ -70,15 +70,17 @@ for dir in $dirs; do
     # note the ending dot here adds the dot to the title.
     title=$(<<< "$title" rev | cut -d'.' -f2 | rev). \
       || die "failed to parse title for $file"
-    title="${title##}"
     [[ -z "$title" ]] \
       && die "failed to find a title for $file"
 
     # TODO do headings need to have a '#' prepended?
 
-    # append title as heading.
-    sed -i "/---/a #$title" "$file" \
-      || die "failed to append title as heading for $file"
+    # append title as heading, only if it hasn't been added already though.
+    pattern="#$title"
+    if ! grep -q "$pattern" "$file"; then
+      sed -i -z "s/---/---\n$pattern/2" "$file" \
+        || die "failed to append title as heading to $file"
+    fi
   done
 
   # add _index file to files.
