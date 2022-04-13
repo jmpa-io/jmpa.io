@@ -4,7 +4,8 @@
 
 # title: # replaced in script.
 title-meta: jmpa.io
-author: "Author: jmpa.io"
+author: |
+  Created by: [jmpa.io](https://jmpa.io)
 # date: # replaced in script.
 # subtitle: "Here is the subtitle. It is a nice subtitle"
 geometry: margin=20mm

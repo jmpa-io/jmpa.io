@@ -2,7 +2,6 @@
 title: 1. Basics.
 images: [/img/bash-101/logo.png]
 ---
-# Basics.
 
 From your `terminal`, run:
 ```bash
