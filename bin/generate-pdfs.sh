@@ -36,12 +36,12 @@ repo=$(basename "$PWD") \
 docker build . -t "$repo" \
   || die "failed to build Dockerfile for $repo"
 
-# # setup out directory.
-# dir="public"
-# if [[ -d "$dir" ]]; then
-#   mkdir -p "$dir" \
-#     || die "failed to create $dir"
-# fi
+# setup out directory.
+outDir="public"
+if [[ -d "$outDir" ]]; then
+  mkdir -p "$outDir" \
+    || die "failed to create $outDir"
+fi
 
 # find directories that should generate pdfs.
 contentDir="./content"
@@ -59,6 +59,38 @@ for dir in $dirs; do
     || die "failed to find files in $dir"
   [[ -z "$files" ]] && { continue; }
   files="$(<<< "$files" sort | tr '\n' ' ')"
+
+  # remove images from part-1.md and move it to _index.
+  part1="$dir/part-1.md"
+  index="$dir/_index.md"
+  if [[ -f "$part1" && -f "$index" ]]; then
+
+    # find + clean images from part-1.
+    images=$(awk '/images: /{print $2}' "$part1") \
+      || die "failed to find images in $part1"
+    images=${images//\[/}         # remove [
+    images=${images//\]/}         # remove ]
+    rawImages="$images"
+
+    # escape images.
+    images=${images//\//\\\/}     # escape /s
+    images=${images//\-/\\\-}     # escape -s
+    images=${images//\./\\\.}     # escape .s
+    images="![](static$images)"   # format.
+
+    # find title.
+    lineNumber=$(grep -n "title" "$index" | cut -d':' -f1) \
+      || die "failed to find line number of title in $index"
+    ((lineNumber++)) # incrementing because of | format.
+    title=$(sed "${lineNumber}q;d" "$index" | tr -d ' ') \
+      || die "failed to find title using sed for $index"
+
+    # append images to title in _index.
+    if ! grep -q "$rawImages" "$index"; then
+      sed -i -z "s/$title/$images\n  $title/1" "$index" \
+        || die "failed to add $part1 images to $index"
+    fi
+  fi
 
   # move titles to be headings in each file, since I can't figure out
   # how to do this with pandoc / latex at this time.
@@ -83,10 +115,11 @@ for dir in $dirs; do
     fi
   done
 
-  # add _index file to files.
-  indexPath="$dir/_index.md"
-  if [[ -f "$indexPath" ]]; then
-    files="${files}${indexPath}"
+  # add _index file to files so it is last in the array.
+  # NOTE: doing this becuase pandoc / LaTeX seems to be reading the last file given to it
+  # for things like the title.
+  if [[ -f "$index" ]]; then
+    files="${files}${index}"
   fi
 
   # generate pdf.
@@ -112,7 +145,7 @@ for dir in $dirs; do
       --metadata-file ./pdfs/metadata.yml \
       --include-in-header ./pdfs/head.tex \
       --dpi=192 \
-      -o "$file" \
+      -o "$outDir/$file" \
       $files \
     || die "failed to create $file using pandoc"
 done

@@ -32,6 +32,9 @@ jobs:
       - name: Compile website.
         run: bin/compile.sh
 
+      - name : Generate PDFs.
+        run: echo bin/generate-pdfs.sh
+
       - name: Upload artifact.
         uses: actions/upload-artifact@v3
         with:

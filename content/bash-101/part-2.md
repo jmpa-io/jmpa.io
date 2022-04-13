@@ -1,7 +1,6 @@
 ---
 title: 2. Setup.
 ---
-# Setup.
 
 From your `terminal`, run:
 ```bash
