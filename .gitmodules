@@ -1,3 +1,6 @@
 [submodule "themes/jmpa"]
 	path = themes/jmpa
 	url = https://github.com/jmpa-io/jmpa-theme.git
+[submodule ".claude/config"]
+	path = .claude/config
+	url = git@github.com:jmpa-io/claude-config.git
