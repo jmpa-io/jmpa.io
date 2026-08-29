@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+{{- partial "head.html" . -}}
+{{- partial "jmpa-head.html" . -}}
+<body>
+{{- partial "jmpa-nav.html" . -}}
+{{- partial "jmpa-cart.html" . -}}
+
+<div class="jmpa-home">
+  <div class="jmpa-home-hero">
+    <h1>hi, i'm <span class="jmpa-brand-hero">jmpa</span>.</h1>
+    <p>I make things and sell them here. Watercolour paintings, and whatever else I'm working on.</p>
+  </div>
+
+  <div class="jmpa-home-sections">
+    <a href="/art" class="jmpa-home-card">
+      <div class="jmpa-home-card-icon">🎨</div>
+      <h2>Art</h2>
+      <p>Original watercolour paintings. Each piece is handmade and one of a kind. Available to buy direct.</p>
+      <span class="jmpa-home-card-arrow">Browse gallery →</span>
+    </a>
+
+  </div>
+</div>
+
+<footer class="jmpa-footer">&copy; {{ now.Year }} jmpa &mdash; <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">by Jordan Cleal</a></footer>
+</body>
+</html>

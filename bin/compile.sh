@@ -30,7 +30,7 @@ echo "##[group]Compiling static site"
 docker run --rm \
   -w /app \
   -v "$PWD:/app" \
-  klakegg/hugo:0.78.2-alpine \
+  klakegg/hugo:0.93.2-alpine \
   || die "failed to compile website"
 echo "##[endgroup]"
 

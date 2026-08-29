@@ -1,51 +1,51 @@
 [
   {
-    "name": "Visual Studio Code.",
-    "description": "What tool we use for writing code.",
+    "name": "Visual Studio Code",
+    "description": "My editor of choice for writing code.",
     "link": "https://code.visualstudio.com/",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg",
     "tag": "development"
   },
   {
-    "name": "GitHub.",
-    "description": "Where we store our code.",
+    "name": "GitHub",
+    "description": "Where I store and version all my code.",
     "link": "https://github.com/",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png",
     "tag": "development"
   },
   {
-    "name": "GitHub Actions.",
-    "description": "What we use for CI/CD.",
+    "name": "GitHub Actions",
+    "description": "CI/CD for all my projects.",
     "link": "https://github.com/features/actions",
     "icon": "https://github.githubassets.com/images/modules/site/features/actions-icon-actions.svg",
     "tag": "development"
   },
   {
-    "name": "Amazon Web Services.",
-    "description": "Where we deploy all our infrastructure.",
+    "name": "Amazon Web Services",
+    "description": "Where I deploy all my infrastructure.",
     "link": "https://aws.amazon.com",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
-    "tag": "Infrastructure"
+    "tag": "infrastructure"
   },
   {
-    "name": "iTerm.",
-    "description": "What terminal we use on Macs.",
+    "name": "Go",
+    "description": "My primary language for building tools and CLIs.",
+    "link": "https://go.dev",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/0/05/Go_Logo_Blue.svg",
+    "tag": "development"
+  },
+  {
+    "name": "Docker",
+    "description": "Containerising everything I build.",
+    "link": "https://www.docker.com",
+    "icon": "https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png",
+    "tag": "infrastructure"
+  },
+  {
+    "name": "iTerm2",
+    "description": "My terminal on macOS.",
     "link": "https://iterm2.com/",
     "icon": "https://icons.iconarchive.com/icons/froyoshark/enkel/256/iTerm-icon.png",
-    "tag": "development"
-  },
-  {
-    "name": "Windows Terminal.",
-    "description": "What terminal we use on Windows.",
-    "link": "https://github.com/microsoft/terminal",
-    "icon": "https://icons.iconarchive.com/icons/bokehlicia/pacifica/256/utilities-terminal-icon.png",
-    "tag": "development"
-  },
-  {
-    "name": "WSL2.",
-    "description": "How we setup Windows to run Linux.",
-    "link": "https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10#1-overview",
-    "icon": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Linux_logo.jpg",
     "tag": "development"
   }
 ]
