@@ -20,17 +20,10 @@ menu:
       url: /
       weight: 1
 
-    - name: 📦 Tech Stack
-      url: /stack
+    - name: 🎨 Art
+      url: /art
       weight: 2
 
-    - name: 🐋 Docker-101
-      url: /docker-101
-      weight: 3
-
-    - name: 🥠 Bash-101
-      url: /bash-101
-      weight: 4
 
   social:
     - name: GitHub
