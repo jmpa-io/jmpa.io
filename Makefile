@@ -4,6 +4,8 @@ ifndef PROJECT
 PROJECT=jmpa.io
 endif
 
+AWS_REGION ?= ap-southeast-2
+
 # ---
 
 generate-website: ## Generates everything related to the 'jmpa.io' website.
