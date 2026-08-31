@@ -24,7 +24,7 @@ for dep in "${deps[@]}"; do
   hash "$dep" 2>/dev/null || missing+=("$dep")
 done
 if [[ ${#missing[@]} -ne 0 ]]; then
-  s=""; [[ ${#missing[@]} -gt 1 ]] && { s="s"; }
+  s=""; [[ ${#missing[@]} -gt 1 ]] && s="s"
   die "missing dep${s}: ${missing[*]}"
 fi
 
