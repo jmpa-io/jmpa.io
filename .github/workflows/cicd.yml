@@ -50,7 +50,7 @@ jobs:
 
   deploy:
     needs: [build-website]
-    uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@main
+    uses: jmpa-io/pipelines/.github/workflows/40-deploy.yml@main
     secrets:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
