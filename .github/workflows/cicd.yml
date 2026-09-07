@@ -7,7 +7,6 @@ on:
     - 'bin/*'
     - 'cf/**'
     - 'cmd/**'
-    - 'templates/**'
     - '**Dockerfile'
     - 'Makefile*'
   workflow_dispatch:
