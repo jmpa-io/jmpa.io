@@ -32,12 +32,8 @@ fi
 repo=$(basename "$PWD") \
   || die "failed to retrieve repository name"
 
-# build docker image.
-docker build . -t "$repo" \
-  || die "failed to build Dockerfile for $repo"
-
 # setup out directory.
-outDir="public"
+outDir="dist/public"
 if [[ -d "$outDir" ]]; then
   mkdir -p "$outDir" \
     || die "failed to create $outDir"
@@ -131,7 +127,7 @@ for dir in $dirs; do
     -w /app \
     -v "$PWD:/app" \
     --entrypoint pandoc \
-    "$repo" \
+    "$repo/pandoc" \
       -f markdown \
       -t latex \
       --pdf-engine=xelatex \

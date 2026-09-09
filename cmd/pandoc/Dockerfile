@@ -1,9 +1,14 @@
 FROM texlive/texlive:TL2020-historic
 
 # install deps.
-RUN apt-get update && apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
+    curl \
     pandoc \
-    fonts-firacode
+    fonts-firacode \
+    unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # install dracula theme for pandoc / latex.
 # https://draculatheme.com/pandoc
@@ -11,7 +16,7 @@ RUN mkdir -p /root/.config/pandoc/ \
     && curl -sL https://github.com/dracula/pandoc/archive/master.zip -o dracula.zip \
     && curl -sL https://github.com/dracula/latex/archive/master.zip -o dracula-latex.zip \
     && unzip dracula.zip \
-    && unzip dracula-latex \
+    && unzip dracula-latex.zip \
     && cp pandoc-master/dracula.yaml /root/.config/pandoc/ \
     && cp pandoc-master/dracula.theme /root/.config/pandoc/ \
     && cp latex-master/draculatheme.sty /root/.config/pandoc/ \

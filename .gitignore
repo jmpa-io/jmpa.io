@@ -1,5 +1,5 @@
 # ignore general files.
-.DS_store
+.DS_Store
 
 # ignore test files.
 out
