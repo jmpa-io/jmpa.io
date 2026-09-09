@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+{{- partial "head.html" . -}}
+{{- partial "jmpa-head.html" . -}}
+<body>
+{{- partial "jmpa-nav.html" . -}}
+{{- partial "jmpa-cart.html" . -}}
+
+<div class="jmpa-content-gradient">
+<div class="about-page">
+  <div class="about-profile">
+    <img class="about-photo" src="/img/jordan.jpg" alt="Jordan Cleal" />
+    <div class="about-intro">
+      <h1>Hi, I'm <span class="hi-accent">Jordan</span>.</h1>
+      <p class="about-tagline">Programmer by day. Watercolourist by night.</p>
+      <p>I'm a software engineer based in Melbourne, Australia. I've been making watercolour paintings and ink drawings for years - mostly landscapes, urban sketches, and loose florals inspired by wherever I happen to be travelling.</p>
+      <p>The work on this site is for sale. Everything is original and one of a kind - no prints. Payments are handled by Square and each piece ships from Melbourne.</p>
+    </div>
+  </div>
+
+  <div class="about-divider"></div>
+
+  <div class="about-section">
+    <h2>About the work</h2>
+    <p>Most pieces are small-format - 15×15cm up to 30×21cm - painted on cold press watercolour paper or toned paper. I work mainly with transparent watercolour, occasionally with gouache or ink. The subject matter leans toward places: Melbourne streets, the Yarra, the Victorian coast, wherever I've been with a sketchbook.</p>
+    <p>I don't do editions or reproductions. If it's listed, it's the original. If it's sold, it's gone.</p>
+  </div>
+
+  <div class="about-divider"></div>
+
+  <div class="about-section">
+    <h2>Commissions</h2>
+    <p>I take a limited number of commissions each year - mostly location pieces, portraits, and pet portraits. If you have something specific in mind, <a href="/commissions">read more about the process here</a> or get in touch directly.</p>
+  </div>
+
+  <div class="about-divider"></div>
+
+  <div class="about-section">
+    <h2>Get in touch</h2>
+    <p>Questions about a piece, shipping, or a commission enquiry - email is the best way to reach me.</p>
+    <div class="about-links">
+      <a class="about-link" href="mailto:support@jmpa.io">support@jmpa.io</a>
+      <a class="about-link" href="https://jcleal.me" target="_blank" rel="noopener noreferrer">jcleal.me</a>
+      <a class="about-link" href="https://github.com/jmpa-io" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer class="jmpa-footer"><div class="jmpa-footer-inner">&copy; {{ now.Year }} jmpa - by <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">Jordan Cleal</a></div></footer>
+</body>
+</html>

@@ -1,18 +1,25 @@
 <div class="jmpa-cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 <div class="jmpa-cart-drawer" id="cart-drawer">
   <div class="jmpa-cart-header">
-    <h2>Cart</h2>
-    <button class="jmpa-cart-close" onclick="closeCart()">✕</button>
+    <div class="jmpa-cart-header-left">
+      <span class="jmpa-cart-header-icon" id="cart-header-icon"></span>
+      <h2>Cart</h2>
+      <span class="jmpa-cart-header-count" id="cart-header-count">0</span>
+    </div>
+    <button class="jmpa-cart-close" id="cart-close-btn" onclick="closeCart()" aria-label="Close cart">×</button>
   </div>
   <div class="jmpa-cart-items" id="cart-items">
     <p class="jmpa-cart-empty">Your cart is empty.</p>
   </div>
   <div class="jmpa-cart-footer">
     <div class="jmpa-cart-total">
-      <span>Total</span>
-      <span id="cart-total-amount">$0</span>
+      <span class="jmpa-cart-total-label">Total</span>
+      <span class="jmpa-cart-total-value" id="cart-total-amount">$0.00</span>
     </div>
-    <button class="jmpa-checkout-btn" onclick="cartCheckout()">Checkout via Square →</button>
-    <p class="jmpa-checkout-note">Each item opens its own Square payment link.</p>
+    <button class="jmpa-checkout-btn" onclick="cartCheckout()">
+      <span>Checkout</span>
+      <span class="jmpa-checkout-icon" id="checkout-arrow-icon"></span>
+    </button>
+    <p class="jmpa-checkout-note">Powered by Square. Each item opens its own payment link.</p>
   </div>
 </div>
