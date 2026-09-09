@@ -5,6 +5,9 @@
   size: "21 × 15 cm"
   price: "$25 AUD"
   image: /img/art/piece-1.svg
+  images:
+    - /img/art/piece-1.svg
+    - /img/art/piece-2.svg
   link: "https://square.link/u/placeholder-01"
   sold: false
 

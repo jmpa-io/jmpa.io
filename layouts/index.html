@@ -5,24 +5,41 @@
 <body>
 {{- partial "jmpa-nav.html" . -}}
 {{- partial "jmpa-cart.html" . -}}
-
+<div class="jmpa-content-gradient">
 <div class="jmpa-home">
   <div class="jmpa-home-hero">
-    <h1>hi, i'm <span class="jmpa-brand-hero">jmpa</span>.</h1>
-    <p>I make things and sell them here. Watercolour paintings, and whatever else I'm working on.</p>
+    <h1><span class="hi-accent">jmpa</span> <span class="jmpa-home-parens">(jordan cleal)</span></h1>
+    <p>Watercolour paintings, made by hand in Melbourne. Each piece is original - no prints, no editions.</p>
   </div>
 
   <div class="jmpa-home-sections">
-    <a href="/art" class="jmpa-home-card">
-      <div class="jmpa-home-card-icon">🎨</div>
+    <a href="/art" class="jmpa-home-card jmpa-home-card--full">
       <h2>Art</h2>
-      <p>Original watercolour paintings. Each piece is handmade and one of a kind. Available to buy direct.</p>
+      <p>Original watercolour paintings. Handmade, unique, available to buy direct.</p>
       <span class="jmpa-home-card-arrow">Browse gallery →</span>
     </a>
 
+    <a href="/about" class="jmpa-home-card">
+      <h2>About</h2>
+      <p>Programmer by day, painter by night. Based in Melbourne, Australia.</p>
+      <span class="jmpa-home-card-arrow">Read more →</span>
+    </a>
+
+    <a href="/commissions" class="jmpa-home-card">
+      <h2>Commissions</h2>
+      <p>Want something custom? Locations, landscapes, pets. Limited spots per year.</p>
+      <span class="jmpa-home-card-arrow">Find out more →</span>
+    </a>
+
+    <a href="/shipping" class="jmpa-home-card">
+      <h2>Shipping & Returns</h2>
+      <p>Ships from Melbourne. Flat rate domestic, international on request.</p>
+      <span class="jmpa-home-card-arrow">Details →</span>
+    </a>
   </div>
 </div>
+</div>
 
-<footer class="jmpa-footer">&copy; {{ now.Year }} jmpa &mdash; <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">by Jordan Cleal</a></footer>
+<footer class="jmpa-footer"><div class="jmpa-footer-inner">&copy; {{ now.Year }} jmpa - by <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">Jordan Cleal</a></div></footer>
 </body>
 </html>

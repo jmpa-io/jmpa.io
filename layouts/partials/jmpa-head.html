@@ -2,6 +2,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/jmpa.css" />
-<!-- prevent theme flash -->
-<script>(function(){var t=localStorage.getItem('jmpa-theme');if(t==='light')document.documentElement.classList.add('light');})()</script>
+<!-- prevent theme/season flash -->
+<script>(function(){
+  var t=localStorage.getItem('jmpa-theme');
+  if(t==='light')document.documentElement.classList.add('light');
+  var s=localStorage.getItem('jmpa-season');
+  var seasons=['spring','summer','autumn','winter'];
+  if(s&&seasons.indexOf(s)!==-1)document.documentElement.classList.add(s);
+})()</script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="/js/jmpa.js" defer></script>

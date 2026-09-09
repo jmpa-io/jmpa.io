@@ -1,12 +1,12 @@
 baseURL: https://jmpa.io
 languageCode: en-us
-title: jmpa.io
+title: jmpa
 theme: jmpa
 
 Params:
   logo: https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
   favicon: ./favicon.ico
-  description: A
+  description: "jmpa.io - art store and portfolio by Jordan Cleal"
   images:
     - >-
       https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
@@ -16,14 +16,21 @@ Params:
 # menu.
 menu:
   main:
-    - name: Home
-      url: /
+    - name: Art
+      url: /art
       weight: 1
 
-    - name: 🎨 Art
-      url: /art
+    - name: About Me
+      url: /about
       weight: 2
 
+    - name: Commissions
+      url: /commissions
+      weight: 3
+
+    - name: Shipping & Returns
+      url: /shipping
+      weight: 4
 
   social:
     - name: GitHub

@@ -5,14 +5,21 @@
 # `jmpa.io`
 
 ```diff
-+ 🌐 The jmpa.io website.
++ 🌐 Art store and portfolio by Jordan Cleal.
 ```
 
 ## Scripts
 
 script|description
 ---|---
-[bin/compile.sh](bin/compile.sh) | Compile the static website using docker + hugo.
-[bin/generate-pdfs.sh](bin/generate-pdfs.sh) | Coverts the raw markdown for courses to pdfs.
-[bin/local.sh](bin/local.sh) | Run this repository inside a docker container.
+[bin/generate-pdfs.sh](bin/generate-pdfs.sh) | Converts the raw markdown for courses to pdfs.
+
+## Running locally?
+
+1. Using a <kbd>terminal</kbd>, run:
+```bash
+make serve
+```
+
+2. Using your browser, navigate to `localhost:1313`.
 

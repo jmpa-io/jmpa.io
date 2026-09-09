@@ -1,19 +1,38 @@
 <nav class="jmpa-nav">
-  <a href="{{ .Site.BaseURL }}" class="jmpa-nav-logo">
-    <img src="/logo.png" alt="jmpa" class="jmpa-nav-logo-img" />
-    <span class="jmpa-brand">jmpa<span class="jmpa-brand-tld">.io</span></span>
-  </a>
-  <div class="jmpa-nav-links">
-    {{ $permalink := .RelPermalink }}
-    {{ range .Site.Menus.main }}
-      <a href="{{ .URL }}" {{ if or (eq $permalink .URL) (and (ne .URL "/") (hasPrefix $permalink .URL)) }}class="active"{{ end }}>{{ .Name }}</a>
-    {{ end }}
+  <div class="jmpa-nav-inner">
+    <a href="/" class="jmpa-nav-logo">
+      <img src="/logo.png" alt="jmpa" class="jmpa-nav-logo-img" />
+      <span class="jmpa-brand">jmpa</span>
+    </a>
+    <span class="jmpa-nav-sep">|</span>
+    <div class="jmpa-nav-links">
+      {{ $permalink := .RelPermalink }}
+      {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}" {{ if or (eq $permalink .URL) (and (ne .URL "/") (hasPrefix $permalink .URL)) }}class="active"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </div>
+    <div class="jmpa-season-wrap" id="season-wrap">
+      <button class="jmpa-season-trigger" id="season-trigger" aria-label="Season theme">
+        <svg width="12" height="12" viewBox="0 0 12 12" id="season-trigger-dot"><circle cx="6" cy="6" r="5" fill="var(--accent)"/></svg>
+      </button>
+      <div class="jmpa-season-popup" id="season-popup">
+        <button class="jmpa-season-btn" data-season="spring" aria-label="Spring">
+          <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#e060a0"/></svg>
+        </button>
+        <button class="jmpa-season-btn" data-season="summer" aria-label="Summer">
+          <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#40a820"/></svg>
+        </button>
+        <button class="jmpa-season-btn" data-season="autumn" aria-label="Autumn">
+          <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#c05010"/></svg>
+        </button>
+        <button class="jmpa-season-btn" data-season="winter" aria-label="Winter">
+          <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#3878c0"/></svg>
+        </button>
+      </div>
+    </div>
+    <button class="jmpa-theme-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+    <button class="jmpa-cart-btn" onclick="toggleCart()" aria-label="Cart">
+      <span id="cart-icon"></span><span class="jmpa-cart-count" id="cart-count">0</span>
+    </button>
   </div>
-  <button class="jmpa-theme-btn" id="theme-toggle" aria-label="Toggle theme">
-    <span class="icon-moon">☽</span>
-    <span class="icon-sun">☀</span>
-  </button>
-  <button class="jmpa-cart-btn" onclick="toggleCart()" aria-label="Cart">
-    🛒 <span class="jmpa-cart-count" id="cart-count">0</span>
-  </button>
 </nav>

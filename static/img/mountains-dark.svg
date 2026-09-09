@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <!-- tree shape: base at (0,0), tip at (0,-h) — scale and translate to place -->
+    <!-- distant tree: h=28, w=10 -->
+    <!-- mid tree: h=40, w=14 -->
+    <!-- near tree: h=55, w=18 -->
+  </defs>
+
+  <!-- ─── CLOUDS ─── white, layered ellipses for depth ─── -->
+  <!-- cloud 1 left -->
+  <ellipse cx="185" cy="76" rx="72" ry="22" fill="white" fill-opacity="0.55"/>
+  <ellipse cx="225" cy="68" rx="52" ry="18" fill="white" fill-opacity="0.55"/>
+  <ellipse cx="155" cy="82" rx="40" ry="14" fill="white" fill-opacity="0.45"/>
+  <!-- cloud 2 centre -->
+  <ellipse cx="690" cy="54" rx="88" ry="24" fill="white" fill-opacity="0.5"/>
+  <ellipse cx="740" cy="46" rx="60" ry="19" fill="white" fill-opacity="0.5"/>
+  <ellipse cx="650" cy="60" rx="44" ry="15" fill="white" fill-opacity="0.42"/>
+  <!-- cloud 3 right -->
+  <ellipse cx="1155" cy="82" rx="68" ry="20" fill="white" fill-opacity="0.52"/>
+  <ellipse cx="1200" cy="72" rx="48" ry="16" fill="white" fill-opacity="0.52"/>
+  <ellipse cx="1120" cy="88" rx="38" ry="13" fill="white" fill-opacity="0.42"/>
+
+  <!-- ─── DISTANT RANGE ─── -->
+  <path fill="white" fill-opacity="0.08"
+    d="M0,420 C100,350 150,200 250,180 C320,165 360,220 420,240
+       C480,260 520,190 600,160 C660,140 700,180 760,200
+       C820,220 860,150 940,130 C1000,115 1040,170 1100,200
+       C1160,230 1200,180 1280,200 C1340,215 1390,270 1440,300
+       L1440,600 L0,600 Z"/>
+
+  <!-- distant trees — tip of each pine at the computed peak, base sitting on the ridge -->
+  <!-- peak (250,180): tree h=28 -->
+  <g fill="#1e4a1e" fill-opacity="0.72">
+    <polygon points="250,180 242,204 258,204"/>
+    <polygon points="250,186 241,212 259,212"/>
+    <polygon points="250,193 239,220 261,220"/>
+    <rect x="248" y="220" width="4" height="7"/>
+  </g>
+  <!-- peak (632,155): tree h=28 -->
+  <g fill="#1e4a1e" fill-opacity="0.72">
+    <polygon points="632,155 624,179 640,179"/>
+    <polygon points="632,161 623,187 641,187"/>
+    <polygon points="632,168 621,195 643,195"/>
+    <rect x="630" y="195" width="4" height="7"/>
+  </g>
+  <!-- peak (960,127): tallest distant peak, h=30 -->
+  <g fill="#1e4a1e" fill-opacity="0.72">
+    <polygon points="960,127 951,153 969,153"/>
+    <polygon points="960,134 950,161 970,161"/>
+    <polygon points="960,141 948,169 972,169"/>
+    <rect x="958" y="169" width="4" height="7"/>
+  </g>
+  <!-- peak (1241,195): h=26 -->
+  <g fill="#1e4a1e" fill-opacity="0.65">
+    <polygon points="1241,195 1234,217 1248,217"/>
+    <polygon points="1241,201 1233,224 1249,224"/>
+    <polygon points="1241,207 1231,231 1251,231"/>
+    <rect x="1239" y="231" width="4" height="7"/>
+  </g>
+
+  <!-- ─── MID RANGE ─── -->
+  <path fill="white" fill-opacity="0.11"
+    d="M0,460 C80,410 130,330 220,300 C290,275 330,320 400,300
+       C470,280 520,240 600,230 C670,220 720,270 800,260
+       C870,250 910,210 990,230 C1060,250 1100,290 1180,280
+       C1260,270 1320,310 1440,340
+       L1440,600 L0,600 Z"/>
+
+  <!-- mid trees at peaks — h=40 -->
+  <!-- peak (220,300) -->
+  <g fill="#1a421a" fill-opacity="0.78">
+    <polygon points="220,300 209,328 231,328"/>
+    <polygon points="220,308 208,337 232,337"/>
+    <polygon points="220,316 206,346 234,346"/>
+    <polygon points="220,324 204,356 236,356"/>
+    <rect x="218" y="356" width="4" height="9"/>
+  </g>
+  <!-- peak (600,230) -->
+  <g fill="#1a421a" fill-opacity="0.78">
+    <polygon points="600,230 589,258 611,258"/>
+    <polygon points="600,238 588,267 612,267"/>
+    <polygon points="600,246 586,276 614,276"/>
+    <polygon points="600,254 584,286 616,286"/>
+    <rect x="598" y="286" width="4" height="9"/>
+  </g>
+  <!-- peak (947,224) -->
+  <g fill="#1a421a" fill-opacity="0.78">
+    <polygon points="947,224 936,252 958,252"/>
+    <polygon points="947,232 935,261 959,261"/>
+    <polygon points="947,240 933,270 961,270"/>
+    <polygon points="947,248 931,280 963,280"/>
+    <rect x="945" y="280" width="4" height="9"/>
+  </g>
+  <!-- peak (1205,278) -->
+  <g fill="#1a421a" fill-opacity="0.70">
+    <polygon points="1205,278 1194,306 1216,306"/>
+    <polygon points="1205,286 1193,315 1217,315"/>
+    <polygon points="1205,294 1191,324 1219,324"/>
+    <polygon points="1205,302 1189,334 1221,334"/>
+    <rect x="1203" y="334" width="4" height="9"/>
+  </g>
+
+  <!-- ─── NEAR HILLS ─── -->
+  <path fill="white" fill-opacity="0.15"
+    d="M0,490 C100,470 200,430 320,420 C420,412 480,440 580,430
+       C680,420 730,450 840,440 C940,430 1000,460 1100,450
+       C1200,440 1300,470 1440,480
+       L1440,600 L0,600 Z"/>
+
+  <!-- near trees — h=55, placed at ridge peaks and flanks -->
+  <!-- peak (320,420) -->
+  <g fill="#163616" fill-opacity="0.85">
+    <polygon points="320,420 306,452 334,452"/>
+    <polygon points="320,430 305,463 335,463"/>
+    <polygon points="320,440 303,474 337,474"/>
+    <polygon points="320,450 301,486 339,486"/>
+    <polygon points="320,460 299,497 341,497"/>
+    <rect x="318" y="497" width="4" height="12"/>
+  </g>
+  <!-- flank left ~80 -->
+  <g fill="#163616" fill-opacity="0.82">
+    <polygon points="80,468 67,498 93,498"/>
+    <polygon points="80,478 65,510 95,510"/>
+    <polygon points="80,488 63,522 97,522"/>
+    <polygon points="80,498 61,533 99,533"/>
+    <polygon points="80,508 60,544 100,544"/>
+    <rect x="78" y="544" width="4" height="12"/>
+  </g>
+  <!-- flank ~180 -->
+  <g fill="#163616" fill-opacity="0.82">
+    <polygon points="180,455 167,485 193,485"/>
+    <polygon points="180,465 165,496 195,496"/>
+    <polygon points="180,475 163,508 197,508"/>
+    <polygon points="180,485 161,520 199,520"/>
+    <polygon points="180,495 160,531 200,531"/>
+    <rect x="178" y="531" width="4" height="12"/>
+  </g>
+  <!-- peak (621,428) -->
+  <g fill="#163616" fill-opacity="0.85">
+    <polygon points="621,428 607,460 635,460"/>
+    <polygon points="621,438 605,471 637,471"/>
+    <polygon points="621,448 603,482 639,482"/>
+    <polygon points="621,458 601,494 641,494"/>
+    <polygon points="621,468 600,505 642,505"/>
+    <rect x="619" y="505" width="4" height="12"/>
+  </g>
+  <!-- peak (881,438) -->
+  <g fill="#163616" fill-opacity="0.85">
+    <polygon points="881,438 867,470 895,470"/>
+    <polygon points="881,448 865,481 897,481"/>
+    <polygon points="881,458 863,492 899,492"/>
+    <polygon points="881,468 861,504 901,504"/>
+    <polygon points="881,478 860,515 902,515"/>
+    <rect x="879" y="515" width="4" height="12"/>
+  </g>
+  <!-- peak (1142,448) -->
+  <g fill="#163616" fill-opacity="0.85">
+    <polygon points="1142,448 1128,480 1156,480"/>
+    <polygon points="1142,458 1126,491 1158,491"/>
+    <polygon points="1142,468 1124,502 1160,502"/>
+    <polygon points="1142,478 1122,514 1162,514"/>
+    <polygon points="1142,488 1121,525 1163,525"/>
+    <rect x="1140" y="525" width="4" height="12"/>
+  </g>
+  <!-- right flank ~1360 -->
+  <g fill="#163616" fill-opacity="0.78">
+    <polygon points="1360,472 1347,502 1373,502"/>
+    <polygon points="1360,482 1345,513 1375,513"/>
+    <polygon points="1360,492 1343,524 1377,524"/>
+    <polygon points="1360,502 1341,536 1379,536"/>
+    <rect x="1358" y="536" width="4" height="12"/>
+  </g>
+
+  <!-- ─── ROCKS / BOULDERS ─── dark, clustered, varied sizes ─── -->
+  <!-- cluster left -->
+  <ellipse cx="130" cy="548" rx="26" ry="11" fill="#0a160a" fill-opacity="0.65"/>
+  <ellipse cx="155" cy="553" rx="16" ry="8" fill="#0a160a" fill-opacity="0.60"/>
+  <ellipse cx="115" cy="555" rx="12" ry="6" fill="#0a160a" fill-opacity="0.55"/>
+  <!-- cluster centre-left -->
+  <ellipse cx="420" cy="542" rx="30" ry="12" fill="#0a160a" fill-opacity="0.65"/>
+  <ellipse cx="450" cy="547" rx="18" ry="8" fill="#0a160a" fill-opacity="0.60"/>
+  <ellipse cx="400" cy="549" rx="13" ry="6" fill="#0a160a" fill-opacity="0.55"/>
+  <!-- centre -->
+  <ellipse cx="720" cy="545" rx="22" ry="10" fill="#0a160a" fill-opacity="0.62"/>
+  <ellipse cx="744" cy="550" rx="14" ry="7" fill="#0a160a" fill-opacity="0.58"/>
+  <!-- cluster centre-right -->
+  <ellipse cx="980" cy="540" rx="32" ry="13" fill="#0a160a" fill-opacity="0.65"/>
+  <ellipse cx="1010" cy="545" rx="19" ry="8" fill="#0a160a" fill-opacity="0.60"/>
+  <ellipse cx="960" cy="547" rx="12" ry="6" fill="#0a160a" fill-opacity="0.55"/>
+  <!-- cluster right -->
+  <ellipse cx="1260" cy="546" rx="24" ry="10" fill="#0a160a" fill-opacity="0.62"/>
+  <ellipse cx="1284" cy="551" rx="15" ry="7" fill="#0a160a" fill-opacity="0.57"/>
+
+</svg>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="/favicon.ico">
+
+  <title>
+    Home - jmpa.io
+  </title>
+
+  <meta name="description"
+    content="jmpa.io — art store and portfolio by Jordan Cleal" /><meta name="generator" content="Hugo 0.93.2" />
+
+  <link rel="stylesheet" href="https://jmpa.io/css/main.css" />
+  <link rel="stylesheet" href="https://jmpa.io/css/style.css" />
+
+  
+  
+
+  <meta property="og:title" content="Home" />
+<meta property="og:description" content="jmpa.io — art store and portfolio by Jordan Cleal" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://jmpa.io/" /><meta property="og:image" content="https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png"/>
+
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png"/>
+
+<meta name="twitter:title" content="Home"/>
+<meta name="twitter:description" content="jmpa.io — art store and portfolio by Jordan Cleal"/>
+
+
+  <meta itemprop="name" content="Home">
+<meta itemprop="description" content="jmpa.io — art store and portfolio by Jordan Cleal">
+
+  <meta itemprop="name" content="Home">
+<meta itemprop="description" content="jmpa.io — art store and portfolio by Jordan Cleal">
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/jmpa.css" />
+
+<script>(function(){var t=localStorage.getItem('jmpa-theme');if(t==='light')document.documentElement.classList.add('light');})()</script>
+<script src="/js/jmpa.js" defer></script>
+<body><nav class="jmpa-nav">
+  <a href="https://jmpa.io" class="jmpa-nav-logo">
+    <img src="/logo.png" alt="jmpa" class="jmpa-nav-logo-img" />
+    <span class="jmpa-brand">jmpa<span class="jmpa-brand-tld">.io</span></span>
+  </a>
+  <div class="jmpa-nav-links">
+    
+    
+      <a href="/art" >Art</a>
+    
+      <a href="/about" >About Me</a>
+    
+      <a href="/commissions" >Commissions</a>
+    
+      <a href="/shipping" >Shipping &amp; Returns</a>
+    
+  </div>
+  <button class="jmpa-theme-btn" id="theme-toggle" aria-label="Toggle theme">
+    <span class="icon-moon">☽</span>
+    <span class="icon-sun">☀</span>
+  </button>
+  <button class="jmpa-cart-btn" onclick="toggleCart()" aria-label="Cart">
+    🛒 <span class="jmpa-cart-count" id="cart-count">0</span>
+  </button>
+</nav>
+<div class="jmpa-cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="jmpa-cart-drawer" id="cart-drawer">
+  <div class="jmpa-cart-header">
+    <h2>Cart</h2>
+    <button class="jmpa-cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="jmpa-cart-items" id="cart-items">
+    <p class="jmpa-cart-empty">Your cart is empty.</p>
+  </div>
+  <div class="jmpa-cart-footer">
+    <div class="jmpa-cart-total">
+      <span>Total</span>
+      <span id="cart-total-amount">$0</span>
+    </div>
+    <button class="jmpa-checkout-btn" onclick="cartCheckout()">Checkout via Square →</button>
+    <p class="jmpa-checkout-note">Each item opens its own Square payment link.</p>
+  </div>
+</div>
+<div class="jmpa-home">
+  <div class="jmpa-home-hero">
+    <h1>hi, i'm <span class="jmpa-brand-hero">jmpa</span>.</h1>
+    <p>I make things and sell them here. Watercolour paintings, and whatever else I'm working on.</p>
+  </div>
+
+  <div class="jmpa-home-sections">
+    <a href="/art" class="jmpa-home-card">
+      <div class="jmpa-home-card-icon">🎨</div>
+      <h2>Art</h2>
+      <p>Original watercolour paintings. Each piece is handmade and one of a kind. Available to buy direct.</p>
+      <span class="jmpa-home-card-arrow">Browse gallery →</span>
+    </a>
+
+    <a href="/about" class="jmpa-home-card">
+      <div class="jmpa-home-card-icon">👋</div>
+      <h2>About Me</h2>
+      <p>Programmer based in Melbourne. I paint watercolours and sell originals here — no prints, no editions.</p>
+      <span class="jmpa-home-card-arrow">Read more →</span>
+    </a>
+
+    <a href="/commissions" class="jmpa-home-card">
+      <div class="jmpa-home-card-icon">✏️</div>
+      <h2>Commissions</h2>
+      <p>Want something custom? I take a limited number of commissions each year — locations, landscapes, pets.</p>
+      <span class="jmpa-home-card-arrow">Find out more →</span>
+    </a>
+
+    <a href="/shipping" class="jmpa-home-card">
+      <div class="jmpa-home-card-icon">📦</div>
+      <h2>Shipping & Returns</h2>
+      <p>All work ships from Melbourne. Flat rate domestic, international on request. Careful packaging guaranteed.</p>
+      <span class="jmpa-home-card-arrow">Details →</span>
+    </a>
+  </div>
+</div>
+
+<footer class="jmpa-footer">&copy; 2026 jmpa &mdash; <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">by Jordan Cleal</a></footer>
+</body>
+</html>

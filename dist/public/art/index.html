@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="/favicon.ico">
+
+  <title>
+    Art - jmpa.io
+  </title>
+
+  <meta name="description"
+    content="jmpa.io — art store and portfolio by Jordan Cleal" /><meta name="generator" content="Hugo 0.93.2" />
+
+  <link rel="stylesheet" href="https://jmpa.io/css/main.css" />
+  <link rel="stylesheet" href="https://jmpa.io/css/style.css" />
+
+  
+  
+
+  <meta property="og:title" content="Art" />
+<meta property="og:description" content="jmpa.io — art store and portfolio by Jordan Cleal" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://jmpa.io/art/" /><meta property="og:image" content="https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png"/>
+
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png"/>
+
+<meta name="twitter:title" content="Art"/>
+<meta name="twitter:description" content="jmpa.io — art store and portfolio by Jordan Cleal"/>
+
+
+  <meta itemprop="name" content="Art">
+<meta itemprop="description" content="jmpa.io — art store and portfolio by Jordan Cleal">
+
+  <meta itemprop="name" content="Art">
+<meta itemprop="description" content="jmpa.io — art store and portfolio by Jordan Cleal">
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/jmpa.css" />
+
+<script>(function(){var t=localStorage.getItem('jmpa-theme');if(t==='light')document.documentElement.classList.add('light');})()</script>
+<script src="/js/jmpa.js" defer></script>
+<body><nav class="jmpa-nav">
+  <a href="https://jmpa.io" class="jmpa-nav-logo">
+    <img src="/logo.png" alt="jmpa" class="jmpa-nav-logo-img" />
+    <span class="jmpa-brand">jmpa<span class="jmpa-brand-tld">.io</span></span>
+  </a>
+  <div class="jmpa-nav-links">
+    
+    
+      <a href="/art" class="active">Art</a>
+    
+      <a href="/about" >About Me</a>
+    
+      <a href="/commissions" >Commissions</a>
+    
+      <a href="/shipping" >Shipping &amp; Returns</a>
+    
+  </div>
+  <button class="jmpa-theme-btn" id="theme-toggle" aria-label="Toggle theme">
+    <span class="icon-moon">☽</span>
+    <span class="icon-sun">☀</span>
+  </button>
+  <button class="jmpa-cart-btn" onclick="toggleCart()" aria-label="Cart">
+    🛒 <span class="jmpa-cart-count" id="cart-count">0</span>
+  </button>
+</nav>
+<div class="jmpa-cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="jmpa-cart-drawer" id="cart-drawer">
+  <div class="jmpa-cart-header">
+    <h2>Cart</h2>
+    <button class="jmpa-cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="jmpa-cart-items" id="cart-items">
+    <p class="jmpa-cart-empty">Your cart is empty.</p>
+  </div>
+  <div class="jmpa-cart-footer">
+    <div class="jmpa-cart-total">
+      <span>Total</span>
+      <span id="cart-total-amount">$0</span>
+    </div>
+    <button class="jmpa-checkout-btn" onclick="cartCheckout()">Checkout via Square →</button>
+    <p class="jmpa-checkout-note">Each item opens its own Square payment link.</p>
+  </div>
+</div>
+<div class="art-hero">
+  <h1>Art</h1>
+  <div class="art-divider"></div>
+  <p>Original watercolour paintings, made by hand.<br>Each piece is one of a kind. Payments via Square — receipt sent automatically.</p>
+</div>
+
+<div class="art-grid">
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-1.svg" alt="Morning Fog Over the Estuary" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Morning Fog Over the Estuary</div>
+      <div class="art-card-medium">Watercolour on cold press</div>
+      <div class="art-card-price">$25 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-01" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-001", "Morning Fog Over the Estuary", "$25 AUD", "https:\/\/square.link\/u\/placeholder-01")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-2.svg" alt="Yarra Bend, Late Afternoon" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Yarra Bend, Late Afternoon</div>
+      <div class="art-card-medium">Watercolour on cold press</div>
+      <div class="art-card-price">$40 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-02" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-002", "Yarra Bend, Late Afternoon", "$40 AUD", "https:\/\/square.link\/u\/placeholder-02")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-3.svg" alt="Loose Florals No. 1" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Loose Florals No. 1</div>
+      <div class="art-card-medium">Watercolour on hot press</div>
+      <div class="art-card-price">$20 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-03" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-003", "Loose Florals No. 1", "$20 AUD", "https:\/\/square.link\/u\/placeholder-03")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-4.svg" alt="Blue Hour — Brunswick" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Blue Hour — Brunswick</div>
+      <div class="art-card-medium">Ink and watercolour on cold press</div>
+      <div class="art-card-price">$55 AUD</div>
+      
+        <span class="art-sold-badge">Sold</span>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-5.svg" alt="Gum Leaves in Flat Light" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Gum Leaves in Flat Light</div>
+      <div class="art-card-medium">Ink and watercolour on cold press</div>
+      <div class="art-card-price">$30 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-05" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-005", "Gum Leaves in Flat Light", "$30 AUD", "https:\/\/square.link\/u\/placeholder-05")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-6.svg" alt="City Rooftops, Overcast" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">City Rooftops, Overcast</div>
+      <div class="art-card-medium">Gouache on toned paper</div>
+      <div class="art-card-price">$45 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-06" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-006", "City Rooftops, Overcast", "$45 AUD", "https:\/\/square.link\/u\/placeholder-06")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-7.svg" alt="Still Life — Ceramic Cup" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Still Life — Ceramic Cup</div>
+      <div class="art-card-medium">Watercolour on hot press</div>
+      <div class="art-card-price">$15 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-07" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-007", "Still Life — Ceramic Cup", "$15 AUD", "https:\/\/square.link\/u\/placeholder-07")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-8.svg" alt="Rain Study — Melbourne" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Rain Study — Melbourne</div>
+      <div class="art-card-medium">Watercolour on cold press</div>
+      <div class="art-card-price">$25 AUD</div>
+      
+        <span class="art-sold-badge">Sold</span>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-9.svg" alt="Loose Florals No. 2" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Loose Florals No. 2</div>
+      <div class="art-card-medium">Watercolour on cold press</div>
+      <div class="art-card-price">$20 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-09" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-009", "Loose Florals No. 2", "$20 AUD", "https:\/\/square.link\/u\/placeholder-09")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-10.svg" alt="Dusk Over the Bay" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Dusk Over the Bay</div>
+      <div class="art-card-medium">Gouache on toned paper</div>
+      <div class="art-card-price">$50 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-10" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-010", "Dusk Over the Bay", "$50 AUD", "https:\/\/square.link\/u\/placeholder-10")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-11.svg" alt="Quick Sketch — River Red Gum" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Quick Sketch — River Red Gum</div>
+      <div class="art-card-medium">Ink on cold press</div>
+      <div class="art-card-price">$15 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-11" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-011", "Quick Sketch — River Red Gum", "$15 AUD", "https:\/\/square.link\/u\/placeholder-11")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-12.svg" alt="Study in Burnt Sienna No. 3" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Study in Burnt Sienna No. 3</div>
+      <div class="art-card-medium">Watercolour on hot press</div>
+      <div class="art-card-price">$20 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-12" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-012", "Study in Burnt Sienna No. 3", "$20 AUD", "https:\/\/square.link\/u\/placeholder-12")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-13.svg" alt="Harbour Sketch — Williamstown" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Harbour Sketch — Williamstown</div>
+      <div class="art-card-medium">Ink and watercolour on cold press</div>
+      <div class="art-card-price">$35 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-13" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-013", "Harbour Sketch — Williamstown", "$35 AUD", "https:\/\/square.link\/u\/placeholder-13")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-14.svg" alt="Green Wash — Healesville" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Green Wash — Healesville</div>
+      <div class="art-card-medium">Watercolour on watercolour block</div>
+      <div class="art-card-price">$30 AUD</div>
+      
+        <span class="art-sold-badge">Sold</span>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-15.svg" alt="Loose Florals No. 3" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Loose Florals No. 3</div>
+      <div class="art-card-medium">Watercolour on cold press</div>
+      <div class="art-card-price">$20 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-15" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-015", "Loose Florals No. 3", "$20 AUD", "https:\/\/square.link\/u\/placeholder-15")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-16.svg" alt="Lunchtime Study — Federation Square" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Lunchtime Study — Federation Square</div>
+      <div class="art-card-medium">Gouache on toned paper</div>
+      <div class="art-card-price">$30 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-16" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-016", "Lunchtime Study — Federation Square", "$30 AUD", "https:\/\/square.link\/u\/placeholder-16")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-17.svg" alt="Warm Grey Wash — Studio Study" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Warm Grey Wash — Studio Study</div>
+      <div class="art-card-medium">Watercolour on cold press</div>
+      <div class="art-card-price">$20 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-17" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-017", "Warm Grey Wash — Studio Study", "$20 AUD", "https:\/\/square.link\/u\/placeholder-17")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-18.svg" alt="Birch Study — Winter Light" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Birch Study — Winter Light</div>
+      <div class="art-card-medium">Watercolour on watercolour block</div>
+      <div class="art-card-price">$45 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-18" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-018", "Birch Study — Winter Light", "$45 AUD", "https:\/\/square.link\/u\/placeholder-18")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-19.svg" alt="Abstract — Coral and Rose" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Abstract — Coral and Rose</div>
+      <div class="art-card-medium">Watercolour on hot press</div>
+      <div class="art-card-price">$35 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-19" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-019", "Abstract — Coral and Rose", "$35 AUD", "https:\/\/square.link\/u\/placeholder-19")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+  <div class="art-card">
+    
+      <img class="art-card-img" src="/img/art/piece-20.svg" alt="Twilight Study — Ocean Road" />
+    
+    <div class="art-card-body">
+      <div class="art-card-title">Twilight Study — Ocean Road</div>
+      <div class="art-card-medium">Gouache on toned paper</div>
+      <div class="art-card-price">$80 AUD</div>
+      
+        <a class="art-buy-btn" href="https://square.link/u/placeholder-20" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("art-020", "Twilight Study — Ocean Road", "$80 AUD", "https:\/\/square.link\/u\/placeholder-20")'>
+          + Add to cart
+        </button>
+      
+    </div>
+  </div>
+  
+</div>
+
+<footer class="jmpa-footer">&copy; 2026 jmpa.io</footer>
+</body>
+</html>
