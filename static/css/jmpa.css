@@ -660,6 +660,24 @@ html.winter .jmpa-footer {
   color: #fff;
 }
 html.winter .jmpa-footer a { color: #c0d8f8; }
+html.yellow .jmpa-footer {
+  background: #8a7000;
+  border-top: 1px solid #6a5400;
+  color: #fff;
+}
+html.yellow .jmpa-footer a { color: #fff8c0; }
+html.grey .jmpa-footer {
+  background: #4a5870;
+  border-top: 1px solid #384860;
+  color: #fff;
+}
+html.grey .jmpa-footer a { color: #d0dce8; }
+html.purple .jmpa-footer {
+  background: #5a2090;
+  border-top: 1px solid #481878;
+  color: #fff;
+}
+html.purple .jmpa-footer a { color: #e0c8ff; }
 .jmpa-footer a { color: var(--muted); text-decoration: none; }
 .jmpa-footer a:hover { color: var(--cyan); }
 

@@ -1,7 +1,7 @@
 // jmpa.io — theme toggle + season + cart
 (function () {
 
-  var SEASONS = ['spring', 'summer', 'autumn', 'winter'];
+  var SEASONS = ['spring', 'summer', 'autumn', 'winter', 'yellow', 'grey', 'purple'];
 
   // ── Season ─────────────────────────────────────────────
   var SEASON_KEY = 'jmpa-season';
