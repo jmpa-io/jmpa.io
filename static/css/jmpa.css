@@ -6,6 +6,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 a { text-decoration: none !important; border-bottom: none !important; }
+button:focus, a:focus { outline: none; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ── dark (default) ── */
 :root {
@@ -181,6 +183,7 @@ html.light .jmpa-nav {
   margin-right: 0;
   white-space: nowrap;
   flex-shrink: 0;
+  height: 32px;
 }
 .jmpa-nav-logo:hover { text-decoration: none !important; }
 .jmpa-nav-logo img, .jmpa-nav-logo .jmpa-brand { pointer-events: none; }
@@ -190,6 +193,9 @@ html.light .jmpa-nav {
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #e0e0e0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 html.light .jmpa-brand {
   color: #444;
@@ -212,7 +218,7 @@ html.light .jmpa-brand {
   border-radius: 4px;
   object-fit: cover;
   object-position: center top;
-  image-rendering: pixelated;
+  flex-shrink: 0;
   opacity: 0.95;
   border: 1px solid rgba(255,255,255,0.18);
 }
@@ -469,10 +475,14 @@ html.light .jmpa-cart-drawer {
 .jmpa-home-card {
   display: flex; flex-direction: column;
   border: 1px solid var(--border); padding: 28px;
-  text-decoration: none; background: var(--bg-panel);
+  text-decoration: none !important; background: var(--bg-panel);
   border-radius: 4px;
   transition: border-color 0.15s, background 0.15s;
 }
+.jmpa-home-card:hover { text-decoration: none !important; }
+.jmpa-home-card h2,
+.jmpa-home-card p,
+.jmpa-home-card-arrow { text-decoration: none !important; }
 .jmpa-home-card--full { grid-column: 1 / -1; }
 .jmpa-home-card:hover { border-color: var(--cyan); }
 .jmpa-home-card:hover .jmpa-home-card-arrow { color: var(--cyan); }
