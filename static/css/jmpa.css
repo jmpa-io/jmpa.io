@@ -59,9 +59,9 @@ html.autumn { --accent: #c04010; --accent-alt: #207890; --cyan: #207890; }
 /* ── winter ── */
 html.winter { --accent: #2870b8; --accent-alt: #30a8c0; --cyan: #30a8c0; }
 /* ── accent-only colour overrides ── */
-html.yellow { --accent: #c8a800; --accent-alt: #a08800; --cyan: #a08800; }
-html.grey   { --accent: #8090a0; --accent-alt: #6070a0; --cyan: #6070a0; }
-html.purple { --accent: #8840c8; --accent-alt: #6030a8; --cyan: #6030a8; }
+html.yellow { --accent: #c09000; --accent-alt: #a07800; --cyan: #a07800; }
+html.grey   { --accent: #607090; --accent-alt: #485878; --cyan: #485878; }
+html.purple { --accent: #d01880; --accent-alt: #b00868; --cyan: #b00868; }
 
 body {
   background: #1e2023;
@@ -661,23 +661,23 @@ html.winter .jmpa-footer {
 }
 html.winter .jmpa-footer a { color: #c0d8f8; }
 html.yellow .jmpa-footer {
-  background: #8a7000;
-  border-top: 1px solid #6a5400;
+  background: #806000;
+  border-top: 1px solid #604800;
   color: #fff;
 }
 html.yellow .jmpa-footer a { color: #fff8c0; }
 html.grey .jmpa-footer {
-  background: #4a5870;
-  border-top: 1px solid #384860;
+  background: #384858;
+  border-top: 1px solid #283848;
   color: #fff;
 }
-html.grey .jmpa-footer a { color: #d0dce8; }
+html.grey .jmpa-footer a { color: #c8d8e8; }
 html.purple .jmpa-footer {
-  background: #5a2090;
-  border-top: 1px solid #481878;
+  background: #901058;
+  border-top: 1px solid #780840;
   color: #fff;
 }
-html.purple .jmpa-footer a { color: #e0c8ff; }
+html.purple .jmpa-footer a { color: #ffc0e0; }
 .jmpa-footer a { color: var(--muted); text-decoration: none; }
 .jmpa-footer a:hover { color: var(--cyan); }
 
