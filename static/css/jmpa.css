@@ -159,9 +159,11 @@ html.light .jmpa-nav {
 .jmpa-nav-sep {
   color: var(--border);
   font-size: 1.1em;
-  margin-right: 12px;
+  margin: 0 12px;
   flex-shrink: 0;
   user-select: none;
+  line-height: 1;
+  align-self: center;
 }
 .jmpa-nav-inner {
   display: flex;
@@ -176,7 +178,7 @@ html.light .jmpa-nav {
   align-items: center;
   gap: 8px;
   text-decoration: none !important;
-  margin-right: 16px;
+  margin-right: 0;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -205,8 +207,8 @@ html.light .jmpa-brand {
   color: var(--accent);
 }
 .jmpa-nav-logo-img {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 4px;
   object-fit: cover;
   object-position: center top;
