@@ -57,8 +57,7 @@ upload:
 
 generate-website: ## Generates everything related to the 'jmpa.io' website.
 generate-website: \
-	compile-website \
-	generate-pdfs
+	compile-website
 
 compile-website: ## Compiles the 'jmpa.io' website, using hugo.
 compile-website: cmd/hugo image-hugo
@@ -71,13 +70,6 @@ compile-website: dist/public
 		-v "$(PWD)/resources" \
 		$(REPO)/hugo \
 		--log --destination $<
-	@test -z "$(CI)" || echo "##[endgroup]"
-
-generate-pdfs: ## Generates PDFs for course content, using pandoc.
-generate-pdfs: cmd/pandoc image-pandoc
-generate-pdfs: dist/public
-	@test -z "$(CI)" || echo "##[group]Generating PDFs."
-	bin/generate-pdfs.sh
 	@test -z "$(CI)" || echo "##[endgroup]"
 
 serve: ## Serves this website locally, mounted inside a Docker container.

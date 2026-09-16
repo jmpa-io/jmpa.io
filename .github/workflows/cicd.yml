@@ -10,7 +10,7 @@ on:
     - 'content/**'
     - 'layouts/**'
     - 'static/**'
-    - 'config.toml'
+    - 'config.yml'
     - '**Dockerfile'
     - 'Makefile*'
   workflow_dispatch:
