@@ -7,6 +7,10 @@ on:
     - 'bin/*'
     - 'cf/**'
     - 'cmd/**'
+    - 'content/**'
+    - 'layouts/**'
+    - 'static/**'
+    - 'config.toml'
     - '**Dockerfile'
     - 'Makefile*'
   workflow_dispatch:
