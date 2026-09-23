@@ -18,7 +18,7 @@ Params:
 # menu.
 menu:
   main:
-    - name: Art
+    - name: Gallery
       url: /art
       weight: 1
 
