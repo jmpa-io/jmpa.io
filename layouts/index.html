@@ -10,41 +10,34 @@
 <div class="jmpa-home">
 
   <div class="jmpa-hero">
-    <div class="jmpa-hero-text">
-      <p class="jmpa-hero-eyebrow">Original watercolour paintings</p>
-      <h1>Art made by hand<br>in <span class="hi-accent">Melbourne</span>.</h1>
-      <p class="jmpa-hero-sub">Every piece is one of a kind. No prints, no editions — just paint on paper, available to own.</p>
+    <p class="jmpa-hero-eyebrow">Original watercolour paintings · Melbourne</p>
+    <h1>Art made by hand.</h1>
+    <p class="jmpa-hero-sub">Every piece is one of a kind. No prints, no editions —<br>just paint on paper, available to own.</p>
+    <div class="jmpa-hero-actions">
       <a href="/art" class="jmpa-hero-cta">Browse the gallery →</a>
-    </div>
-    <div class="jmpa-hero-grid">
-      {{ range first 4 .Site.Data.art }}
-      <div class="jmpa-hero-thumb">
-        {{ if .thumbnail }}
-          <img src="{{ .thumbnail }}" alt="{{ .title }}" />
-        {{ else if .images }}
-          <img src="{{ index .images 0 }}" alt="{{ .title }}" />
-        {{ else }}
-          <div class="jmpa-hero-thumb-placeholder"></div>
-        {{ end }}
-      </div>
-      {{ end }}
+      <a href="/commissions" class="jmpa-hero-cta-ghost">Commissions</a>
     </div>
   </div>
 
   <div class="jmpa-home-links">
-    <a href="/about" class="jmpa-home-link">
-      <span class="jmpa-home-link-name">About</span>
-      <span class="jmpa-home-link-desc">Programmer by day, painter by night. Based in Melbourne.</span>
+    <a href="/art" class="jmpa-home-link">
+      <span class="jmpa-home-link-name">Gallery</span>
+      <span class="jmpa-home-link-desc">All available original paintings.</span>
       <span class="jmpa-home-link-arrow">→</span>
     </a>
     <a href="/commissions" class="jmpa-home-link">
       <span class="jmpa-home-link-name">Commissions</span>
-      <span class="jmpa-home-link-desc">Locations, landscapes, pets. Limited spots per year.</span>
+      <span class="jmpa-home-link-desc">Custom work, made to order. Limited spots per year.</span>
+      <span class="jmpa-home-link-arrow">→</span>
+    </a>
+    <a href="/about" class="jmpa-home-link">
+      <span class="jmpa-home-link-name">About</span>
+      <span class="jmpa-home-link-desc">Who's behind the paintings.</span>
       <span class="jmpa-home-link-arrow">→</span>
     </a>
     <a href="/shipping" class="jmpa-home-link">
       <span class="jmpa-home-link-name">Shipping</span>
-      <span class="jmpa-home-link-desc">Ships from Melbourne. Flat rate domestic, international on request.</span>
+      <span class="jmpa-home-link-desc">Flat rate domestic. International on request.</span>
       <span class="jmpa-home-link-arrow">→</span>
     </a>
   </div>
@@ -52,6 +45,6 @@
 </div>
 </div>
 
-<footer class="jmpa-footer"><div class="jmpa-footer-inner">&copy; {{ now.Year }} jmpa &mdash; <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">Jordan Cleal</a></div></footer>
+<footer class="jmpa-footer"><div class="jmpa-footer-inner"><span>&copy; {{ now.Year }} jmpa</span><a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">Jordan Cleal</a></div></footer>
 </body>
 </html>
