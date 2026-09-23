@@ -1,5 +1,32 @@
-// jmpa.io — theme toggle + season + cart
+// jmpa.io — theme toggle + palette + cart
 (function () {
+
+  // ── Palette ────────────────────────────────────────────
+  var PALETTES = ['ocean', 'forest', 'sunset', 'violet', 'yellow', 'grey', 'purple'];
+  var PALETTE_KEY = 'jmpa-palette';
+
+  function applyPalette(palette) {
+    PALETTES.forEach(function (p) { document.documentElement.classList.remove(p); });
+    if (palette && PALETTES.indexOf(palette) !== -1) {
+      document.documentElement.classList.add(palette);
+    }
+    document.querySelectorAll('.jmpa-palette-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.palette === (palette || ''));
+    });
+  }
+
+  function setPalette(palette) {
+    var current = localStorage.getItem(PALETTE_KEY);
+    if (current === palette) {
+      localStorage.removeItem(PALETTE_KEY);
+      applyPalette(null);
+    } else {
+      localStorage.setItem(PALETTE_KEY, palette);
+      applyPalette(palette);
+    }
+  }
+
+  applyPalette(localStorage.getItem(PALETTE_KEY));
 
   var SEASONS = ['spring', 'summer', 'autumn', 'winter', 'yellow', 'grey', 'purple'];
 
@@ -44,23 +71,23 @@
   }
 
   function applyTheme(theme) {
-    if (theme === 'light') {
-      document.documentElement.classList.add('light');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('light');
+      document.documentElement.classList.remove('dark');
     }
     setThemeIcon(theme);
   }
 
   function toggleTheme() {
-    var isLight = document.documentElement.classList.contains('light');
-    var next = isLight ? 'dark' : 'light';
+    var isDark = document.documentElement.classList.contains('dark');
+    var next = isDark ? 'light' : 'dark';
     localStorage.setItem(THEME_KEY, next);
     applyTheme(next);
   }
 
   // apply saved theme immediately (before DOMContentLoaded to avoid flash)
-  applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
+  applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 
   // ── Cart ───────────────────────────────────────────────
   var CART_KEY = 'jmpa-cart';
@@ -188,10 +215,34 @@
     cartUpdateCount();
     cartRender();
 
+    // palette popup
+    var paletteTrigger = document.getElementById('jmpa-palette-trigger');
+    var palettePopup   = document.getElementById('jmpa-palette-popup');
+    if (paletteTrigger && palettePopup) {
+      paletteTrigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        palettePopup.classList.toggle('open');
+      });
+      document.addEventListener('click', function (e) {
+        if (!palettePopup.contains(e.target) && e.target !== paletteTrigger) {
+          palettePopup.classList.remove('open');
+        }
+      });
+    }
+    document.querySelectorAll('.jmpa-palette-btn').forEach(function (btn) {
+      var p = btn.dataset.palette;
+      btn.classList.toggle('active', (p || '') === (localStorage.getItem(PALETTE_KEY) || ''));
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setPalette(p);
+        if (palettePopup) palettePopup.classList.remove('open');
+      });
+    });
+
     var themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
 
-    var currentTheme = localStorage.getItem(THEME_KEY) || 'dark';
+    var currentTheme = localStorage.getItem(THEME_KEY) || 'light';
     setThemeIcon(currentTheme);
 
     // season popup
