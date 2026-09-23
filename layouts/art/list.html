@@ -52,9 +52,9 @@ document.getElementById('jmpa-lightbox').addEventListener('touchend', function(e
 <div class="jmpa-content-gradient">
 <div class="art-grid">
   <div class="art-grid-header">
-    <h1>Art</h1>
-    <div class="art-divider"></div>
-    <p>Original watercolour paintings, made by hand.<br>Each piece is one of a kind. Payments via Square - receipt sent automatically.</p>
+    <p class="page-eyebrow">Original watercolour paintings</p>
+    <h1>Gallery.</h1>
+    <p>Every piece is one of a kind. No prints, no editions — just paint on paper, available to own.</p>
   </div>
   <div class="art-cards">
   {{ range .Site.Data.art }}
@@ -99,6 +99,6 @@ document.getElementById('jmpa-lightbox').addEventListener('touchend', function(e
 </div>
 </div>
 
-<footer class="jmpa-footer"><div class="jmpa-footer-inner">&copy; {{ now.Year }} jmpa - by <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">Jordan Cleal</a></div></footer>
+<footer class="jmpa-footer"><div class="jmpa-footer-inner"><span>&copy; {{ now.Year }} jmpa</span><a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">Jordan Cleal</a></div></footer>
 </body>
 </html>
