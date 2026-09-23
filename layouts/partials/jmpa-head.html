@@ -1,14 +1,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/jmpa.css" />
-<!-- prevent theme/season flash -->
+<!-- prevent theme/palette flash -->
 <script>(function(){
   var t=localStorage.getItem('jmpa-theme');
-  if(t==='light')document.documentElement.classList.add('light');
-  var s=localStorage.getItem('jmpa-season');
-  var seasons=['spring','summer','autumn','winter','yellow','grey','purple'];
-  if(s&&seasons.indexOf(s)!==-1)document.documentElement.classList.add(s);
+  if(t==='dark')document.documentElement.classList.add('dark');
+  var p=localStorage.getItem('jmpa-palette');
+  var palettes=['ocean','forest','sunset','violet','yellow','grey','purple'];
+  if(p&&palettes.indexOf(p)!==-1)document.documentElement.classList.add(p);
 })()</script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 {{ with .Site.Params.inventoryUrl }}<script>window.JMPA_INVENTORY_URL = {{ . | jsonify }};</script>{{ end }}

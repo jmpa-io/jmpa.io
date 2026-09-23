@@ -56,6 +56,7 @@ document.getElementById('jmpa-lightbox').addEventListener('touchend', function(e
     <div class="art-divider"></div>
     <p>Original watercolour paintings, made by hand.<br>Each piece is one of a kind. Payments via Square - receipt sent automatically.</p>
   </div>
+  <div class="art-cards">
   {{ range .Site.Data.art }}
   <div class="art-card">
     {{ $imgs := slice }}
@@ -79,6 +80,7 @@ document.getElementById('jmpa-lightbox').addEventListener('touchend', function(e
       </div>
     {{ end }}
     <div class="art-card-body">
+      <div class="art-card-tag">Original · Handmade</div>
       <div class="art-card-title">{{ .title }}</div>
       {{ with .medium }}<div class="art-card-medium">{{ . }}</div>{{ end }}
       <div class="art-card-price">{{ .price }}</div>
@@ -93,6 +95,7 @@ document.getElementById('jmpa-lightbox').addEventListener('touchend', function(e
     </div>
   </div>
   {{ end }}
+  </div>
 </div>
 </div>
 

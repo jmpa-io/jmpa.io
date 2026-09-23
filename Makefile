@@ -101,7 +101,7 @@ serve: dist/public
 	@docker run --rm \
 		-w /app \
 		-v "$(PWD):/app" \
-		-p "1313:1313" \
+		-p "1314:1313" \
 		$(REPO)/hugo \
 		server --disableFastRender
 

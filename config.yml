@@ -22,7 +22,7 @@ menu:
       url: /art
       weight: 1
 
-    - name: About Me
+    - name: About
       url: /about
       weight: 2
 
@@ -30,7 +30,7 @@ menu:
       url: /commissions
       weight: 3
 
-    - name: Shipping & Returns
+    - name: Shipping
       url: /shipping
       weight: 4
 
