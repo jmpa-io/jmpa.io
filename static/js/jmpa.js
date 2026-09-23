@@ -156,8 +156,35 @@
     items.forEach(function (item) { window.open(item.link, '_blank'); });
   };
 
+  // ── Inventory (live sold status from Lambda) ───────────
+  var INVENTORY_URL = window.JMPA_INVENTORY_URL || '';
+
+  function syncInventory() {
+    if (!INVENTORY_URL) return;
+    // Only run on pages that have art cards.
+    if (!document.querySelector('.art-card')) return;
+    fetch(INVENTORY_URL)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var sold = data.sold || [];
+        sold.forEach(function (artId) {
+          // Find the card whose add-to-cart button carries this id.
+          var btn = document.querySelector('.art-add-cart-btn[onclick*="\'' + artId + '\'"]');
+          if (!btn) return;
+          var badge = document.createElement('div');
+          badge.className = 'art-sold-badge';
+          badge.textContent = 'Sold';
+          btn.replaceWith(badge);
+        });
+      })
+      .catch(function () {
+        // Silently ignore — static fallback (sold: true in art.yml) is still shown.
+      });
+  }
+
   // ── Init ───────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
+    syncInventory();
     cartUpdateCount();
     cartRender();
 

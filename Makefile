@@ -6,6 +6,13 @@ endif
 
 AWS_REGION ?= ap-southeast-2
 
+# Square credentials — pulled from SSM. Set SQUARE_SANDBOX=false for production.
+SQUARE_ACCESS_TOKEN ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/square/access-token --with-decryption --query 'Parameter.Value' --output text)
+SQUARE_SANDBOX      ?= true
+
+export SQUARE_ACCESS_TOKEN
+export SQUARE_SANDBOX
+
 # ---
 
 # The param prefix is the beginning of a path in AWS SSM Parameter Store that
@@ -37,6 +44,7 @@ pull-config:
 # Services.
 # Deployed manually: cert
 SERVICE_GROUP_1 = website
+SERVICE_GROUP_2 = inventory
 
 # Targets.
 cert: ## Deploys the 'cert' stack.
@@ -48,6 +56,19 @@ website: ## Deploys the 'website' stack.
 website: ADDITIONAL_PARAMETER_OVERRIDES="AcmCertificateArn=$(CERT_ARN) "
 website: ADDITIONAL_PARAMETER_OVERRIDES+="HostedZoneId=$(HOSTED_ZONE_ID) "
 website: deploy-website
+
+inventory: ## Deploys the 'inventory' stack.
+inventory: binary-go-inventory bootstrap-inventory
+inventory: deploy-inventory
+
+invoke-inventory: ## Invokes the inventory Lambda locally via aws-sam-cli.
+invoke-inventory: binary-go-inventory bootstrap-inventory
+	@cmd/inventory/local.sh
+
+update-square-inventory: ## Creates Square payment links for all unsold paintings and writes them back to data/art.yml.
+update-square-inventory: binary-go-update-square-inventory
+	@ART_YML=data/art.yml \
+	dist/update-square-inventory/update-square-inventory-$(OS)-$(ARCH)
 
 upload: ## Uploads generated website content to AWS S3. Be careful with this command!
 upload:
