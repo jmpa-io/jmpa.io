@@ -13,8 +13,8 @@
         <a href="{{ .URL }}" {{ if or (eq $permalink .URL) (and (ne .URL "/") (hasPrefix $permalink .URL)) }}class="active"{{ end }}>{{ .Name }}</a>
       {{ end }}
     </div>
-    <div class="jmpa-palette-wrap">
-      <button class="jmpa-palette-trigger" id="jmpa-palette-trigger" aria-label="Colour theme" title="Colour theme">
+    <div class="jmpa-palette-wrap" data-tip="Colour">
+      <button class="jmpa-palette-trigger" id="jmpa-palette-trigger" aria-label="Colour theme">
         <svg width="13" height="13" viewBox="0 0 13 13"><circle cx="6.5" cy="6.5" r="5" fill="var(--muted)"/></svg>
       </button>
       <div class="jmpa-palette-popup" id="jmpa-palette-popup">
@@ -28,8 +28,8 @@
         <button class="jmpa-palette-btn" data-palette=""       title="Default"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#1c1a17"/></svg></button>
       </div>
     </div>
-    <button class="jmpa-theme-btn" id="theme-toggle" aria-label="Toggle theme"></button>
-    <button class="jmpa-cart-btn" onclick="toggleCart()" aria-label="Cart">
+    <button class="jmpa-theme-btn" id="theme-toggle" aria-label="Toggle theme" data-tip="Theme"></button>
+    <button class="jmpa-cart-btn" onclick="toggleCart()" aria-label="Cart" data-tip="Cart">
       <span id="cart-icon"></span><span class="jmpa-cart-count" id="cart-count">0</span>
     </button>
   </div>
