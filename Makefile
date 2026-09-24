@@ -67,6 +67,26 @@ invoke-inventory: ## Invokes the inventory Lambda locally via aws-sam-cli.
 invoke-inventory: square-access-token binary-go-inventory bootstrap-inventory
 	@cmd/inventory/local.sh
 
+run-inventory-local: ## Runs the inventory HTTP server locally on :8787 (set SQUARE_ACCESS_TOKEN first).
+run-inventory-local:
+	@go run ./cmd/inventory-local/
+
+start-inventory-local: ## Starts the inventory Lambda locally via SAM on port 8787 (set SQUARE_ACCESS_TOKEN first).
+start-inventory-local: binary-go-inventory bootstrap-inventory
+	@ENV_FILE=$$(mktemp /tmp/jmpa-inventory-env.XXXXXX.json); \
+	jq -n \
+	  --arg token "$$SQUARE_ACCESS_TOKEN" \
+	  --arg sandbox "$${SQUARE_SANDBOX:-true}" \
+	  '{"InventoryFunction":{"SQUARE_ACCESS_TOKEN":$$token,"SQUARE_SANDBOX":$$sandbox,"LOG_LEVEL":"debug"}}' \
+	  > "$$ENV_FILE"; \
+	sam local start-api \
+	  --template cf/inventory/template.yml \
+	  --env-vars "$$ENV_FILE" \
+	  --port 8787 \
+	  --parameter-overrides \
+	    "Environment=local Organization=jmpa-io Repository=jmpa.io Project=jmpa Component=inventory Revision=local SquareSandbox=$${SQUARE_SANDBOX:-true}"; \
+	rm -f "$$ENV_FILE"
+
 update-square-inventory: ## Creates Square payment links for all unsold paintings and writes them back to data/art.yml.
 update-square-inventory: square-access-token binary-go-update-square-inventory
 	@ART_YML=data/art.yml \
