@@ -7,8 +7,7 @@ Params:
   logo: https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
   favicon: ./favicon.ico
   description: "jmpa.io - art store and portfolio by Jordan Cleal"
-  # inventoryUrl: "" # Set to the deployed API Gateway URL once inventory Lambda is deployed.
-  # e.g. inventoryUrl: "https://abc123.execute-api.ap-southeast-2.amazonaws.com/prod/inventory"
+  inventoryUrl: "http://localhost:8787/inventory"
   images:
     - >-
       https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
