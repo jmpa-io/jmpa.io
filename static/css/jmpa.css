@@ -110,27 +110,31 @@ body {
   pointer-events: none;
   will-change: transform;
   z-index: 0;
-  filter: blur(120px);
-  background: var(--accent-glow);
-  transition: background 0.4s;
-  opacity: 0.45;
+  filter: blur(100px);
+  opacity: 1;
 }
 .jmpa-blob-a {
-  width: 40vw; height: 40vw;
-  top: -10%; left: -10%;
-  animation: blob-a 5s ease-in-out infinite;
+  width: 45vw; height: 45vw;
+  top: -5%; left: -8%;
+  background: rgba(220, 140, 90, 0.18);
+  animation: blob-a 9s ease-in-out infinite;
 }
 .jmpa-blob-b {
-  width: 32vw; height: 32vw;
-  bottom: -12%; right: -8%;
-  animation: blob-b 7s ease-in-out infinite;
+  width: 36vw; height: 36vw;
+  bottom: -10%; right: -6%;
+  background: rgba(160, 120, 200, 0.13);
+  animation: blob-b 12s ease-in-out infinite;
 }
 .jmpa-blob-c {
-  width: 24vw; height: 24vw;
-  top: 40%; left: 55%;
-  animation: blob-c 9s ease-in-out infinite;
-  filter: blur(140px);
+  width: 28vw; height: 28vw;
+  top: 35%; left: 52%;
+  background: rgba(200, 170, 80, 0.12);
+  animation: blob-c 15s ease-in-out infinite;
+  filter: blur(120px);
 }
+html.dark .jmpa-blob-a { background: rgba(180, 90, 50, 0.18); }
+html.dark .jmpa-blob-b { background: rgba(100, 60, 160, 0.18); }
+html.dark .jmpa-blob-c { background: rgba(160, 120, 30, 0.14); }
 
 /* everything sits above the blobs */
 .jmpa-nav,
@@ -194,25 +198,38 @@ html.dark .jmpa-nav-logo:hover { color: #fff; }
   display: flex;
   gap: 4px;
   flex: 1;
+  padding-left: 20px;
 }
 .jmpa-nav-links a {
-  font-size: 0.88em;
+  font-size: 0.82em;
   color: var(--muted);
   padding: 4px 10px;
   border-radius: 4px;
-  transition: color 0.1s;
+  border: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
   font-weight: 400;
 }
-.jmpa-nav-links a:hover { color: var(--accent); border-bottom: none; }
-.jmpa-nav-links a.active { color: var(--accent); font-weight: 500; }
+.jmpa-nav-links a:hover {
+  color: var(--text);
+  border-color: var(--border);
+  background: var(--bg-sub);
+}
+.jmpa-nav-links a.active {
+  color: var(--text);
+  font-weight: 500;
+  border-color: var(--subtle);
+  background: var(--bg-sub);
+}
+html.dark .jmpa-nav-links a:hover { border-color: #484848; background: var(--bg-sub); }
+html.dark .jmpa-nav-links a.active { border-color: #707070; background: var(--bg-sub); }
 
 /* theme toggle */
 .jmpa-theme-btn {
   background: none;
   border: 1px solid var(--border);
   color: var(--muted);
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 4px;
   cursor: pointer;
   display: inline-flex;
@@ -235,12 +252,12 @@ html.dark .jmpa-theme-btn:hover {
 .jmpa-theme-btn svg { width: 14px; height: 14px; }
 
 /* nav button tooltips */
-.jmpa-palette-wrap,
+.jmpa-palette-trigger,
 .jmpa-theme-btn,
 .jmpa-cart-btn {
   position: relative;
 }
-.jmpa-palette-wrap::after,
+.jmpa-palette-trigger::after,
 .jmpa-theme-btn::after,
 .jmpa-cart-btn::after {
   content: attr(data-tip);
@@ -260,10 +277,15 @@ html.dark .jmpa-theme-btn:hover {
   transition: opacity 0.12s;
   z-index: 400;
 }
-.jmpa-palette-wrap:hover::after,
+.jmpa-palette-trigger:hover::after,
 .jmpa-theme-btn:hover::after,
 .jmpa-cart-btn:hover::after {
   opacity: 1;
+}
+/* hide palette tooltip when popup is open */
+.jmpa-palette-popup.open ~ * .jmpa-palette-trigger::after,
+.jmpa-palette-wrap:has(.jmpa-palette-popup.open) .jmpa-palette-trigger::after {
+  opacity: 0 !important;
 }
 
 /* cart button */
@@ -271,8 +293,8 @@ html.dark .jmpa-theme-btn:hover {
   background: none;
   border: 1px solid var(--border);
   color: var(--muted);
-  height: 32px;
-  padding: 0 12px;
+  height: 28px;
+  padding: 0 10px;
   border-radius: 4px;
   cursor: pointer;
   display: inline-flex;
@@ -308,8 +330,8 @@ html.dark .jmpa-cart-count { color: #c8c8c8; }
   background: none;
   border: 1px solid var(--border);
   color: var(--muted);
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 4px;
   cursor: pointer;
   display: inline-flex;
@@ -717,8 +739,9 @@ html.dark .art-card-price { color: #f0ebe4; }
   padding: 14px 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 20px;
 }
+.jmpa-footer-inner span { flex: 1; }
 .jmpa-footer a { color: var(--muted); }
 .jmpa-footer a:hover { color: var(--accent); }
 
