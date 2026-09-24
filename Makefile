@@ -6,13 +6,33 @@ endif
 
 AWS_REGION ?= ap-southeast-2
 
-SQUARE_SANDBOX ?= true
+# ---
+
+# environment.
+# Valid values: local, dev, prod.
+# Defaults to local if not set.
+ENVIRONMENT ?= local
+
+ifeq ($(ENVIRONMENT),local)
+  SQUARE_SANDBOX        ?= true
+  HUGO_PARAMS_INVENTORYURL ?= http://localhost:8788/inventory
+else ifeq ($(ENVIRONMENT),dev)
+  SQUARE_SANDBOX        ?= true
+  HUGO_PARAMS_INVENTORYURL ?=
+else ifeq ($(ENVIRONMENT),prod)
+  SQUARE_SANDBOX        ?= false
+  HUGO_PARAMS_INVENTORYURL ?=
+else
+  $(error ENVIRONMENT must be one of: local, dev, prod)
+endif
+
 export SQUARE_SANDBOX
+export HUGO_PARAMS_INVENTORYURL
 
 # ---
 
 # The param prefix is the beginning of a path in AWS SSM Parameter Store that
-# points to config for this website.
+# points to config for this service.
 ifeq ($(ENVIRONMENT),prod)
 PARAM_PREFIX ?= $(REPO)
 else
@@ -32,6 +52,12 @@ cert-arn:
 square-access-token:
 	$(eval SQUARE_ACCESS_TOKEN ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/square/access-token --with-decryption --query 'Parameter.Value' --output text))
 	$(eval export SQUARE_ACCESS_TOKEN)
+
+inventory-url:
+ifneq ($(ENVIRONMENT),local)
+	$(eval HUGO_PARAMS_INVENTORYURL := $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/inventory/url --query 'Parameter.Value' --output text))
+	$(eval export HUGO_PARAMS_INVENTORYURL)
+endif
 
 pull-config: ## Prints the config pulled from AWS.
 pull-config: hosted-zone-id upload-bucket cert-arn
@@ -67,26 +93,6 @@ invoke-inventory: ## Invokes the inventory Lambda locally via aws-sam-cli.
 invoke-inventory: square-access-token binary-go-inventory bootstrap-inventory
 	@cmd/inventory/local.sh
 
-run-inventory-local: ## Runs the inventory HTTP server locally on :8787 (set SQUARE_ACCESS_TOKEN first).
-run-inventory-local:
-	@go run ./cmd/inventory-local/
-
-start-inventory-local: ## Starts the inventory Lambda locally via SAM on port 8787 (set SQUARE_ACCESS_TOKEN first).
-start-inventory-local: binary-go-inventory bootstrap-inventory
-	@ENV_FILE=$$(mktemp /tmp/jmpa-inventory-env.XXXXXX.json); \
-	jq -n \
-	  --arg token "$$SQUARE_ACCESS_TOKEN" \
-	  --arg sandbox "$${SQUARE_SANDBOX:-true}" \
-	  '{"InventoryFunction":{"SQUARE_ACCESS_TOKEN":$$token,"SQUARE_SANDBOX":$$sandbox,"LOG_LEVEL":"debug"}}' \
-	  > "$$ENV_FILE"; \
-	sam local start-api \
-	  --template cf/inventory/template.yml \
-	  --env-vars "$$ENV_FILE" \
-	  --port 8787 \
-	  --parameter-overrides \
-	    "Environment=local Organization=jmpa-io Repository=jmpa.io Project=jmpa Component=inventory Revision=local SquareSandbox=$${SQUARE_SANDBOX:-true}"; \
-	rm -f "$$ENV_FILE"
-
 update-square-inventory: ## Creates Square payment links for all unsold paintings and writes them back to data/art.yml.
 update-square-inventory: square-access-token binary-go-update-square-inventory
 	@ART_YML=data/art.yml \
@@ -103,7 +109,7 @@ generate-website: \
 	compile-website
 
 compile-website: ## Compiles the 'jmpa.io' website, using hugo.
-compile-website: cmd/hugo image-hugo
+compile-website: cmd/hugo image-hugo inventory-url
 compile-website: dist/public
 	@test -z "$(CI)" || echo "##[group]Compiling website."
 	docker run --rm \
@@ -111,17 +117,24 @@ compile-website: dist/public
 		-v "$(PWD):/app" \
 		-v "$(PWD)/public" \
 		-v "$(PWD)/resources" \
+		-e HUGO_PARAMS_INVENTORYURL \
 		$(REPO)/hugo \
 		--log --destination $<
 	@test -z "$(CI)" || echo "##[endgroup]"
 
+start-inventory-local: ## Starts the local inventory server in the background (reads data/art.yml).
+	@pkill -f "inventory-local" 2>/dev/null || true
+	@go run ./cmd/inventory-local/ &
+	@echo "inventory-local started on :8788"
+
 serve: ## Serves this website locally, mounted inside a Docker container.
-serve: cmd/hugo image-hugo
+serve: cmd/hugo image-hugo start-inventory-local
 serve: dist/public
 	@docker run --rm \
 		-w /app \
 		-v "$(PWD):/app" \
 		-p "1314:1313" \
+		-e HUGO_PARAMS_INVENTORYURL \
 		$(REPO)/hugo \
 		server --disableFastRender
 

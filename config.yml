@@ -7,7 +7,6 @@ Params:
   logo: https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
   favicon: ./favicon.ico
   description: "jmpa.io - art store and portfolio by Jordan Cleal"
-  inventoryUrl: "http://localhost:8787/inventory"
   images:
     - >-
       https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
