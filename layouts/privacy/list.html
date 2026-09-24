@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+{{- partial "head.html" . -}}
+{{- partial "jmpa-head.html" . -}}
+<body>
+{{- partial "jmpa-nav.html" . -}}
+{{- partial "jmpa-cart.html" . -}}
+
+<div class="jmpa-content-gradient">
+<div class="page">
+
+  <div class="page-header">
+    <p class="page-eyebrow">Legal</p>
+    <h1>Privacy.</h1>
+    <p class="page-lead">How jmpa.io handles your information. Short version: very little is collected and none of it is sold.</p>
+  </div>
+
+  <div class="page-section">
+    <h2>What we collect</h2>
+    <p>If you make a purchase or enquiry, we collect the information you provide — name, email, and shipping address. This is used only to fulfil your order or respond to your message.</p>
+    <p>We don't run analytics, tracking pixels, or third-party ad scripts. No cookies are set by this site beyond what's needed for the shopping cart (stored locally in your browser).</p>
+  </div>
+
+  <div class="page-section">
+    <h2>Payments</h2>
+    <p>Payments are processed by <a href="https://squareup.com/au/en/legal/general/privacy" target="_blank" rel="noopener noreferrer">Square</a>. Your card details go directly to Square — jmpa.io never sees or stores them. Square's privacy policy governs how they handle that data.</p>
+  </div>
+
+  <div class="page-section">
+    <h2>Email</h2>
+    <p>If you email us at support@jmpa.io, we keep that correspondence to handle your query. We don't add you to any mailing list.</p>
+  </div>
+
+  <div class="page-section">
+    <h2>Sharing</h2>
+    <p>We don't sell, trade, or share your personal information with third parties, except where required to fulfil an order (e.g. providing a shipping address to Australia Post).</p>
+  </div>
+
+  <div class="page-section">
+    <h2>Your rights</h2>
+    <p>You can request to see, correct, or delete any personal information we hold about you. Email us and we'll respond promptly.</p>
+    <a class="page-cta" href="mailto:support@jmpa.io">support@jmpa.io</a>
+  </div>
+
+  <div class="page-section">
+    <h2>Changes</h2>
+    <p>If this policy changes materially, we'll update this page. Last updated {{ now.Format "January 2006" }}.</p>
+  </div>
+
+</div>
+</div>
+
+{{- partial "jmpa-footer.html" . -}}
+</body>
+</html>
