@@ -34,6 +34,16 @@ func New(accessToken string, sandbox bool) *Client {
 	}
 }
 
+// NewWithBaseURL returns a Square client pointed at a custom base URL.
+// Intended for tests — point it at an httptest.Server instead of Square.
+func NewWithBaseURL(accessToken, baseURL string) *Client {
+	return &Client{
+		accessToken: accessToken,
+		baseURL:     baseURL,
+		http:        &http.Client{Timeout: 10 * time.Second},
+	}
+}
+
 func (c *Client) do(ctx context.Context, method, path string, body io.Reader) (*http.Response, error) {
 	req, err := http.NewRequestWithContext(ctx, method, c.baseURL+path, body)
 	if err != nil {

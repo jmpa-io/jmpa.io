@@ -180,7 +180,7 @@ html.dark ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
   align-items: center;
   gap: 8px;
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 700;
   color: #000;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -189,7 +189,7 @@ html.dark ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 .jmpa-nav-logo:hover { color: #000; }
 html.dark .jmpa-nav-logo { color: #fff; }
 html.dark .jmpa-nav-logo:hover { color: #fff; }
-.jmpa-brand-tld { font-weight: 400; color: var(--muted); }
+.jmpa-brand-tld { color: inherit; }
 .jmpa-nav-links {
   display: flex;
   gap: 4px;
