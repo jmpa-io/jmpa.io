@@ -111,10 +111,10 @@ func (c *Client) ListCatalogItems(ctx context.Context) ([]CatalogItem, []Catalog
 		if err != nil {
 			return nil, nil, fmt.Errorf("list catalog: %w", err)
 		}
-		defer resp.Body.Close()
-
 		var r listCatalogResponse
-		if err := json.NewDecoder(resp.Body).Decode(&r); err != nil {
+		err = json.NewDecoder(resp.Body).Decode(&r)
+		resp.Body.Close()
+		if err != nil {
 			return nil, nil, fmt.Errorf("decode catalog: %w", err)
 		}
 		if len(r.Errors) > 0 {
@@ -191,10 +191,10 @@ func (c *Client) BatchRetrieveInventoryCounts(ctx context.Context, variationIDs 
 		if err != nil {
 			return nil, fmt.Errorf("batch retrieve inventory: %w", err)
 		}
-		defer resp.Body.Close()
-
 		var r inventoryCountsResponse
-		if err := json.NewDecoder(resp.Body).Decode(&r); err != nil {
+		err = json.NewDecoder(resp.Body).Decode(&r)
+		resp.Body.Close()
+		if err != nil {
 			return nil, fmt.Errorf("decode inventory: %w", err)
 		}
 		if len(r.Errors) > 0 {
