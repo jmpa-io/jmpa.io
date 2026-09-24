@@ -5,13 +5,11 @@ theme: jmpa
 
 Params:
   logo: https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
-  favicon: ./favicon.ico
+  favicon: /favicon.ico
   description: "jmpa.io - art store and portfolio by Jordan Cleal"
   images:
     - >-
       https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
-  custom_css:
-    - css/style.css
 
 # menu.
 menu:

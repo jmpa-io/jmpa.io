@@ -28,37 +28,6 @@
 
   applyPalette(localStorage.getItem(PALETTE_KEY));
 
-  var SEASONS = ['spring', 'summer', 'autumn', 'winter', 'yellow', 'grey', 'purple'];
-
-  // ── Season ─────────────────────────────────────────────
-  var SEASON_KEY = 'jmpa-season';
-
-  function applySeason(season) {
-    SEASONS.forEach(function (s) {
-      document.documentElement.classList.remove(s);
-    });
-    if (season && SEASONS.indexOf(season) !== -1) {
-      document.documentElement.classList.add(season);
-    }
-    document.querySelectorAll('.jmpa-season-btn').forEach(function (btn) {
-      btn.classList.toggle('active', btn.dataset.season === season);
-    });
-  }
-
-  function setSeason(season) {
-    var current = localStorage.getItem(SEASON_KEY);
-    if (current === season) {
-      localStorage.removeItem(SEASON_KEY);
-      applySeason(null);
-    } else {
-      localStorage.setItem(SEASON_KEY, season);
-      applySeason(season);
-    }
-  }
-
-  // apply saved season immediately (before DOMContentLoaded to avoid flash)
-  applySeason(localStorage.getItem(SEASON_KEY));
-
   // ── Theme ──────────────────────────────────────────────
   var THEME_KEY = 'jmpa-theme';
 
@@ -180,7 +149,10 @@
   window.cartCheckout = function () {
     var items = cartLoad();
     if (!items.length) return;
-    items.forEach(function (item) { window.open(item.link, '_blank'); });
+    // Open each Square link sequentially — browsers block concurrent window.open() calls
+    items.forEach(function (item, i) {
+      setTimeout(function () { window.open(item.link, '_blank'); }, i * 300);
+    });
   };
 
   // ── Inventory (live sold status from Lambda) ───────────
@@ -244,32 +216,6 @@
 
     var currentTheme = localStorage.getItem(THEME_KEY) || 'light';
     setThemeIcon(currentTheme);
-
-    // season popup
-    var seasonTrigger = document.getElementById('season-trigger');
-    var seasonPopup   = document.getElementById('season-popup');
-
-    if (seasonTrigger && seasonPopup) {
-      seasonTrigger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        seasonPopup.classList.toggle('open');
-      });
-      document.addEventListener('click', function (e) {
-        if (!seasonPopup.contains(e.target) && e.target !== seasonTrigger) {
-          seasonPopup.classList.remove('open');
-        }
-      });
-    }
-
-    document.querySelectorAll('.jmpa-season-btn').forEach(function (btn) {
-      var s = btn.dataset.season;
-      btn.classList.toggle('active', s === localStorage.getItem(SEASON_KEY));
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        setSeason(s);
-        if (seasonPopup) seasonPopup.classList.remove('open');
-      });
-    });
 
     if (window.feather) {
       var cartIcon = document.getElementById('cart-icon');
