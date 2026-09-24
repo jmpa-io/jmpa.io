@@ -62,6 +62,8 @@ document.getElementById('jmpa-lightbox').addEventListener('touchend', function(e
     {{ $imgs := slice }}
     {{ if .images }}
       {{ range .images }}{{ $imgs = $imgs | append . }}{{ end }}
+    {{ else if .image }}
+      {{ $imgs = $imgs | append .image }}
     {{ else if .thumbnail }}
       {{ $imgs = $imgs | append .thumbnail }}
     {{ end }}

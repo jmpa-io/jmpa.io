@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+{{- partial "head.html" . -}}
+{{- partial "jmpa-head.html" . -}}
+<body>
+{{- partial "jmpa-nav.html" . -}}
+{{- partial "jmpa-cart.html" . -}}
+
+<div class="jmpa-content-gradient">
+<div class="page">
+
+  <div class="page-header">
+    <p class="page-eyebrow">404</p>
+    <h1>Nothing here.</h1>
+    <p class="page-lead">That page doesn't exist. It may have moved or never existed at all.</p>
+  </div>
+
+  <div class="page-section">
+    <div class="page-links">
+      <a href="/" class="page-link">Home</a>
+      <a href="/art" class="page-link">Gallery</a>
+      <a href="/commissions" class="page-link">Commissions</a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+{{- partial "jmpa-footer.html" . -}}
+</body>
+</html>

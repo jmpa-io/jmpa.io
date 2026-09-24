@@ -7,10 +7,17 @@
 {{- partial "jmpa-cart.html" . -}}
 
 <div class="jmpa-content-gradient">
-<div class="static-page">
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  <a class="static-cta" href="/">Return home</a>
+<div class="page">
+  <div class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<p class="page-lead">{{ . }}</p>{{ end }}
+  </div>
+  <div class="page-section">
+    <div class="page-links">
+      <a href="/" class="page-link">Return home</a>
+      <a href="/art" class="page-link">Browse the gallery</a>
+    </div>
+  </div>
 </div>
 </div>
 
