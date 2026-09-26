@@ -251,18 +251,16 @@ html.dark .jmpa-theme-btn:hover {
 }
 .jmpa-theme-btn svg { width: 14px; height: 14px; }
 
-/* nav button tooltips */
-.jmpa-palette-trigger,
+/* nav button tooltips — theme and cart only, not palette (has its own popup) */
 .jmpa-theme-btn,
 .jmpa-cart-btn {
   position: relative;
 }
-.jmpa-palette-trigger::after,
 .jmpa-theme-btn::after,
 .jmpa-cart-btn::after {
   content: attr(data-tip);
   position: absolute;
-  bottom: calc(100% + 7px);
+  top: calc(100% + 7px);
   left: 50%;
   transform: translateX(-50%);
   background: var(--text);
@@ -275,17 +273,11 @@ html.dark .jmpa-theme-btn:hover {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.12s;
-  z-index: 400;
+  z-index: 150;
 }
-.jmpa-palette-trigger:hover::after,
 .jmpa-theme-btn:hover::after,
 .jmpa-cart-btn:hover::after {
   opacity: 1;
-}
-/* hide palette tooltip when popup is open */
-.jmpa-palette-popup.open ~ * .jmpa-palette-trigger::after,
-.jmpa-palette-wrap:has(.jmpa-palette-popup.open) .jmpa-palette-trigger::after {
-  opacity: 0 !important;
 }
 
 /* cart button */
@@ -360,7 +352,7 @@ html.dark .jmpa-palette-trigger:hover {
   gap: 6px;
   flex-direction: row;
   box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-  z-index: 300;
+  z-index: 500;
   white-space: nowrap;
 }
 .jmpa-palette-popup.open { display: flex; }
