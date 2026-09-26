@@ -181,6 +181,27 @@
       });
   }
 
+  // ── Cycling display fonts ──────────────────────────────
+  var DISPLAY_FONTS = [
+    "'Playfair Display', Georgia, serif",
+    "'DM Serif Display', Georgia, serif",
+    "'Cormorant Garamond', Georgia, serif",
+    "'Fraunces', Georgia, serif",
+  ];
+  var fontIdx = 0;
+
+  function cycleHeadingFonts() {
+    fontIdx = (fontIdx + 1) % DISPLAY_FONTS.length;
+    var font = DISPLAY_FONTS[fontIdx];
+    document.querySelectorAll(
+      '.jmpa-hero h1, .page-header h1, .about-bio h1, .art-grid-header h1'
+    ).forEach(function (el) {
+      el.style.fontFamily = font;
+    });
+  }
+
+  setInterval(cycleHeadingFonts, 500);
+
   // ── Init ───────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     syncInventory();
