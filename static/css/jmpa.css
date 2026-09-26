@@ -34,7 +34,10 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   --accent-glow: rgba(28,26,23,0.04);
   --red:      #c03030;
   --font:     'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-display:   'Playfair Display', Georgia, serif;
+  --font-display-2: 'DM Serif Display', Georgia, serif;
+  --font-display-3: 'Cormorant Garamond', Georgia, serif;
+  --font-display-4: 'Fraunces', Georgia, serif;
   --shadow:   0 2px 12px rgba(0,0,0,0.06);
   --shadow-hover: 0 8px 28px rgba(0,0,0,0.11);
   --radius:   10px;
@@ -55,20 +58,20 @@ html.dark {
 }
 
 /* ── Palette themes ── */
-html.ocean  { --accent: #0e8fd8; --accent-glow: rgba(14,143,216,0.06); }
-html.forest { --accent: #1ea832; --accent-glow: rgba(30,168,50,0.06); }
-html.sunset { --accent: #e84820; --accent-glow: rgba(232,72,32,0.06); }
-html.violet { --accent: #6030d0; --accent-glow: rgba(96,48,208,0.06); }
-html.yellow { --accent: #c09000; --accent-glow: rgba(192,144,0,0.06); }
-html.grey   { --accent: #607090; --accent-glow: rgba(96,112,144,0.06); }
-html.purple { --accent: #d01880; --accent-glow: rgba(208,24,128,0.06); }
-html.dark.ocean  { --accent: #38b8f8; --accent-glow: rgba(56,184,248,0.10); }
-html.dark.forest { --accent: #38d848; --accent-glow: rgba(56,216,72,0.10); }
-html.dark.sunset { --accent: #ff6840; --accent-glow: rgba(255,104,64,0.10); }
-html.dark.violet { --accent: #9060f8; --accent-glow: rgba(144,96,248,0.10); }
-html.dark.yellow { --accent: #f0c820; --accent-glow: rgba(240,200,32,0.10); }
-html.dark.grey   { --accent: #90a8c8; --accent-glow: rgba(144,168,200,0.10); }
-html.dark.purple { --accent: #f840a8; --accent-glow: rgba(248,64,168,0.10); }
+html.ocean  { --accent: #0e8fd8; --accent-glow: rgba(14,143,216,0.06);  --accent-bg: rgba(14,143,216,0.10); }
+html.forest { --accent: #1ea832; --accent-glow: rgba(30,168,50,0.06);   --accent-bg: rgba(30,168,50,0.10); }
+html.sunset { --accent: #e84820; --accent-glow: rgba(232,72,32,0.06);   --accent-bg: rgba(232,72,32,0.10); }
+html.violet { --accent: #6030d0; --accent-glow: rgba(96,48,208,0.06);   --accent-bg: rgba(96,48,208,0.10); }
+html.yellow { --accent: #c09000; --accent-glow: rgba(192,144,0,0.06);   --accent-bg: rgba(192,144,0,0.10); }
+html.grey   { --accent: #607090; --accent-glow: rgba(96,112,144,0.06);  --accent-bg: rgba(96,112,144,0.10); }
+html.purple { --accent: #d01880; --accent-glow: rgba(208,24,128,0.06);  --accent-bg: rgba(208,24,128,0.10); }
+html.dark.ocean  { --accent: #38b8f8; --accent-glow: rgba(56,184,248,0.10);  --accent-bg: rgba(56,184,248,0.12); }
+html.dark.forest { --accent: #38d848; --accent-glow: rgba(56,216,72,0.10);   --accent-bg: rgba(56,216,72,0.12); }
+html.dark.sunset { --accent: #ff6840; --accent-glow: rgba(255,104,64,0.10);  --accent-bg: rgba(255,104,64,0.12); }
+html.dark.violet { --accent: #9060f8; --accent-glow: rgba(144,96,248,0.10);  --accent-bg: rgba(144,96,248,0.12); }
+html.dark.yellow { --accent: #f0c820; --accent-glow: rgba(240,200,32,0.10);  --accent-bg: rgba(240,200,32,0.12); }
+html.dark.grey   { --accent: #90a8c8; --accent-glow: rgba(144,168,200,0.10); --accent-bg: rgba(144,168,200,0.12); }
+html.dark.purple { --accent: #f840a8; --accent-glow: rgba(248,64,168,0.10);  --accent-bg: rgba(248,64,168,0.12); }
 
 @keyframes blob-a {
   0%   { transform: translate(0,    0)    scale(1); }
@@ -212,16 +215,16 @@ html.dark .jmpa-nav-logo:hover { color: #fff; }
 .jmpa-nav-links a:hover {
   color: var(--text);
   border-color: var(--border);
-  background: var(--bg-sub);
+  background: var(--accent-bg, var(--bg-sub));
 }
 .jmpa-nav-links a.active {
-  color: var(--text);
+  color: var(--accent);
   font-weight: 500;
-  border-color: var(--subtle);
-  background: var(--bg-sub);
+  border-color: var(--accent);
+  background: var(--accent-bg, var(--bg-sub));
 }
 html.dark .jmpa-nav-links a:hover { border-color: #484848; background: var(--bg-sub); }
-html.dark .jmpa-nav-links a.active { border-color: #707070; background: var(--bg-sub); }
+html.dark .jmpa-nav-links a.active { border-color: var(--accent); background: var(--accent-bg, var(--bg-sub)); }
 
 /* theme toggle */
 .jmpa-theme-btn {
@@ -330,6 +333,25 @@ html.dark .jmpa-cart-count { color: #c8c8c8; }
   align-items: center;
   justify-content: center;
   transition: border-color 0.15s, background 0.15s;
+}
+html.ocean .jmpa-palette-trigger,
+html.forest .jmpa-palette-trigger,
+html.sunset .jmpa-palette-trigger,
+html.violet .jmpa-palette-trigger,
+html.yellow .jmpa-palette-trigger,
+html.grey .jmpa-palette-trigger,
+html.purple .jmpa-palette-trigger {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+html.ocean .jmpa-palette-trigger circle,
+html.forest .jmpa-palette-trigger circle,
+html.sunset .jmpa-palette-trigger circle,
+html.violet .jmpa-palette-trigger circle,
+html.yellow .jmpa-palette-trigger circle,
+html.grey .jmpa-palette-trigger circle,
+html.purple .jmpa-palette-trigger circle {
+  fill: var(--accent);
 }
 .jmpa-palette-trigger:hover {
   border-color: var(--subtle);
@@ -508,7 +530,7 @@ html.dark .jmpa-checkout-btn { color: var(--bg); }
   margin: 0 0 24px;
 }
 .jmpa-hero h1 {
-  font-family: var(--font-display);
+  font-family: var(--font-display-4);
   font-size: 3.6em;
   font-weight: 400;
   line-height: 1.1;
@@ -759,7 +781,7 @@ html.dark .art-card-price { color: #f0ebe4; }
   margin: 0 0 16px;
 }
 .page-header h1 {
-  font-family: var(--font-display);
+  font-family: var(--font-display-2);
   font-size: 2.4em;
   font-weight: 400;
   line-height: 1.15;
@@ -867,7 +889,7 @@ html.dark .page-cta { color: var(--bg); }
   margin-top: 4px;
 }
 .about-bio h1 {
-  font-family: var(--font-display);
+  font-family: var(--font-display-3);
   font-size: 2em;
   font-weight: 400;
   line-height: 1.2;
