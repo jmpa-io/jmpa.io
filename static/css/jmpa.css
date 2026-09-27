@@ -796,7 +796,8 @@ html.dark .jmpa-footer {
 .jmpa-footer-right {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
+  flex: 1;
+  gap: 8px 16px;
   justify-content: flex-end;
   align-items: center;
 }
