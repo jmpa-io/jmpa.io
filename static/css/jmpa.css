@@ -576,7 +576,9 @@ html.dark .jmpa-hero h1 { color: #f0ebe4; }
 html.dark .jmpa-hero-cta { color: #f0ebe4; border-color: #f0ebe4; }
 .jmpa-hero-cta-icon { display: inline-flex; align-items: center; gap: 6px; }
 .jmpa-hero-cta-ghost {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.9em;
   font-weight: 400;
   color: var(--muted);
