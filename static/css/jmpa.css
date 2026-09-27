@@ -564,7 +564,9 @@ html.dark .jmpa-hero h1 { color: #f0ebe4; }
   flex-wrap: wrap;
 }
 .jmpa-hero-cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.9em;
   font-weight: 500;
   color: var(--text);
