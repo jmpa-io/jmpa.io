@@ -91,12 +91,8 @@ html.dark.purple { --accent: #f840a8; --accent-glow: rgba(248,64,168,0.10);  --a
   100% { transform: translate(0,    0)    scale(1); }
 }
 
-html {
-  background: var(--bg);
-  transition: background 0.4s;
-}
 body {
-  background: transparent;
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font);
   font-size: 17px;
@@ -105,7 +101,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: color 0.2s;
+  transition: background 0.4s, color 0.2s;
   position: relative;
   overflow-x: hidden;
 }
@@ -578,6 +574,7 @@ html.dark .jmpa-hero h1 { color: #f0ebe4; }
 }
 .jmpa-hero-cta:hover { opacity: 0.5; }
 html.dark .jmpa-hero-cta { color: #f0ebe4; border-color: #f0ebe4; }
+.jmpa-hero-cta-icon { display: inline-flex; align-items: center; gap: 6px; }
 .jmpa-hero-cta-ghost {
   display: inline-block;
   font-size: 0.9em;
@@ -759,20 +756,65 @@ html.dark .art-card-price { color: #f0ebe4; }
 /* ── Footer ── */
 .jmpa-footer {
   color: var(--muted);
-  font-size: 0.76em;
-  background: transparent;
+  font-size: 0.78em;
+  background: rgba(0, 0, 0, 0.18);
+  margin-top: auto;
+}
+html.dark .jmpa-footer {
+  background: rgba(0, 0, 0, 0.25);
 }
 .jmpa-footer-inner {
   max-width: 800px;
   margin: 0 auto;
-  padding: 14px 24px;
+  padding: 32px 24px 16px;
   display: flex;
-  align-items: center;
-  gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
 }
-.jmpa-footer-inner span { flex: 1; }
-.jmpa-footer a { color: var(--muted); }
-.jmpa-footer a:hover { color: var(--accent); }
+.jmpa-footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.jmpa-footer-brand {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.jmpa-footer-tagline {
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 220px;
+}
+.jmpa-footer-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.jmpa-footer-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text);
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.jmpa-footer-instagram:hover { color: var(--accent); }
+.jmpa-footer-link { color: var(--muted); transition: color 0.15s; }
+.jmpa-footer-link:hover { color: var(--accent); }
+.jmpa-footer-link-icon { display: inline-flex; align-items: center; gap: 5px; }
+.jmpa-footer-bottom {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px 20px;
+  color: var(--muted);
+  opacity: 0.6;
+  font-size: 0.9em;
+}
 
 /* ── Page container — all inner pages ── */
 .page {
@@ -864,6 +906,7 @@ html.dark .page-section li { color: #c0bab0; }
 }
 .page-cta:hover { opacity: 0.85; }
 html.dark .page-cta { color: var(--bg); }
+.page-cta-icon { display: inline-flex; align-items: center; gap: 7px; }
 
 /* ── Page inline links ── */
 .page-links {
@@ -875,14 +918,20 @@ html.dark .page-cta { color: var(--bg); }
 .page-link {
   font-size: 0.82em;
   color: var(--muted);
+  background: var(--bg-card);
   border: 1px solid var(--border);
   padding: 7px 16px;
   border-radius: 4px;
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 .page-link:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+.page-link-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 /* ── About profile ── */
