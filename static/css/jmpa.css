@@ -1041,15 +1041,87 @@ html.dark .art-grid-header h1 { color: #f0ebe4; }
   .jmpa-nav-links a { font-size: 0.78em; }
 }
 
+/* ── Hamburger button ── */
+.jmpa-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.jmpa-hamburger span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--muted);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.jmpa-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.jmpa-hamburger.open span:nth-child(2) { opacity: 0; }
+.jmpa-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile menu drawer ── */
+.jmpa-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 52px;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 998;
+  padding: 12px 24px 16px;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.jmpa-mobile-menu.open { display: flex; }
+.jmpa-mobile-menu a {
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: color 0.15s, background 0.15s;
+}
+.jmpa-mobile-menu a:hover { color: var(--text); background: var(--bg-sub); }
+.jmpa-mobile-menu a.active { color: var(--accent); background: var(--accent-bg, var(--bg-sub)); border-color: var(--accent); }
+
 @media (max-width: 640px) {
   .art-cards { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .jmpa-nav-links { display: none; }
+  .jmpa-hamburger { display: flex; }
   .jmpa-cart-drawer { width: 100vw; }
   .about-profile { flex-direction: column; gap: 20px; }
   .about-photo { width: 88px; height: 88px; }
   .page-header h1, .about-bio h1, .art-grid-header h1 { font-size: 1.9em; }
+
+  /* footer: stack vertically on mobile */
+  .jmpa-footer-inner { flex-direction: column; gap: 20px; align-items: flex-start; }
+  .jmpa-footer-right { justify-content: flex-start; }
+  .jmpa-footer-bottom { flex-direction: row; }
 }
 
 @media (max-width: 400px) {
   .art-cards { grid-template-columns: 1fr; }
+}
+
+/* ── Back to top — more visible ── */
+.jmpa-back-to-top {
+  border-color: #555 !important;
+  color: #999 !important;
+}
+.jmpa-back-to-top:hover {
+  border-color: #aaa !important;
+  color: #eee !important;
 }
