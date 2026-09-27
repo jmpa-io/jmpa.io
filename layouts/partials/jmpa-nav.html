@@ -29,9 +29,18 @@
         <button class="jmpa-palette-btn" data-palette=""       title="Default"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#1c1a17"/></svg></button>
       </div>
     </div>
+    <button class="jmpa-hamburger" id="jmpa-hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <button class="jmpa-theme-btn" id="theme-toggle" aria-label="Toggle theme" data-tip="Theme"></button>
     <button class="jmpa-cart-btn" onclick="toggleCart()" aria-label="Cart" data-tip="Cart">
       <span id="cart-icon"></span><span class="jmpa-cart-count" id="cart-count">0</span>
     </button>
   </div>
 </nav>
+<div class="jmpa-mobile-menu" id="jmpa-mobile-menu" aria-hidden="true">
+  {{ $permalink := .RelPermalink }}
+  {{ range .Site.Menus.main }}
+    <a href="{{ .URL }}" {{ if or (eq $permalink .URL) (and (ne .URL "/") (hasPrefix $permalink .URL)) }}class="active"{{ end }}>{{ .Name }}</a>
+  {{ end }}
+</div>
