@@ -202,6 +202,28 @@
 
   setInterval(cycleHeadingFonts, 500);
 
+  // ── Hamburger ──────────────────────────────────────────
+  function initHamburger() {
+    var btn  = document.getElementById('jmpa-hamburger');
+    var menu = document.getElementById('jmpa-mobile-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function () {
+      var open = menu.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+    });
+    // close on nav link tap
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', false);
+        menu.setAttribute('aria-hidden', true);
+      });
+    });
+  }
+
   // ── Init ───────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     syncInventory();
@@ -231,6 +253,8 @@
         if (palettePopup) palettePopup.classList.remove('open');
       });
     });
+
+    initHamburger();
 
     var themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
