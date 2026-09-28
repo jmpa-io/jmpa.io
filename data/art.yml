@@ -1,6 +1,6 @@
 - id: "art-001"
   title: "Morning Fog Over the Estuary"
-  description: "Soft diffused light filters through early-morning mist, dissolving the horizon between water and sky. Cool greys and muted blues shift through the fog, punctuated by the faint warm glow of a distant sunrise. A mood of quiet suspension — the world holding its breath."
+  description: "Soft diffused light filters through early-morning mist, dissolving the horizon between water and sky. Cool greys and muted blues shift through the fog, punctuated by the faint warm glow of a distant sunrise. A mood of quiet suspension  -  the world holding its breath."
   medium: "Watercolour on cold press"
   size: "21 × 15 cm"
   price: "$25 AUD"
@@ -13,7 +13,7 @@
 
 - id: "art-002"
   title: "Yarra Bend, Late Afternoon"
-  description: "Dappled amber light catches the surface of still river water, interrupted by the dark reflections of river red gums leaning overhead. The palette is warm — burnt sienna, raw umber, and a single sweep of cerulean where the sky opens through the canopy."
+  description: "Dappled amber light catches the surface of still river water, interrupted by the dark reflections of river red gums leaning overhead. The palette is warm  -  burnt sienna, raw umber, and a single sweep of cerulean where the sky opens through the canopy."
   medium: "Watercolour on cold press"
   size: "30 × 21 cm"
   price: "$40 AUD"
@@ -23,7 +23,7 @@
 
 - id: "art-003"
   title: "Loose Florals No. 1"
-  description: "Three stems loosely arranged — petals rendered in wet-on-wet washes of rose madder and cobalt violet, bleeding freely into one another. The composition is intentionally unfinished at the edges, letting the white of the paper breathe."
+  description: "Three stems loosely arranged  -  petals rendered in wet-on-wet washes of rose madder and cobalt violet, bleeding freely into one another. The composition is intentionally unfinished at the edges, letting the white of the paper breathe."
   medium: "Watercolour on hot press"
   size: "15 × 15 cm"
   price: "$20 AUD"
@@ -32,7 +32,7 @@
   sold: false
 
 - id: "art-004"
-  title: "Blue Hour — Brunswick"
+  title: "Blue Hour  -  Brunswick"
   description: "A narrow laneway caught just after dusk, when the sky holds its last deep indigo and the streetlights begin to warm the wet pavement. The mood is quiet and urban, rendered with a limited palette of Prussian blue, yellow ochre, and neutral tint."
   medium: "Ink and watercolour on cold press"
   size: "21 × 30 cm"
@@ -53,7 +53,7 @@
 
 - id: "art-006"
   title: "City Rooftops, Overcast"
-  description: "Looking east across a grid of low rooftops under a low, featureless sky. Chimneys, water tanks, and TV aerials punctuate the line. A deliberately cool, restrained palette — titanium white, paynes grey, and a single warm accent in a distant window."
+  description: "Looking east across a grid of low rooftops under a low, featureless sky. Chimneys, water tanks, and TV aerials punctuate the line. A deliberately cool, restrained palette  -  titanium white, paynes grey, and a single warm accent in a distant window."
   medium: "Gouache on toned paper"
   size: "30 × 20 cm"
   price: "$45 AUD"
@@ -62,8 +62,8 @@
   sold: false
 
 - id: "art-007"
-  title: "Still Life — Ceramic Cup"
-  description: "A simple white cup on a worn timber surface, lit from the left by a single window. The interest lies in the shadow — a long cool shape that anchors the composition and gives weight to what is otherwise a very quiet scene."
+  title: "Still Life  -  Ceramic Cup"
+  description: "A simple white cup on a worn timber surface, lit from the left by a single window. The interest lies in the shadow  -  a long cool shape that anchors the composition and gives weight to what is otherwise a very quiet scene."
   medium: "Watercolour on hot press"
   size: "15 × 15 cm"
   price: "$15 AUD"
@@ -72,8 +72,8 @@
   sold: false
 
 - id: "art-008"
-  title: "Rain Study — Melbourne"
-  description: "A street scene dissolved by heavy rain — figures, trams, and storefronts reduced to smears of reflected light on wet asphalt. Painted quickly with a large brush and minimal detail, relying on the granulating quality of raw umber to suggest movement."
+  title: "Rain Study  -  Melbourne"
+  description: "A street scene dissolved by heavy rain  -  figures, trams, and storefronts reduced to smears of reflected light on wet asphalt. Painted quickly with a large brush and minimal detail, relying on the granulating quality of raw umber to suggest movement."
   medium: "Watercolour on cold press"
   size: "21 × 15 cm"
   price: "$25 AUD"
@@ -83,7 +83,7 @@
 
 - id: "art-009"
   title: "Loose Florals No. 2"
-  description: "A second study in the same loose floral series — this time leaning into warmer tones. Cadmium orange and quinacridone magenta bloom outward from wet centres, pulling the eye through a barely-resolved arrangement of petals and stems."
+  description: "A second study in the same loose floral series  -  this time leaning into warmer tones. Cadmium orange and quinacridone magenta bloom outward from wet centres, pulling the eye through a barely-resolved arrangement of petals and stems."
   medium: "Watercolour on cold press"
   size: "15 × 15 cm"
   price: "$20 AUD"
@@ -93,7 +93,7 @@
 
 - id: "art-010"
   title: "Dusk Over the Bay"
-  description: "The sky above Port Phillip Bay at dusk — horizontal bands of coral, violet, and deep teal compressed into the lower third of the composition. A single dark headland anchors the left edge. Everything else is colour and light."
+  description: "The sky above Port Phillip Bay at dusk  -  horizontal bands of coral, violet, and deep teal compressed into the lower third of the composition. A single dark headland anchors the left edge. Everything else is colour and light."
   medium: "Gouache on toned paper"
   size: "30 × 20 cm"
   price: "$50 AUD"
@@ -102,7 +102,7 @@
   sold: false
 
 - id: "art-011"
-  title: "Quick Sketch — River Red Gum"
+  title: "Quick Sketch  -  River Red Gum"
   description: "A ten-minute field sketch of a lone red gum beside a dried creek bed, captured with diluted ink and a broad brush. The directness of the mark-making gives the piece an energy that longer studies sometimes lose."
   medium: "Ink on cold press"
   size: "21 × 15 cm"
@@ -113,7 +113,7 @@
 
 - id: "art-012"
   title: "Study in Burnt Sienna No. 3"
-  description: "A near-monochromatic exercise in one of the most versatile earth pigments — layers of transparent burnt sienna building depth and warmth across a simple landscape form. The third in an ongoing series exploring limited-palette restrictions."
+  description: "A near-monochromatic exercise in one of the most versatile earth pigments  -  layers of transparent burnt sienna building depth and warmth across a simple landscape form. The third in an ongoing series exploring limited-palette restrictions."
   medium: "Watercolour on hot press"
   size: "21 × 15 cm"
   price: "$20 AUD"
@@ -122,7 +122,7 @@
   sold: false
 
 - id: "art-013"
-  title: "Harbour Sketch — Williamstown"
+  title: "Harbour Sketch  -  Williamstown"
   description: "Working boats moored at low tide, hulls resting in dark reflective mud. The composition is anchored by strong tonal contrast between the shadowed hulls and the bright, overexposed sky, painted in a single pale wash."
   medium: "Ink and watercolour on cold press"
   size: "30 × 21 cm"
@@ -132,8 +132,8 @@
   sold: false
 
 - id: "art-014"
-  title: "Green Wash — Healesville"
-  description: "Tree ferns and mountain ash rendered as intersecting planes of green — viridian, sap green, and chromium oxide sitting in wet layers against a warm ground. Painted in the Dandenong Ranges on a humid summer afternoon."
+  title: "Green Wash  -  Healesville"
+  description: "Tree ferns and mountain ash rendered as intersecting planes of green  -  viridian, sap green, and chromium oxide sitting in wet layers against a warm ground. Painted in the Dandenong Ranges on a humid summer afternoon."
   medium: "Watercolour on watercolour block"
   size: "21 × 21 cm"
   price: "$30 AUD"
@@ -143,7 +143,7 @@
 
 - id: "art-015"
   title: "Loose Florals No. 3"
-  description: "The third floral study leans into cool purples and soft whites — lavender, dioxazine violet, and bleed-softened edges that give the blooms an almost dreamlike quality. The stems are suggested rather than drawn."
+  description: "The third floral study leans into cool purples and soft whites  -  lavender, dioxazine violet, and bleed-softened edges that give the blooms an almost dreamlike quality. The stems are suggested rather than drawn."
   medium: "Watercolour on cold press"
   size: "15 × 15 cm"
   price: "$20 AUD"
@@ -152,8 +152,8 @@
   sold: false
 
 - id: "art-016"
-  title: "Lunchtime Study — Federation Square"
-  description: "A fast observational study made on location during a lunch break — figures passing across the stone forecourt under harsh midday sun. Cast shadows become the real subject, sharp and decisive across pale warm stone."
+  title: "Lunchtime Study  -  Federation Square"
+  description: "A fast observational study made on location during a lunch break  -  figures passing across the stone forecourt under harsh midday sun. Cast shadows become the real subject, sharp and decisive across pale warm stone."
   medium: "Gouache on toned paper"
   size: "21 × 15 cm"
   price: "$30 AUD"
@@ -162,8 +162,8 @@
   sold: false
 
 - id: "art-017"
-  title: "Warm Grey Wash — Studio Study"
-  description: "A quiet interior study using a palette restricted to warm greys and a single accent of yellow ochre. The subject is an ordinary studio corner — a wooden chair, a shelf, afternoon light through a blind — made interesting by the restraint of colour."
+  title: "Warm Grey Wash  -  Studio Study"
+  description: "A quiet interior study using a palette restricted to warm greys and a single accent of yellow ochre. The subject is an ordinary studio corner  -  a wooden chair, a shelf, afternoon light through a blind  -  made interesting by the restraint of colour."
   medium: "Watercolour on cold press"
   size: "21 × 15 cm"
   price: "$20 AUD"
@@ -172,8 +172,8 @@
   sold: false
 
 - id: "art-018"
-  title: "Birch Study — Winter Light"
-  description: "White birch trunks in winter, stripped bare, their pale forms crossing in front of a pale sky. The challenge was making the white trunks visible without outlining them — solved through careful negative painting in the background wash."
+  title: "Birch Study  -  Winter Light"
+  description: "White birch trunks in winter, stripped bare, their pale forms crossing in front of a pale sky. The challenge was making the white trunks visible without outlining them  -  solved through careful negative painting in the background wash."
   medium: "Watercolour on watercolour block"
   size: "30 × 21 cm"
   price: "$45 AUD"
@@ -182,8 +182,8 @@
   sold: false
 
 - id: "art-019"
-  title: "Abstract — Coral and Rose"
-  description: "A non-representational piece exploring the tension between coral pink, deep rose, and soft neutral grounds. Shapes are formed by masking fluid reserves and layered transparent washes, with no intention of depicting anything — only colour relationships."
+  title: "Abstract  -  Coral and Rose"
+  description: "A non-representational piece exploring the tension between coral pink, deep rose, and soft neutral grounds. Shapes are formed by masking fluid reserves and layered transparent washes, with no intention of depicting anything  -  only colour relationships."
   medium: "Watercolour on hot press"
   size: "21 × 21 cm"
   price: "$35 AUD"
@@ -192,8 +192,8 @@
   sold: false
 
 - id: "art-020"
-  title: "Twilight Study — Ocean Road"
-  description: "The last light of the day over the Great Ocean Road coast — a narrow band of warm salmon fading upward into a deep cobalt, with the dark cliffs reduced to a silhouette. Painted from memory the morning after, while the colour still felt vivid."
+  title: "Twilight Study  -  Ocean Road"
+  description: "The last light of the day over the Great Ocean Road coast  -  a narrow band of warm salmon fading upward into a deep cobalt, with the dark cliffs reduced to a silhouette. Painted from memory the morning after, while the colour still felt vivid."
   medium: "Gouache on toned paper"
   size: "30 × 20 cm"
   price: "$80 AUD"
