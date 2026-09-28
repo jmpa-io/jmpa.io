@@ -44,12 +44,12 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 }
 
 html.dark {
-  --bg:       #141210;
-  --bg-sub:   #1e1a17;
-  --bg-card:  #1e1a17;
-  --border:   #2e2820;
-  --text:     #f0ebe4;
-  --muted:    #7a7060;
+  --bg:       #1e1b18;
+  --bg-sub:   #272320;
+  --bg-card:  #272320;
+  --border:   #3a342c;
+  --text:     #f5f0ea;
+  --muted:    #9a8e80;
   --subtle:   #a09080;
   --accent:   #f0ebe4;
   --accent-glow: rgba(240,235,228,0.05);
@@ -519,7 +519,7 @@ html.dark .jmpa-checkout-btn { color: var(--bg); }
 .jmpa-content-gradient {
   background: transparent;
   padding: 0;
-  flex: 1;
+  min-height: 100vh;
 }
 
 /* ── Homepage ── */
