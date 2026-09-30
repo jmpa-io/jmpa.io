@@ -1,0 +1,60 @@
+baseURL: https://jmpa.io
+languageCode: en-us
+title: jmpa.io
+theme: jmpa
+
+Params:
+  logo: https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
+  favicon: ./favicon.ico
+  description: "jmpa.io — art store and portfolio by Jordan Cleal"
+  images:
+    - >-
+      https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
+  custom_css:
+    - css/style.css
+
+# menu.
+menu:
+  main:
+    - name: Art
+      url: /art
+      weight: 1
+
+    - name: About Me
+      url: /about
+      weight: 2
+
+    - name: Commissions
+      url: /commissions
+      weight: 3
+
+    - name: Shipping & Returns
+      url: /shipping
+      weight: 4
+
+  social:
+    - name: GitHub
+      url: https://github.com/jmpa-io
+      weight: 1
+
+    - name: Email
+      url: mailto:support@jmpa.io
+      weight: 2
+
+# syntax highlighting.
+markup:
+  highlight:
+    style: dracula
+  goldmark:
+    renderer:
+      unsafe: true
+
+# setup 404s.
+# https://moonbooth.com/hugo/custom-404/
+redirects:
+  - from: /*
+    to: /404/
+    status: 404
+
+# remove s's in titles.
+pluralizeListTitles: false
