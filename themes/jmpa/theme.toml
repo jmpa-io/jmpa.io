@@ -1,0 +1,12 @@
+name = "jmpa"
+license = "MIT"
+description = "Custom Hugo theme for jmpa.io — art portfolio and store"
+homepage = "https://github.com/jmpa-io/jmpa.io"
+tags = ["Hugo", "theme", "art", "portfolio", "store"]
+features = ["dark", "minimal", "responsive", "shopping cart"]
+min_version = "0.82.1"
+
+[author]
+  name = "Jordan Cleal"
+  homepage = "https://jmpa.io"
+

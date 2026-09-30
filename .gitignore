@@ -1,0 +1,22 @@
+# ignore general files.
+.DS_Store
+
+# ignore test files.
+out
+test.sh
+
+# ignore log files.
+super-linter.log
+
+# ignore folders generated via CI/CD.
+/depot
+/bin/[0-9][0-9]-*.sh
+/cf/[0-9][0-9]-*.yml
+/.github/templates/[0-9][0-9]-*
+
+# ignore generated files.
+/resources
+/public/*
+!/public/.gitkeep
+/.hugo_build.lock
+*.pdf

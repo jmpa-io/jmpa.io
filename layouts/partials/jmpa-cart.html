@@ -1,0 +1,18 @@
+<div class="jmpa-cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="jmpa-cart-drawer" id="cart-drawer">
+  <div class="jmpa-cart-header">
+    <h2>Cart</h2>
+    <button class="jmpa-cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="jmpa-cart-items" id="cart-items">
+    <p class="jmpa-cart-empty">Your cart is empty.</p>
+  </div>
+  <div class="jmpa-cart-footer">
+    <div class="jmpa-cart-total">
+      <span>Total</span>
+      <span id="cart-total-amount">$0</span>
+    </div>
+    <button class="jmpa-checkout-btn" onclick="cartCheckout()">Checkout via Square →</button>
+    <p class="jmpa-checkout-note">Each item opens its own Square payment link.</p>
+  </div>
+</div>

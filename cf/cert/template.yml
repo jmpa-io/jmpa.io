@@ -1,0 +1,43 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: The cert configuration for 'jmpa.io'.
+
+Parameters:
+  Environment:
+    Description: The environment used when deploying this service.
+    Type: String
+    AllowedValues: ["prod"] # Only allowing this environment for this stack.
+
+  Domain:
+    Description: The domain registered.
+    Type: String
+
+  HostedZoneId:
+    Description: The ID for the domain registered, via AWS Route53.
+    Type: String
+
+Conditions:
+  CreateResources: !And [
+    !Equals [ !Ref "AWS::Region", "us-east-1" ],
+    !Equals [ !Ref Environment, "prod" ]
+  ]
+
+Resources:
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Condition: CreateResources
+    Properties:
+      DomainName: !Ref Domain
+      SubjectAlternativeNames:
+        - !Sub "*.${Domain}"
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - DomainName: !Ref Domain
+          HostedZoneId: !Ref HostedZoneId
+
+  CertificateParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/certs/${Domain}/arn"
+      Type: String
+      Value: !Ref Certificate

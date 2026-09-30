@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+{{- partial "head.html" . -}}
+{{- partial "jmpa-head.html" . -}}
+<body>
+{{- partial "jmpa-nav.html" . -}}
+{{- partial "jmpa-cart.html" . -}}
+
+<div class="art-hero">
+  <h1>Art</h1>
+  <div class="art-divider"></div>
+  <p>Original watercolour paintings, made by hand.<br>Each piece is one of a kind. Payments via Square — receipt sent automatically.</p>
+</div>
+
+<div class="art-grid">
+  {{ range .Site.Data.art }}
+  <div class="art-card">
+    {{ if .image }}
+      <img class="art-card-img" src="{{ .image }}" alt="{{ .title }}" />
+    {{ else }}
+      <div class="art-card-img-placeholder">photo coming soon</div>
+    {{ end }}
+    <div class="art-card-body">
+      <div class="art-card-title">{{ .title }}</div>
+      {{ with .medium }}<div class="art-card-medium">{{ . }}</div>{{ end }}
+      <div class="art-card-price">{{ .price }}</div>
+      {{ if .sold }}
+        <span class="art-sold-badge">Sold</span>
+      {{ else }}
+        <a class="art-buy-btn" href="{{ .link }}" target="_blank" rel="noopener noreferrer">Buy now</a>
+        <button class="art-add-cart-btn"
+          onclick='cartAdd("{{ .id }}", "{{ .title }}", "{{ .price }}", "{{ .link }}")'>
+          + Add to cart
+        </button>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+<footer class="jmpa-footer">&copy; {{ now.Year }} jmpa.io</footer>
+</body>
+</html>
