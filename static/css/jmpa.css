@@ -759,19 +759,16 @@ html.dark .art-card-price { color: #f0ebe4; }
 
 /* ── Footer ── */
 .jmpa-footer {
+  background: var(--bg-sub);
+  border-top: 1px solid var(--border);
   color: var(--muted);
   font-size: 0.78em;
-  background: #2a2a2a;
-  color: #aaa;
   margin-top: auto;
-}
-html.dark .jmpa-footer {
-  background: #1a1a1a;
 }
 .jmpa-footer-inner {
   max-width: 800px;
   margin: 0 auto;
-  padding: 32px 24px 16px;
+  padding: 36px 24px 20px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -785,11 +782,11 @@ html.dark .jmpa-footer {
 .jmpa-footer-brand {
   font-size: 1.1em;
   font-weight: 700;
-  color: #e8e4de;
+  color: var(--text);
   letter-spacing: -0.01em;
 }
 .jmpa-footer-tagline {
-  color: #7a7670;
+  color: var(--muted);
   line-height: 1.5;
   max-width: 220px;
 }
@@ -797,7 +794,7 @@ html.dark .jmpa-footer {
   display: flex;
   flex-wrap: wrap;
   flex: 1;
-  gap: 8px 16px;
+  gap: 10px 20px;
   justify-content: flex-end;
   align-items: center;
 }
@@ -805,19 +802,21 @@ html.dark .jmpa-footer {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: #c8c4be;
+  color: var(--text);
   font-weight: 500;
-  transition: color 0.15s;
+  opacity: 0.85;
+  transition: color 0.15s, opacity 0.15s;
 }
-.jmpa-footer-instagram:hover { color: var(--accent); }
-.jmpa-footer-link { color: #8a8680; transition: color 0.15s; }
+.jmpa-footer-instagram:hover { color: var(--accent); opacity: 1; }
+.jmpa-footer-link { color: var(--muted); transition: color 0.15s; }
 .jmpa-footer-link:hover { color: var(--accent); }
 .jmpa-footer-link-icon { display: inline-flex; align-items: center; gap: 5px; }
 .jmpa-footer-bottom {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 24px 20px;
-  color: #5a5650;
+  padding: 14px 24px 22px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
   font-size: 0.9em;
   display: flex;
   align-items: center;
@@ -830,16 +829,16 @@ html.dark .jmpa-footer {
   width: 30px;
   height: 30px;
   border-radius: 4px;
-  border: 1px solid #444;
+  border: 1px solid var(--border);
   background: none;
-  color: #666;
+  color: var(--muted);
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 .jmpa-back-to-top:hover {
-  border-color: #888;
-  color: #bbb;
-  background: rgba(255,255,255,0.05);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
 }
 
 /* ── Page container — all inner pages ── */
