@@ -3,7 +3,6 @@ name: README.md
 on:
   push:
     paths:
-    - '.github/templates/*'
     - '.github/workflows/*'
     - 'img/*'
   workflow_dispatch:

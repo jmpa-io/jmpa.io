@@ -18,5 +18,9 @@ super-linter.log
 /resources
 /public/*
 !/public/.gitkeep
+/dist/public/
 /.hugo_build.lock
 *.pdf
+
+/dist/inventory/
+/inventory-local
