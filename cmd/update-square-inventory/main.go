@@ -34,7 +34,8 @@ type artEntry struct {
 	Medium      string   `yaml:"medium"`
 	Size        string   `yaml:"size"`
 	Price       string   `yaml:"price"`
-	Thumbnail   string   `yaml:"thumbnail"`
+	Thumbnail   string   `yaml:"thumbnail,omitempty"`
+	Image       string   `yaml:"image,omitempty"`
 	Images      []string `yaml:"images,omitempty"`
 	Link        string   `yaml:"link"`
 	Sold        bool     `yaml:"sold"`
