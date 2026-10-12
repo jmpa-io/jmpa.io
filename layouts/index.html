@@ -5,44 +5,23 @@
 <body>
 {{- partial "jmpa-nav.html" . -}}
 {{- partial "jmpa-cart.html" . -}}
+<div class="jmpa-content-gradient">
 
 <div class="jmpa-home">
-  <div class="jmpa-home-hero">
-    <h1>hi, i'm <span class="jmpa-brand-hero">jmpa</span>.</h1>
-    <p>I make things and sell them here. Watercolour paintings, and whatever else I'm working on.</p>
+
+  <div class="jmpa-hero">
+    <p class="jmpa-hero-eyebrow">Original watercolour paintings · Melbourne</p>
+    <h1>Art made by hand.</h1>
+    <p class="jmpa-hero-sub">Every piece is one of a kind. No prints, no editions - just paint on paper, available to own.</p>
+    <div class="jmpa-hero-actions">
+      <a href="/art" class="jmpa-hero-cta jmpa-hero-cta-icon">Browse the gallery <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="/commissions" class="jmpa-hero-cta-ghost jmpa-hero-cta-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>Commissions</a>
+    </div>
   </div>
 
-  <div class="jmpa-home-sections">
-    <a href="/art" class="jmpa-home-card">
-      <div class="jmpa-home-card-icon">🎨</div>
-      <h2>Art</h2>
-      <p>Original watercolour paintings. Each piece is handmade and one of a kind. Available to buy direct.</p>
-      <span class="jmpa-home-card-arrow">Browse gallery →</span>
-    </a>
-
-    <a href="/about" class="jmpa-home-card">
-      <div class="jmpa-home-card-icon">👋</div>
-      <h2>About Me</h2>
-      <p>Programmer based in Melbourne. I paint watercolours and sell originals here — no prints, no editions.</p>
-      <span class="jmpa-home-card-arrow">Read more →</span>
-    </a>
-
-    <a href="/commissions" class="jmpa-home-card">
-      <div class="jmpa-home-card-icon">✏️</div>
-      <h2>Commissions</h2>
-      <p>Want something custom? I take a limited number of commissions each year — locations, landscapes, pets.</p>
-      <span class="jmpa-home-card-arrow">Find out more →</span>
-    </a>
-
-    <a href="/shipping" class="jmpa-home-card">
-      <div class="jmpa-home-card-icon">📦</div>
-      <h2>Shipping & Returns</h2>
-      <p>All work ships from Melbourne. Flat rate domestic, international on request. Careful packaging guaranteed.</p>
-      <span class="jmpa-home-card-arrow">Details →</span>
-    </a>
-  </div>
+</div>
 </div>
 
-<footer class="jmpa-footer">&copy; {{ now.Year }} jmpa &mdash; <a href="https://jcleal.me" target="_blank" rel="noopener noreferrer">by Jordan Cleal</a></footer>
+{{- partial "jmpa-footer.html" . -}}
 </body>
 </html>

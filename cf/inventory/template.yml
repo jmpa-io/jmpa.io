@@ -1,0 +1,118 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: The inventory API for 'jmpa.io' - checks Square for sold paintings.
+
+Parameters:
+  Environment:
+    Description: The environment used when deploying this service.
+    Type: String
+
+  Organization:
+    Description: The organization this service belongs to.
+    Type: String
+
+  Repository:
+    Description: The repository this service belongs to.
+    Type: String
+
+  Project:
+    Description: The project this service belongs to.
+    Type: String
+
+  Component:
+    Description: The component name.
+    Type: String
+
+  Revision:
+    Description: The git revision of this deployment.
+    Type: String
+
+  SquareAccessTokenSsmParam:
+    Description: SSM parameter path for the Square access token.
+    Type: String
+    Default: /jmpa.io/square/access-token
+
+  SquareSandbox:
+    Description: Set to 'true' to use the Square sandbox.
+    Type: String
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+
+Conditions:
+  CreateResources: !Equals [ !Ref "AWS::Region", "ap-southeast-2" ]
+
+Resources:
+
+  InventoryFunction:
+    Type: AWS::Serverless::Function
+    Condition: CreateResources
+    Properties:
+      FunctionName: !Sub ${Organization}-inventory-${Environment}
+      Description: Returns sold painting IDs by querying Square inventory.
+      Runtime: provided.al2023
+      Architectures:
+        - arm64
+      Handler: bootstrap
+      CodeUri: ../../dist/inventory/
+      Timeout: 15
+      MemorySize: 128
+      Environment:
+        Variables:
+          LOG_LEVEL: info
+          SQUARE_ACCESS_TOKEN: !Sub "{{resolve:ssm:${SquareAccessTokenSsmParam}}}"
+          SQUARE_SANDBOX: !Ref SquareSandbox
+      Policies:
+        - SSMParameterReadPolicy:
+            ParameterName: !Select [1, !Split ["/", !Ref SquareAccessTokenSsmParam]]
+      Events:
+        GetInventory:
+          Type: HttpApi
+          Properties:
+            Path: /inventory
+            Method: GET
+            ApiId: !Ref InventoryApi
+        OptionsInventory:
+          Type: HttpApi
+          Properties:
+            Path: /inventory
+            Method: OPTIONS
+            ApiId: !Ref InventoryApi
+      Tags:
+        organization: !Ref Organization
+        repository: !Ref Repository
+        project: !Ref Project
+        component: !Ref Component
+        revision: !Ref Revision
+        environment: !Ref Environment
+
+  InventoryApi:
+    Type: AWS::Serverless::HttpApi
+    Condition: CreateResources
+    Properties:
+      StageName: !Ref Environment
+      CorsConfiguration:
+        AllowOrigins:
+          - "https://jmpa.io"
+          - "http://localhost:1313"
+        AllowMethods:
+          - GET
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+      Tags:
+        organization: !Ref Organization
+        repository: !Ref Repository
+        project: !Ref Project
+        component: !Ref Component
+        revision: !Ref Revision
+        environment: !Ref Environment
+
+Outputs:
+  InventoryApiUrl:
+    Description: The URL for the inventory API.
+    Value: !Sub "https://${InventoryApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/inventory"
+    Export:
+      Name: !Sub ${Organization}-inventory-api-url-${Environment}

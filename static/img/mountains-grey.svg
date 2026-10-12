@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice">
+
+  <!-- clouds -->
+  <path d="M110,90 C110,84 134,60 159,60 C185,60 177,69 177,69 C177,69 161,35 195,35 C229,35 211,67 211,67 C211,67 204,53 227,53 C251,53 280,84 280,90 Z" fill="white" fill-opacity="0.50"/>
+  <path d="M595,62 C595,56 624,26 656,26 C687,26 678,37 678,37 C678,37 658,-3 700,-3 C742,-3 720,35 720,35 C720,35 710,18 740,18 C769,18 805,56 805,62 Z" fill="white" fill-opacity="0.50"/>
+  <path d="M1078,90 C1078,84 1102,60 1128,60 C1154,60 1147,69 1147,69 C1147,69 1130,35 1165,35 C1200,35 1182,67 1182,67 C1182,67 1174,53 1198,53 C1223,53 1252,84 1252,90 Z" fill="white" fill-opacity="0.50"/>
+
+  <!-- distant range -->
+  <path fill="#8090a8" fill-opacity="0.20" d="M0,420 C100,350 150,200 250,180 C320,165 360,220 420,240 C480,260 520,190 600,160 C660,140 700,180 760,200 C820,220 860,150 940,130 C1000,115 1040,170 1100,200 C1160,230 1200,180 1280,200 C1340,215 1390,270 1440,300 L1440,600 L0,600 Z"/>
+
+  <!-- distant trees -->
+  <polygon points="127,199 123,210 130,210" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="132,202 130,210 134,210" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="250,172 248,180 252,180" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="435,216 432,229 438,229" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="446,218 443,228 448,228" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="626,150 624,157 628,157" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="634,144 631,156 637,156" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="790,186 787,195 792,195" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="795,181 792,193 798,193" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="957,115 954,128 961,128" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="965,117 961,129 968,129" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="1092,169 1088,182 1095,182" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="1100,177 1098,185 1102,185" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="1106,178 1104,185 1109,185" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="1239,185 1236,195 1242,195" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="1245,188 1243,196 1247,196" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="1376,232 1374,239 1378,239" fill="#7c8ba3" fill-opacity="0.20"/>
+  <polygon points="1381,230 1378,240 1383,240" fill="#7c8ba3" fill-opacity="0.20"/>
+
+  <!-- mid range -->
+  <path fill="#6878a0" fill-opacity="0.24" d="M0,460 C80,410 130,330 220,300 C290,275 330,320 400,300 C470,280 520,240 600,230 C670,220 720,270 800,260 C870,250 910,210 990,230 C1060,250 1100,290 1180,280 C1260,270 1320,310 1440,340 L1440,600 L0,600 Z"/>
+
+  <!-- mid trees -->
+  <polygon points="60,337 56,350 64,350" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="220,281 215,300 225,300" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="402,298 398,314 407,314" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="410,297 405,315 415,315" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="416,292 411,312 422,312" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="586,222 582,236 590,236" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="600,212 595,230 605,230" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="611,219 608,232 615,232" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="751,238 745,258 756,258" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="760,243 755,260 765,260" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="766,243 761,259 770,259" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="941,211 937,225 945,225" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="947,212 944,224 950,224" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="957,212 952,227 961,227" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="1095,250 1091,264 1098,264" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="1107,250 1103,266 1111,266" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="1199,261 1194,277 1203,277" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="1213,262 1208,280 1217,280" fill="#65759c" fill-opacity="0.24"/>
+  <polygon points="1390,308 1387,320 1393,320" fill="#65759c" fill-opacity="0.24"/>
+
+  <!-- near hills -->
+  <path fill="#506080" fill-opacity="0.28" d="M0,490 C100,470 200,430 320,420 C420,412 480,440 580,430 C680,420 730,450 840,440 C940,430 1000,460 1100,450 C1200,440 1300,470 1440,480 L1440,600 L0,600 Z"/>
+
+  <!-- near trees -->
+  <polygon points="29,451 22,475 36,475" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="47,449 41,474 54,474" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="115,447 111,464 120,464" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="130,442 125,462 135,462" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="140,435 133,461 147,461" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="226,421 218,451 234,451" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="239,427 233,448 245,448" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="341,396 333,424 349,424" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="361,394 353,423 369,423" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="473,403 465,431 481,431" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="492,405 485,432 499,432" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="608,404 602,428 615,428" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="634,411 629,429 639,429" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="736,414 729,439 743,439" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="751,419 745,440 757,440" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="881,409 873,438 889,438" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1004,417 997,445 1012,445" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1022,418 1015,445 1030,445" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1131,429 1126,448 1136,448" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1146,428 1140,448 1151,448" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1260,432 1253,459 1267,459" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1270,431 1262,460 1278,460" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1290,434 1282,462 1297,462" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1366,440 1358,470 1374,470" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1380,443 1372,472 1388,472" fill="#4b5a78" fill-opacity="0.28"/>
+  <polygon points="1388,455 1384,472 1393,472" fill="#4b5a78" fill-opacity="0.28"/>
+
+  <!-- rocks -->
+  <ellipse cx="130" cy="548" rx="26" ry="11" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="155" cy="553" rx="16" ry="8" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="115" cy="555" rx="12" ry="6" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="420" cy="542" rx="30" ry="12" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="450" cy="547" rx="18" ry="8" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="400" cy="549" rx="13" ry="6" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="720" cy="545" rx="22" ry="10" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="744" cy="550" rx="14" ry="7" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="980" cy="540" rx="32" ry="13" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="1010" cy="545" rx="19" ry="8" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="960" cy="547" rx="12" ry="6" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="1260" cy="546" rx="24" ry="10" fill="#182030" fill-opacity="0.62"/>
+  <ellipse cx="1284" cy="551" rx="15" ry="7" fill="#182030" fill-opacity="0.62"/>
+
+</svg>
