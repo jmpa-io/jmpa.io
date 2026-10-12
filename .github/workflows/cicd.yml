@@ -7,7 +7,10 @@ on:
     - 'bin/*'
     - 'cf/**'
     - 'cmd/**'
-    - 'templates/**'
+    - 'content/**'
+    - 'layouts/**'
+    - 'static/**'
+    - 'config.yml'
     - '**Dockerfile'
     - 'Makefile*'
   workflow_dispatch:
@@ -50,7 +53,9 @@ jobs:
 
   deploy:
     needs: [build-website]
-    uses: jmpa-io/pipelines/.github/workflows/40-deploy.yml@main
+    uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@main
+    with:
+      templates: website
     secrets:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}

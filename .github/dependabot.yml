@@ -8,7 +8,20 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     labels: ["dependencies", "github-actions"]
-    auto-merge: true
+
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    labels: ["dependencies", "go"]
+
+  - package-ecosystem: npm
+    directory: /themes/jmpa
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    labels: ["dependencies", "javascript"]
 
   - package-ecosystem: docker
     directory: /
@@ -16,4 +29,3 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     labels: ["dependencies", "docker"]
-    auto-merge: true
