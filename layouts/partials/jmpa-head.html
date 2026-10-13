@@ -2,14 +2,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Serif+Display&family=Cormorant+Garamond:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/jmpa.css" />
+<link rel="stylesheet" href="/css/palette.css" />
 <!-- prevent theme/palette flash -->
 <script>(function(){
-  var t=localStorage.getItem('jmpa-theme');
-  if(t==='dark')document.documentElement.classList.add('dark');
-  var p=localStorage.getItem('jmpa-palette');
-  var palettes=['ocean','forest','sunset','violet','yellow','grey','purple'];
+  var s=localStorage.getItem('scheme');
+  if(s==='dark')document.documentElement.classList.add('dark');
+  var p=localStorage.getItem('palette');
+  var palettes=['ocean','forest','sunset','violet','yellow','grey','purple','crimson','teal'];
   if(p&&palettes.indexOf(p)!==-1)document.documentElement.classList.add(p);
 })()</script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 {{ with .Site.Params.inventoryurl }}<script>window.JMPA_INVENTORY_URL = {{ . | jsonify }};</script>{{ end }}
+<script src="/js/palette.js"></script>
+<script>
+  Palette.init({
+    btnSelector: '.jmpa-palette-btn',
+    triggerId: 'jmpa-palette-trigger',
+    popupId: 'jmpa-palette-popup',
+    toggleId: 'theme-toggle',
+    onScheme: function (scheme, toggle) {
+      if (!toggle || typeof feather === 'undefined') return;
+      toggle.innerHTML = scheme === 'light' ? feather.icons.moon.toSvg() : feather.icons.sun.toSvg();
+    }
+  });
+</script>
 <script src="/js/jmpa.js" defer></script>
