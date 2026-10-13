@@ -20,6 +20,42 @@
   </div>
 
 </div>
+
+{{ $sold := where .Site.Data.art "sold" true }}
+{{ if gt (len $sold) 0 }}
+<div class="jmpa-sold-section">
+  <div class="jmpa-sold-top">
+    <div>
+      <p class="jmpa-sold-eyebrow">Sold</p>
+      <h2 class="jmpa-sold-heading">Recently sold.</h2>
+    </div>
+    <a href="/art" class="jmpa-hero-cta-ghost jmpa-hero-cta-icon">View the gallery <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+  </div>
+  <div class="art-cards jmpa-sold-cards">
+    {{ range last 3 $sold }}
+    <div class="art-card">
+      {{ $img := .image }}
+      {{ if not $img }}{{ with .images }}{{ $img = index . 0 }}{{ end }}{{ end }}
+      <div class="art-card-img-wrap">
+        {{ if $img }}
+          <img class="art-card-img" src="{{ $img }}" alt="{{ .title }}" />
+        {{ else }}
+          <div class="art-card-img-placeholder">photo coming soon</div>
+        {{ end }}
+      </div>
+      <div class="art-card-body">
+        <div class="art-card-tag">Original · Handmade</div>
+        <div class="art-card-title">{{ .title }}</div>
+        {{ with .medium }}<div class="art-card-medium">{{ . }}</div>{{ end }}
+        <div class="art-card-price">{{ .price }}</div>
+        <div class="art-sold-badge">Sold</div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
+
 </div>
 
 {{- partial "jmpa-footer.html" . -}}

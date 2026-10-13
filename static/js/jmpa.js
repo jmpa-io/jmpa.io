@@ -1,62 +1,5 @@
-// jmpa.io — theme toggle + palette + cart
+// jmpa.io — cart + fonts + hamburger (palette + theme handled by palette.js)
 (function () {
-
-  // ── Palette ────────────────────────────────────────────
-  var PALETTES = ['ocean', 'forest', 'sunset', 'violet', 'yellow', 'grey', 'purple'];
-  var PALETTE_KEY = 'jmpa-palette';
-
-  function applyPalette(palette) {
-    PALETTES.forEach(function (p) { document.documentElement.classList.remove(p); });
-    if (palette && PALETTES.indexOf(palette) !== -1) {
-      document.documentElement.classList.add(palette);
-    }
-    document.querySelectorAll('.jmpa-palette-btn').forEach(function (btn) {
-      btn.classList.toggle('active', btn.dataset.palette === (palette || ''));
-    });
-  }
-
-  function setPalette(palette) {
-    var current = localStorage.getItem(PALETTE_KEY);
-    if (current === palette) {
-      localStorage.removeItem(PALETTE_KEY);
-      applyPalette(null);
-    } else {
-      localStorage.setItem(PALETTE_KEY, palette);
-      applyPalette(palette);
-    }
-  }
-
-  applyPalette(localStorage.getItem(PALETTE_KEY));
-
-  // ── Theme ──────────────────────────────────────────────
-  var THEME_KEY = 'jmpa-theme';
-
-  function setThemeIcon(theme) {
-    var btn = document.getElementById('theme-toggle');
-    if (!btn || !window.feather) return;
-    btn.innerHTML = theme === 'light'
-      ? feather.icons.moon.toSvg()
-      : feather.icons.sun.toSvg();
-  }
-
-  function applyTheme(theme) {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    setThemeIcon(theme);
-  }
-
-  function toggleTheme() {
-    var isDark = document.documentElement.classList.contains('dark');
-    var next = isDark ? 'light' : 'dark';
-    localStorage.setItem(THEME_KEY, next);
-    applyTheme(next);
-  }
-
-  // apply saved theme immediately (before DOMContentLoaded to avoid flash)
-  applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 
   // ── Cart ───────────────────────────────────────────────
   var CART_KEY = 'jmpa-cart';
@@ -122,8 +65,6 @@
   }
 
   // ── Public API ─────────────────────────────────────────
-  window.toggleTheme = toggleTheme;
-
   window.toggleCart = function () {
     var drawer = document.getElementById('cart-drawer');
     if (drawer && drawer.classList.contains('open')) { cartClose(); } else { cartOpen(); }
@@ -229,38 +170,7 @@
     syncInventory();
     cartUpdateCount();
     cartRender();
-
-    // palette popup
-    var paletteTrigger = document.getElementById('jmpa-palette-trigger');
-    var palettePopup   = document.getElementById('jmpa-palette-popup');
-    if (paletteTrigger && palettePopup) {
-      paletteTrigger.addEventListener('click', function (e) {
-        e.stopPropagation();
-        palettePopup.classList.toggle('open');
-      });
-      document.addEventListener('click', function (e) {
-        if (!palettePopup.contains(e.target) && e.target !== paletteTrigger) {
-          palettePopup.classList.remove('open');
-        }
-      });
-    }
-    document.querySelectorAll('.jmpa-palette-btn').forEach(function (btn) {
-      var p = btn.dataset.palette;
-      btn.classList.toggle('active', (p || '') === (localStorage.getItem(PALETTE_KEY) || ''));
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        setPalette(p);
-        if (palettePopup) palettePopup.classList.remove('open');
-      });
-    });
-
     initHamburger();
-
-    var themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-
-    var currentTheme = localStorage.getItem(THEME_KEY) || 'light';
-    setThemeIcon(currentTheme);
 
     if (window.feather) {
       var cartIcon = document.getElementById('cart-icon');
