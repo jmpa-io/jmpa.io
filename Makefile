@@ -1,4 +1,9 @@
 
+# The deploy container mounts the repo at /go/src/app, so Makefile.common.mk's
+# `REPO = $(shell basename $(shell git rev-parse --show-toplevel))` would resolve to 'app' and
+# beat the REPO the pipeline passes in, making the SSM lookups below miss. Pin it.
+override REPO := jmpa.io
+
 # Default PROJECT, if not given by another Makefile.
 ifndef PROJECT
 PROJECT=jmpa.io
@@ -97,6 +102,10 @@ update-square-inventory: ## Creates Square payment links for all unsold painting
 update-square-inventory: square-access-token binary-go-update-square-inventory
 	@ART_YML=data/art.yml \
 	dist/update-square-inventory/update-square-inventory-$(OS)-$(ARCH)
+
+sync: ## Syncs the downloaded website artifact (dist/) to AWS S3; called by the 50-upload pipeline.
+sync: upload-bucket
+	aws s3 sync --delete dist/ s3://$(UPLOAD_BUCKET)/
 
 upload: ## Uploads generated website content to AWS S3. Be careful with this command!
 upload: upload-bucket
