@@ -72,8 +72,21 @@ jobs:
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       AWS_RUNNER_ROLE_NAME: ${{ secrets.AWS_RUNNER_ROLE_NAME }}
 
+  # Prove the dev copy serves a directory URL (the home page and a subpage) before anything else
+  # builds on it. CloudFront can lag a few seconds behind the stack update, so retry.
+  smoke-test:
+    needs: [upload-website]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the dev site.
+        run: |
+          for path in / /store/order-successful/; do
+            curl -fsS --retry 8 --retry-delay 15 --retry-all-errors -o /dev/null "https://dev.jmpa.io${path}"
+            echo "ok https://dev.jmpa.io${path}"
+          done
+
   post-to-slack:
-    needs: [lint, build-website, deploy, upload-website]
+    needs: [lint, build-website, deploy, upload-website, smoke-test]
     if: always()
     uses: jmpa-io/pipelines/.github/workflows/99-post-to-slack.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
     with:
