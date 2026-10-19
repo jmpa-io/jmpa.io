@@ -1,4 +1,9 @@
 
+# The deploy container mounts the repo at /go/src/app, so Makefile.common.mk's
+# `REPO = $(shell basename $(shell git rev-parse --show-toplevel))` would resolve to 'app' and
+# beat the REPO the pipeline passes in, making the SSM lookups below miss. Pin it.
+override REPO := jmpa.io
+
 # Default PROJECT, if not given by another Makefile.
 ifndef PROJECT
 PROJECT=jmpa.io
