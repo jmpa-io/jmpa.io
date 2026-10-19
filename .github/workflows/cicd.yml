@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   lint:
-    uses: jmpa-io/pipelines/.github/workflows/10-lint.yml@main
+    uses: jmpa-io/pipelines/.github/workflows/10-lint.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
     secrets:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
@@ -54,7 +54,7 @@ jobs:
 
   deploy:
     needs: [build-website]
-    uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@main
+    uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
     with:
       templates: website
     secrets:
@@ -64,7 +64,7 @@ jobs:
 
   upload-website:
     needs: [deploy]
-    uses: jmpa-io/pipelines/.github/workflows/50-upload-artifacts-to-s3.yml@main
+    uses: jmpa-io/pipelines/.github/workflows/50-upload-artifacts-to-s3.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
     with:
       artifact: jmpa.io
     secrets:
@@ -75,7 +75,7 @@ jobs:
   post-to-slack:
     needs: [lint, build-website, deploy, upload-website]
     if: always()
-    uses: jmpa-io/pipelines/.github/workflows/99-post-to-slack.yml@main
+    uses: jmpa-io/pipelines/.github/workflows/99-post-to-slack.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
     with:
       needs: ${{ toJSON(needs) }}
     secrets:
