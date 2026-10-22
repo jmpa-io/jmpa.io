@@ -52,7 +52,7 @@ upload-bucket:
 	$(eval UPLOAD_BUCKET ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/bucket --query 'Parameter.Value' --output text))
 
 cert-arn:
-	$(eval CERT_ARN ?= $(shell aws ssm get-parameter --region us-east-1 --name /certs/$(REPO)/arn --query 'Parameter.Value' --output text))
+	$(eval CERT_ARN ?= $(shell aws ssm get-parameter --region us-east-1 --name /certs/$(PARAM_PREFIX)/arn --query 'Parameter.Value' --output text))
 
 square-access-token:
 	$(eval SQUARE_ACCESS_TOKEN ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/square/access-token --with-decryption --query 'Parameter.Value' --output text))
