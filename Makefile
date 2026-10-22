@@ -48,6 +48,11 @@ endif
 hosted-zone-id:
 	$(eval HOSTED_ZONE_ID ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/hosted-zone/id --query 'Parameter.Value' --output text))
 
+# The live bucket predates the /<site>/bucket SSM param, so name it directly for prod.
+ifeq ($(ENVIRONMENT),prod)
+UPLOAD_BUCKET ?= $(REPO)
+endif
+
 upload-bucket:
 	$(eval UPLOAD_BUCKET ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/bucket --query 'Parameter.Value' --output text))
 
@@ -106,6 +111,12 @@ update-square-inventory: square-access-token binary-go-update-square-inventory
 sync: ## Syncs the downloaded website artifact (dist/) to AWS S3; called by the 50-upload pipeline.
 sync: upload-bucket
 	aws s3 sync --delete dist/ s3://$(UPLOAD_BUCKET)/
+ifeq ($(ENVIRONMENT),prod)
+	@# The live site sits behind CloudFront; drop its cached copies so visitors get the new content.
+	id="$$(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[?@=='$(PARAM_PREFIX)']].Id | [0]" --output text)"; \
+	test -n "$$id" -a "$$id" != None || { echo "no CloudFront distribution has the alias $(PARAM_PREFIX)"; exit 1; }; \
+	aws cloudfront create-invalidation --distribution-id "$$id" --paths '/*'
+endif
 
 upload: ## Uploads generated website content to AWS S3. Be careful with this command!
 upload: upload-bucket
