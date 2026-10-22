@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   lint:
-    uses: jmpa-io/pipelines/.github/workflows/10-lint.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
+    uses: jmpa-io/pipelines/.github/workflows/10-lint.yml@ce5c5b9a18da6c3975e7bd71f9f7c99b9b49ef2f # main (adds account_id)
     secrets:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
@@ -54,9 +54,10 @@ jobs:
 
   deploy:
     needs: [build-website]
-    uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
+    uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@ce5c5b9a18da6c3975e7bd71f9f7c99b9b49ef2f # main (adds account_id)
     with:
       templates: website
+      account_id: '213851291874' # the dev AWS account.
     secrets:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
@@ -64,9 +65,10 @@ jobs:
 
   upload-website:
     needs: [deploy]
-    uses: jmpa-io/pipelines/.github/workflows/50-upload-artifacts-to-s3.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
+    uses: jmpa-io/pipelines/.github/workflows/50-upload-artifacts-to-s3.yml@ce5c5b9a18da6c3975e7bd71f9f7c99b9b49ef2f # main (adds account_id)
     with:
       artifact: jmpa.io
+      account_id: '213851291874' # the dev AWS account.
     secrets:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
@@ -88,7 +90,7 @@ jobs:
   post-to-slack:
     needs: [lint, build-website, deploy, upload-website, smoke-test]
     if: always()
-    uses: jmpa-io/pipelines/.github/workflows/99-post-to-slack.yml@7778d436a95a3f61fe6416e7219502afd8ccb5d9 # v1.0.0
+    uses: jmpa-io/pipelines/.github/workflows/99-post-to-slack.yml@ce5c5b9a18da6c3975e7bd71f9f7c99b9b49ef2f # main (adds account_id)
     with:
       needs: ${{ toJSON(needs) }}
     secrets:
