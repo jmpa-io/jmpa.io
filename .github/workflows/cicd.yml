@@ -42,7 +42,9 @@ jobs:
         run: git submodule update --init themes/jmpa
 
       - name: Generate website.
-        run: make generate-website
+        # Empty on purpose: the Makefile's 'local' default bakes http://localhost:8788/inventory into the pages, and this
+        # one artifact is served from both dev and prod.
+        run: HUGO_PARAMS_INVENTORYURL= make generate-website
 
       - name: Upload artifact.
         uses: actions/upload-artifact@v4
@@ -87,8 +89,33 @@ jobs:
             echo "ok https://dev.jmpa.io${path}"
           done
 
+  # Promote to prod: when this lands on main, publish the exact artifact that just passed the dev smoke test to the live
+  # site (prod account), then check the live URLs. Merging to main is the approval.
+  publish-prod:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [smoke-test]
+    uses: jmpa-io/pipelines/.github/workflows/50-upload-artifacts-to-s3.yml@ce5c5b9a18da6c3975e7bd71f9f7c99b9b49ef2f # main (adds account_id)
+    with:
+      artifact: jmpa.io
+      environment: prod
+    secrets:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_RUNNER_ROLE_NAME: ${{ secrets.AWS_RUNNER_ROLE_NAME }}
+
+  smoke-test-prod:
+    needs: [publish-prod]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the live site.
+        run: |
+          for path in / /store/order-successful/; do
+            curl -fsS --retry 8 --retry-delay 15 --retry-all-errors -o /dev/null "https://jmpa.io${path}"
+            echo "ok https://jmpa.io${path}"
+          done
+
   post-to-slack:
-    needs: [lint, build-website, deploy, upload-website, smoke-test]
+    needs: [lint, build-website, deploy, upload-website, smoke-test, publish-prod, smoke-test-prod]
     if: always()
     uses: jmpa-io/pipelines/.github/workflows/99-post-to-slack.yml@ce5c5b9a18da6c3975e7bd71f9f7c99b9b49ef2f # main (adds account_id)
     with:
