@@ -6,7 +6,7 @@ Parameters:
   Environment:
     Description: The environment used when deploying this service.
     Type: String
-    AllowedValues: ["prod"] # Only allowing this environment for this stack.
+    AllowedValues: ["dev", "prod"] # dev certs live in the dev AWS account (Domain=dev.<site>).
 
   Domain:
     Description: The domain registered.
@@ -17,10 +17,7 @@ Parameters:
     Type: String
 
 Conditions:
-  CreateResources: !And [
-    !Equals [ !Ref "AWS::Region", "us-east-1" ],
-    !Equals [ !Ref Environment, "prod" ]
-  ]
+  CreateResources: !Equals [ !Ref "AWS::Region", "us-east-1" ]
 
 Resources:
   Certificate:
