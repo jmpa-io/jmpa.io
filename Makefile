@@ -48,13 +48,11 @@ endif
 hosted-zone-id:
 	$(eval HOSTED_ZONE_ID ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/hosted-zone/id --query 'Parameter.Value' --output text))
 
-# The live bucket predates the /<site>/bucket SSM param, so name it directly for prod.
-ifeq ($(ENVIRONMENT),prod)
-UPLOAD_BUCKET ?= $(REPO)
-endif
+# The bucket is named after the domain (see cf/website/template.yml), in every environment.
+UPLOAD_BUCKET ?= $(PARAM_PREFIX)
 
 upload-bucket:
-	$(eval UPLOAD_BUCKET ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/bucket --query 'Parameter.Value' --output text))
+	@true
 
 cert-arn:
 	$(eval CERT_ARN ?= $(shell aws ssm get-parameter --region us-east-1 --name /certs/$(PARAM_PREFIX)/arn --query 'Parameter.Value' --output text))
@@ -89,10 +87,18 @@ cert: AWS_REGION=us-east-1
 cert: ADDITIONAL_PARAMETER_OVERRIDES="HostedZoneId=$(HOSTED_ZONE_ID) "
 cert: deploy-cert
 
+# The live prod stack predates the <project>-website-<env> naming, so keep its name and CI updates it in place.
+ifeq ($(ENVIRONMENT),prod)
+override STACK_NAME := jmpa-io
+endif
+
 website: ## Deploys the 'website' stack.
+# Prod keeps the zone and certificate it already has (a deploy reuses the previous values of parameters not given).
+ifneq ($(ENVIRONMENT),prod)
 website: hosted-zone-id cert-arn
-website: ADDITIONAL_PARAMETER_OVERRIDES="AcmCertificateArn=$(CERT_ARN) "
+website: ADDITIONAL_PARAMETER_OVERRIDES+="AcmCertificateArn=$(CERT_ARN) "
 website: ADDITIONAL_PARAMETER_OVERRIDES+="HostedZoneId=$(HOSTED_ZONE_ID) "
+endif
 website: deploy-website
 
 inventory: ## Deploys the 'inventory' stack.
