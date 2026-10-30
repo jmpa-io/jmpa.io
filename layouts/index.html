@@ -10,6 +10,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/fira-code-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/css/desktop.css">
+  <script src="/js/palette.js"></script>
+  <script>
+    Palette.init({
+      triggerId: 'display-btn', popupId: 'display-dlg', toggleId: 'scheme-btn',
+      customIds: { primary: 'display-primary', secondary: 'display-secondary', reset: 'display-reset', note: 'display-note' },
+    });
+  </script>
 </head>
 <body>
   <div class="screen" id="screen">
@@ -59,6 +66,17 @@
         <span class="flag" aria-hidden="true"><i></i><i></i><i></i><i></i></span><strong>Start</strong>
       </button>
       <span class="tasks" id="tasks"></span>
+      <div class="display-dlg" id="display-dlg" role="dialog" aria-label="Display properties">
+        <div class="win-bar"><span class="win-title">Display</span></div>
+        <div class="dlg-body">
+          <label>Primary <input type="color" id="display-primary" value="#c04828"></label>
+          <label>Secondary <input type="color" id="display-secondary" value="#2f7fae"></label>
+          <button class="bevel" id="display-reset" type="button">Reset</button>
+          <p id="display-note" class="dlg-note" aria-live="polite"></p>
+        </div>
+      </div>
+      <button class="bevel tray" id="display-btn" type="button" title="Display colours" aria-label="Display colours" aria-expanded="false"><span class="swatch" aria-hidden="true"></span></button>
+      <button class="bevel tray" id="scheme-btn" type="button" title="Toggle day/night" aria-label="Dark mode" aria-pressed="false"></button>
       <button class="bevel tray" id="crt-btn" type="button" title="Toggle CRT effect" aria-pressed="true">CRT</button>
       <span class="clock" id="clock"></span>
     </footer>
