@@ -3,7 +3,15 @@ languageCode: en-us
 title: jmpa
 
 Params:
-  description: "jmpa.io - something is brewing."
+  description: "jmpa.io - a little desktop that links to the rest of my corner of the internet."
+  # Programs on the desktop. `url` programs navigate away; `window` programs open in-page.
+  programs:
+    - { title: art.exe, icon: palette, url: "https://art.jmpa.io" }
+    - { title: blog, icon: document, url: "https://jcleal.me" }
+    - { title: portfolio.exe, icon: briefcase, url: "https://portfolio.jcleal.me" }
+    - { title: startpage, icon: globe, url: "https://startpage.jcleal.me" }
+    - { title: github, icon: folder, url: "https://github.com/jmpa-io", newtab: true }
+    - { title: room.exe, icon: monitor, window: room }
 
 markup:
   goldmark:
