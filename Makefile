@@ -97,6 +97,11 @@ serve: dist/public
 
 PHONY += generate-website serve
 
+e2e: ## Runs the Playwright screenshot + interaction tests against dist/public (run `make generate-website` first).
+	cd e2e && npm ci && SITE_DIR=../dist/public npx playwright test
+
+PHONY += e2e
+
 ---: ## ---
 
 # Includes the common Makefile.
