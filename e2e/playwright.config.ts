@@ -1,30 +1,28 @@
+// MASTER COPY - mirror, do not edit per-repo. Master lives in jmpa-io/jcleal.me/e2e; sync with `make e2e-sync` (see README).
+// Everything site-specific (port, projects, selectors, snapshot naming) is in ./site.ts.
 import { defineConfig } from '@playwright/test';
-
-const port = 4172;
+import { site } from './site';
 
 export default defineConfig({
   testDir: '.',
   testMatch: /.*\.spec\.ts/,
-  snapshotPathTemplate: '{testDir}/{testFileName}-snapshots/{arg}-{projectName}{ext}',
+  snapshotPathTemplate: site.snapshotTemplate ?? '{testDir}/{testFileName}-snapshots/{arg}-{projectName}{ext}',
   fullyParallel: true,
   reporter: [['list'], ['html', { open: 'never' }]],
   expect: { toHaveScreenshot: { maxDiffPixelRatio: 0.02, animations: 'disabled' } },
   use: {
-    baseURL: `http://localhost:${port}`,
+    baseURL: `http://localhost:${site.port}`,
     channel: 'chrome', // system Chrome: no browser download needed.
     reducedMotion: 'reduce',
     timezoneId: 'Australia/Melbourne',
     locale: 'en-AU',
   },
-  projects: [
-    { name: 'desktop', use: { viewport: { width: 1280, height: 800 } } },
-    { name: 'mobile', use: { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 } },
-  ],
+  projects: site.projects,
   webServer: {
-    // Serves the already-built site: `hugo --baseURL http://localhost:4172/` then SITE_DIR=<dir> to override.
+    // Serves the already-built output with a tiny static server; SITE_DIR overrides the directory.
     command: 'node server.mjs',
-    env: { PORT: String(port), SITE_DIR: process.env.SITE_DIR || '../public' },
-    url: `http://localhost:${port}/`,
+    env: { PORT: String(site.port), SITE_DIR: process.env.SITE_DIR || site.siteDir },
+    url: `http://localhost:${site.port}/`,
     reuseExistingServer: !process.env.CI,
   },
 });
