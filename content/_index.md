@@ -1,7 +1,3 @@
 ---
-title: Home
+title: jmpa
 ---
-
-# Welcome 👋
-
-This website is still under development.
