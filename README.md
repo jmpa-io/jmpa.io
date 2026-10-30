@@ -5,14 +5,10 @@
 # `jmpa.io`
 
 ```diff
-+ 🌐 Art store and portfolio by Jordan Cleal.
++ 🌐 Something is brewing. For now: a pixel-art room, and links elsewhere.
 ```
 
-## Scripts
-
-script|description
----|---
-[bin/generate-pdfs.sh](bin/generate-pdfs.sh) | Converts the raw markdown for courses to pdfs.
+The art store lives at [art.jmpa.io](https://github.com/jmpa-io/art.jmpa.io).
 
 ## Running locally?
 

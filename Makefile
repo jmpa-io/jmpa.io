@@ -13,21 +13,9 @@ AWS_REGION ?= ap-southeast-2
 # Defaults to local if not set.
 ENVIRONMENT ?= local
 
-ifeq ($(ENVIRONMENT),local)
-  SQUARE_SANDBOX        ?= true
-  HUGO_PARAMS_INVENTORYURL ?= http://localhost:8788/inventory
-else ifeq ($(ENVIRONMENT),dev)
-  SQUARE_SANDBOX        ?= true
-  HUGO_PARAMS_INVENTORYURL ?=
-else ifeq ($(ENVIRONMENT),prod)
-  SQUARE_SANDBOX        ?= false
-  HUGO_PARAMS_INVENTORYURL ?=
-else
+ifeq ($(filter $(ENVIRONMENT),local dev prod),)
   $(error ENVIRONMENT must be one of: local, dev, prod)
 endif
-
-export SQUARE_SANDBOX
-export HUGO_PARAMS_INVENTORYURL
 
 # ---
 
@@ -49,16 +37,6 @@ upload-bucket:
 cert-arn:
 	$(eval CERT_ARN ?= $(shell aws ssm get-parameter --region us-east-1 --name /certs/$(REPO)/arn --query 'Parameter.Value' --output text))
 
-square-access-token:
-	$(eval SQUARE_ACCESS_TOKEN ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/square/access-token --with-decryption --query 'Parameter.Value' --output text))
-	$(eval export SQUARE_ACCESS_TOKEN)
-
-inventory-url:
-ifneq ($(ENVIRONMENT),local)
-	$(eval HUGO_PARAMS_INVENTORYURL := $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/inventory/url --query 'Parameter.Value' --output text))
-	$(eval export HUGO_PARAMS_INVENTORYURL)
-endif
-
 pull-config: ## Prints the config pulled from AWS.
 pull-config: hosted-zone-id upload-bucket cert-arn
 	@echo $(HOSTED_ZONE_ID)
@@ -70,7 +48,6 @@ pull-config: hosted-zone-id upload-bucket cert-arn
 # Services.
 # Deployed manually: cert
 SERVICE_GROUP_1 = website
-SERVICE_GROUP_2 = inventory
 
 # Targets.
 cert: ## Deploys the 'cert' stack.
@@ -85,19 +62,6 @@ website: ADDITIONAL_PARAMETER_OVERRIDES="AcmCertificateArn=$(CERT_ARN) "
 website: ADDITIONAL_PARAMETER_OVERRIDES+="HostedZoneId=$(HOSTED_ZONE_ID) "
 website: deploy-website
 
-inventory: ## Deploys the 'inventory' stack.
-inventory: binary-go-inventory bootstrap-inventory
-inventory: deploy-inventory
-
-invoke-inventory: ## Invokes the inventory Lambda locally via aws-sam-cli.
-invoke-inventory: square-access-token binary-go-inventory bootstrap-inventory
-	@cmd/inventory/local.sh
-
-update-square-inventory: ## Creates Square payment links for all unsold paintings and writes them back to data/art.yml.
-update-square-inventory: square-access-token binary-go-update-square-inventory
-	@ART_YML=data/art.yml \
-	dist/update-square-inventory/update-square-inventory-$(OS)-$(ARCH)
-
 upload: ## Uploads generated website content to AWS S3. Be careful with this command!
 upload: upload-bucket
 	aws s3 sync --delete dist/public/ s3://$(UPLOAD_BUCKET)/
@@ -109,7 +73,7 @@ generate-website: \
 	compile-website
 
 compile-website: ## Compiles the 'jmpa.io' website, using hugo.
-compile-website: cmd/hugo image-hugo inventory-url
+compile-website: cmd/hugo image-hugo
 compile-website: dist/public
 	@test -z "$(CI)" || echo "##[group]Compiling website."
 	docker run --rm \
@@ -117,24 +81,17 @@ compile-website: dist/public
 		-v "$(PWD):/app" \
 		-v "$(PWD)/public" \
 		-v "$(PWD)/resources" \
-		-e HUGO_PARAMS_INVENTORYURL \
 		$(REPO)/hugo \
 		--log --destination $<
 	@test -z "$(CI)" || echo "##[endgroup]"
 
-start-inventory-local: ## Starts the local inventory server in the background (reads data/art.yml).
-	@pkill -f "inventory-local" 2>/dev/null || true
-	@go run ./cmd/inventory-local/ &
-	@echo "inventory-local started on :8788"
-
 serve: ## Serves this website locally, mounted inside a Docker container.
-serve: cmd/hugo image-hugo start-inventory-local
+serve: cmd/hugo image-hugo
 serve: dist/public
 	@docker run --rm \
 		-w /app \
 		-v "$(PWD):/app" \
 		-p "1314:1313" \
-		-e HUGO_PARAMS_INVENTORYURL \
 		$(REPO)/hugo \
 		server --disableFastRender
 
