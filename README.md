@@ -28,6 +28,12 @@ Params:
 
 Valid `icon`s: `document`, `briefcase`, `folder`, `globe`, `monitor`, `palette` (16x16 pixel maps in `static/js/desktop.js`).
 
+## Colours and day/night
+
+The tray has a **Display** button (two colour inputs: Primary + Secondary, plus Reset) and a sun/moon button. Primary drives title bars, selection and Start accents; Secondary tints the wallpaper and taskbar. Contrast is kept AA in light and dark. Choices persist in `localStorage` (`palette-custom`, `scheme`) and are applied before first paint.
+
+`static/js/palette.js` and `e2e/{playwright.config.ts,helpers/palette-helpers.ts,server.mjs}` are mirrored masters from `jcleal.me` - do not edit them here (`make e2e-sync` in `jcleal.me`).
+
 ## Running locally?
 
 1. Using a <kbd>terminal</kbd>, run:
