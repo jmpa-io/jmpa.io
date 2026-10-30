@@ -3,17 +3,30 @@
 @font-face { font-family: 'Fira Code'; font-weight: 700; src: url('/fonts/fira-code-latin-700-normal.woff2') format('woff2'); font-display: swap; }
 
 :root {
-  --face: #c0c0c0;
-  --light: #dfdfdf;
-  --shadow: #808080;
-  --navy: #000080;
-  --blue: #1084d0;
+  --face: var(--pal-face, #c0c0c0);
+  --hi: var(--pal-face-hi, #fff);
+  --light: color-mix(in oklch, var(--face), var(--hi));
+  --shadow: var(--pal-face-shadow, #808080);
+  --lo: #000;
+  --ink: #000;
+  --navy: var(--pal-title-a, #000080);
+  --blue: var(--pal-title-b, #1084d0);
   --teal: #008080;
-  --raised: inset -1px -1px #000, inset 1px 1px #fff, inset -2px -2px var(--shadow), inset 2px 2px var(--light);
-  --sunken: inset -1px -1px #fff, inset 1px 1px var(--shadow), inset -2px -2px var(--light), inset 2px 2px #000;
+  --dim: 0;
+  --raised: inset -1px -1px var(--lo), inset 1px 1px var(--hi), inset -2px -2px var(--shadow), inset 2px 2px var(--light);
+  --sunken: inset -1px -1px var(--hi), inset 1px 1px var(--shadow), inset -2px -2px var(--light), inset 2px 2px var(--lo);
   color-scheme: light;
   font-family: 'Fira Code', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   font-size: 12.5px;
+}
+/* Dark Win98: dark faces, same title bars (from the primary colour). */
+html.dark {
+  --face: var(--pal-face-dark, #3a3a3a);
+  --hi: color-mix(in oklch, var(--face), #fff 22%);
+  --shadow: color-mix(in oklch, var(--face), #000 45%);
+  --ink: #ececec;
+  --dim: 0.5;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -30,7 +43,7 @@ a { color: inherit; text-decoration: none; }
 
 .bevel { background: var(--face); border: 0; box-shadow: var(--raised); cursor: pointer; }
 .bevel:active, .bevel.down { box-shadow: var(--sunken); }
-.bevel:focus-visible { outline: 1px dotted #000; outline-offset: -5px; }
+.bevel:focus-visible { outline: 1px dotted var(--ink); outline-offset: -5px; }
 
 /* ---- screen + CRT ---- */
 .screen {
@@ -38,7 +51,7 @@ a { color: inherit; text-decoration: none; }
   position: fixed; inset: 0;
   display: flex; flex-direction: column;
   background: var(--teal);
-  color: #000;
+  color: var(--ink);
   overflow: hidden;
   border-radius: calc(var(--crt) * 24px);
   text-shadow:
@@ -77,8 +90,15 @@ a { color: inherit; text-decoration: none; }
 /* ---- desktop ---- */
 .desktop {
   position: relative; flex: 1; min-height: 0; overflow: hidden;
-  background: var(--teal) url('/img/wallpaper.png') center / cover no-repeat;
+  background:
+    linear-gradient(rgba(0, 0, 0, var(--dim)), rgba(0, 0, 0, var(--dim))),
+    var(--teal) url('/img/wallpaper.png') center / cover no-repeat;
   image-rendering: pixelated;
+}
+/* Secondary colour tints the wallpaper. */
+.desktop::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: var(--pal-desk, transparent); mix-blend-mode: soft-light; opacity: 0.6;
 }
 .icons { position: absolute; top: 10px; left: 10px; display: grid; gap: 6px; z-index: 1; }
 .icon {
@@ -104,30 +124,30 @@ a { color: inherit; text-decoration: none; }
 .win-bar {
   display: flex; align-items: center; justify-content: space-between;
   height: 20px; padding: 1px 2px;
-  background: linear-gradient(to right, var(--shadow), #b5b5b5); color: var(--face);
+  background: linear-gradient(to right, color-mix(in oklch, var(--shadow) 65%, #000), var(--shadow)); color: #fff;
   user-select: none; touch-action: none;
 }
 .win.focused .win-bar { background: linear-gradient(to right, var(--navy), var(--blue)); color: #fff; }
 .win-title { display: flex; align-items: center; gap: 4px; font-weight: 700; white-space: nowrap; }
 .win-ctrl { display: flex; gap: 2px; }
-.win-ctrl button { position: relative; width: 16px; height: 14px; padding: 0; color: #000; text-shadow: none; }
+.win-ctrl button { position: relative; width: 16px; height: 14px; padding: 0; color: var(--ink); text-shadow: none; }
 .win-ctrl i { position: absolute; inset: 0; display: block; }
-.g-min::before { content: ''; position: absolute; left: 4px; bottom: 3px; width: 6px; height: 2px; background: #000; }
+.g-min::before { content: ''; position: absolute; left: 4px; bottom: 3px; width: 6px; height: 2px; background: var(--ink); }
 .g-close {
   background:
-    linear-gradient(45deg, transparent 43%, #000 43% 57%, transparent 57%) center / 8px 8px no-repeat,
-    linear-gradient(-45deg, transparent 43%, #000 43% 57%, transparent 57%) center / 8px 8px no-repeat;
+    linear-gradient(45deg, transparent 43%, var(--ink) 43% 57%, transparent 57%) center / 8px 8px no-repeat,
+    linear-gradient(-45deg, transparent 43%, var(--ink) 43% 57%, transparent 57%) center / 8px 8px no-repeat;
 }
 .win-body { margin-top: 3px; background: #000; box-shadow: var(--sunken); padding: 2px; }
 canvas { display: block; width: 100%; aspect-ratio: 16 / 9; image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* ---- taskbar ---- */
 .taskbar {
-  position: relative; z-index: 3;
+  position: relative; z-index: 6000;
   display: flex; align-items: center; gap: 4px;
   height: 30px; padding: 0 3px;
   background: var(--face);
-  box-shadow: inset 0 1px 0 var(--light), inset 0 2px 0 #fff;
+  box-shadow: inset 0 1px 0 var(--light), inset 0 2px 0 var(--hi);
 }
 .start { display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 8px; }
 .start.down strong { transform: translate(1px, 1px); }
@@ -140,10 +160,26 @@ canvas { display: block; width: 100%; aspect-ratio: 16 / 9; image-rendering: pix
 .tasks { flex: 1; display: flex; gap: 2px; overflow: hidden; }
 .task { display: flex; align-items: center; gap: 5px; width: 160px; min-width: 0; height: 24px; padding: 0 6px; font-size: 12px; text-align: left; }
 .task span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.task.down { background: repeating-conic-gradient(var(--light) 0 25%, #fff 0 50%) 0 0 / 2px 2px; }
-.tray { height: 24px; padding: 0 8px; font-size: 11px; }
-.tray[aria-pressed='false'] { color: var(--shadow); text-shadow: 1px 1px 0 #fff; }
+.task.down { background: repeating-conic-gradient(var(--light) 0 25%, var(--hi) 0 50%) 0 0 / 2px 2px; }
+.tray { height: 24px; min-width: 28px; padding: 0 8px; font-size: 11px; }
+#crt-btn[aria-pressed='false'] { text-decoration: line-through; }
+.swatch { display: block; width: 12px; height: 12px; background: linear-gradient(135deg, var(--navy) 50%, var(--pal-desk, var(--teal)) 50%); box-shadow: var(--sunken); }
+#scheme-btn::before { content: '\2600'; }
+#scheme-btn.dark::before { content: '\263E'; }
 .clock { padding: 4px 10px; box-shadow: var(--sunken); font-size: 12px; }
+
+/* ---- Display dialog (colour picker) ---- */
+.display-dlg {
+  position: absolute; right: 2px; bottom: 30px; display: none; width: 220px;
+  padding: 3px; background: var(--face); box-shadow: var(--raised), 2px 2px 0 rgba(0, 0, 0, 0.35);
+}
+.display-dlg.open { display: block; }
+.display-dlg .win-bar { background: linear-gradient(to right, var(--navy), var(--blue)); }
+.dlg-body { display: grid; gap: 8px; padding: 10px 8px 8px; }
+.dlg-body label { display: flex; align-items: center; justify-content: space-between; }
+.dlg-body input[type='color'] { width: 56px; height: 22px; padding: 0; border: 0; background: none; box-shadow: var(--sunken); cursor: pointer; }
+.dlg-body .bevel { justify-self: start; height: 24px; padding: 0 12px; }
+.dlg-note { margin: 0; min-height: 1.2em; font-size: 11px; }
 
 /* ---- start menu ---- */
 .start-backdrop { position: absolute; inset: 0; z-index: 7000; }
