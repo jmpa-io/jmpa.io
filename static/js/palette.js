@@ -203,6 +203,8 @@
       syncInputs();
     },
     onChange: function (fn) { state.listeners.push(fn); },
+    // "Primary adjusted for readability." text for UIs that don't use the init() note element (e.g. React).
+    note: function () { return state.custom ? adjustedNote(state.custom, state.dark) : ''; },
     scheme: function () { return storedScheme() || osScheme(); },
     setScheme: function (s) {
       if (s !== 'dark' && s !== 'light') return false;
