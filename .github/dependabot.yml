@@ -9,20 +9,6 @@ updates:
     open-pull-requests-limit: 10
     labels: ["dependencies", "github-actions"]
 
-  - package-ecosystem: gomod
-    directory: /
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 10
-    labels: ["dependencies", "go"]
-
-  - package-ecosystem: npm
-    directory: /themes/jmpa
-    schedule:
-      interval: daily
-    open-pull-requests-limit: 10
-    labels: ["dependencies", "javascript"]
-
   - package-ecosystem: docker
     directory: /
     schedule:

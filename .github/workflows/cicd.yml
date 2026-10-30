@@ -38,9 +38,6 @@ jobs:
       - name: Checkout.
         uses: actions/checkout@v4
 
-      - name: Checkout theme submodule.
-        run: git submodule update --init themes/jmpa
-
       - name: Generate website.
         run: make generate-website
 
