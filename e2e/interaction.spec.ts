@@ -130,7 +130,7 @@ test.describe('desktop pointer', () => {
     await expect(page.locator('#tasks .task')).toHaveCount(1);
     await expect(win).toHaveClass(/focused/);
     const bar = await win.locator('.win-bar').evaluate((e) => getComputedStyle(e).backgroundImage);
-    expect(bar).toContain('rgb(0, 0, 128)');
+    expect(bar).toContain('oklch(0.48');
 
     await win.getByRole('button', { name: 'Minimise' }).click();
     await expect(win).toBeHidden();
