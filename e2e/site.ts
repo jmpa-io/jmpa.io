@@ -12,7 +12,7 @@ export const site: {
   openPicker?: (page: Page) => Promise<void>;
 } = {
   name: 'jmpa.io',
-  port: 4172,
+  port: Number(process.env.E2E_PORT || 4172), // E2E_PORT lets a second checkout/worktree run beside the first.
   siteDir: '../public',
   defaults: ['#0a2a6b', '#2f7fae'], // deep navy
   snapshotTemplate: '{testDir}/{testFileName}-snapshots/{arg}{ext}',
