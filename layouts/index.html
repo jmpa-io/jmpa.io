@@ -9,6 +9,7 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preload" href="/fonts/fira-code-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/crt.css">
   <link rel="stylesheet" href="/css/desktop.css">
   <script src="/js/palette.js"></script>
   <script>
@@ -20,6 +21,8 @@
 </head>
 <body>
   <div class="screen" id="screen">
+   <div class="glass" id="glass">
+    <div class="crt-content" id="crt-content">
     <div class="desktop" id="desktop">
       <h1 class="sr-only">jmpa</h1>
       <nav class="icons" aria-label="Programs">
@@ -32,11 +35,12 @@
         {{ end }}
       </nav>
 
-      <section class="win" id="win-room" hidden aria-label="room.exe" style="left:160px;top:40px;width:560px">
+      <section class="win" id="win-room" hidden aria-label="room.exe" style="left:160px;top:40px;width:590px;height:362px">
         <div class="win-bar" data-drag>
           <span class="win-title"><span class="icon-img" data-icon="monitor" data-size="16"></span> room.exe</span>
           <span class="win-ctrl">
             <button class="bevel" type="button" data-min aria-label="Minimise"><i class="g-min"></i></button>
+            <button class="bevel" type="button" data-max aria-label="Maximise"><i class="g-max"></i></button>
             <button class="bevel" type="button" data-close aria-label="Close"><i class="g-close"></i></button>
           </span>
         </div>
@@ -58,6 +62,7 @@
         <a role="menuitem" href="{{ .url }}" data-icon="{{ .icon }}" data-size="32"{{ if .newtab }} target="_blank" rel="noopener"{{ end }}><span class="icon-img"></span><span>{{ .title }}</span></a>
         {{ end }}
         {{ end }}
+        <button type="button" role="menuitem" id="shutdown"><span class="icon-img power-ico" aria-hidden="true">&#9211;</span><span>Shut Down</span></button>
       </div>
     </div>
 
@@ -80,10 +85,13 @@
       <button class="bevel tray" id="crt-btn" type="button" title="Toggle CRT effect" aria-pressed="true">CRT</button>
       <span class="clock" id="clock"></span>
     </footer>
+    </div>
 
-    <div class="crt" aria-hidden="true"></div>
+    <div class="crt" id="crt" aria-hidden="true"></div>
+   </div>
   </div>
   <script src="/js/room.js"></script>
+  <script src="/js/crt.js"></script>
   <script src="/js/desktop.js"></script>
 </body>
 </html>

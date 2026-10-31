@@ -149,7 +149,7 @@
     var drag = null;
     var bar = el.querySelector('[data-drag]');
     bar.addEventListener('pointerdown', function (e) {
-      if (e.target.closest('button')) return;
+      if (e.target.closest('button') || el.classList.contains('max')) return;
       drag = { dx: e.clientX - el.offsetLeft, dy: e.clientY - el.offsetTop };
       bar.setPointerCapture(e.pointerId);
     });
@@ -159,7 +159,99 @@
       el.style.left = Math.max(0, Math.min(d.clientWidth - el.offsetWidth, e.clientX - drag.dx)) + 'px';
       el.style.top = Math.max(0, Math.min(d.clientHeight - el.offsetHeight, e.clientY - drag.dy)) + 'px';
     });
-    bar.addEventListener('pointerup', function () { drag = null; });
+    bar.addEventListener('pointerup', function () { drag = null; saveGeom(); });
+
+    // ---- maximise / restore (restore returns to the last size and position) ----
+    function toggleMax() {
+      el.classList.toggle('max');
+      var m = el.classList.contains('max');
+      var b = el.querySelector('[data-max]');
+      if (b) b.setAttribute('aria-label', m ? 'Restore' : 'Maximise');
+      saveGeom();
+    }
+    var maxBtn = el.querySelector('[data-max]');
+    if (maxBtn) maxBtn.addEventListener('click', toggleMax);
+    bar.addEventListener('dblclick', function (e) {
+      if (!e.target.closest('button')) toggleMax();
+    });
+
+    // ---- resize: 8 handles, pointer events + capture, min size, clamped to the desktop ----
+    var MIN_W = 220;
+    var MIN_H = 120;
+    var DIRS = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
+    DIRS.forEach(function (dir) {
+      var h = document.createElement('i');
+      h.className = 'rz rz-' + dir;
+      h.dataset.dir = dir;
+      h.setAttribute('aria-hidden', 'true');
+      el.appendChild(h);
+      var st = null;
+      h.addEventListener('pointerdown', function (e) {
+        if (el.classList.contains('max') || e.button > 0) return;
+        e.preventDefault();
+        st = { x: e.clientX, y: e.clientY, l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight };
+        h.setPointerCapture(e.pointerId);
+      });
+      h.addEventListener('pointermove', function (e) {
+        if (!st) return;
+        var d = document.getElementById('desktop');
+        var dx = e.clientX - st.x;
+        var dy = e.clientY - st.y;
+        var l = st.l, t = st.t, w = st.w, hh = st.h;
+        if (dir.indexOf('e') >= 0) w = Math.max(MIN_W, Math.min(st.w + dx, d.clientWidth - st.l));
+        if (dir.indexOf('s') >= 0) hh = Math.max(MIN_H, Math.min(st.h + dy, d.clientHeight - st.t));
+        if (dir.indexOf('w') >= 0) {
+          w = Math.max(MIN_W, Math.min(st.w - dx, st.l + st.w));
+          l = st.l + st.w - w;
+        }
+        if (dir.indexOf('n') >= 0) {
+          hh = Math.max(MIN_H, Math.min(st.h - dy, st.t + st.h));
+          t = st.t + st.h - hh;
+        }
+        el.style.left = l + 'px';
+        el.style.top = t + 'px';
+        el.style.width = w + 'px';
+        el.style.height = hh + 'px';
+      });
+      var end = function () { if (st) { st = null; saveGeom(); } };
+      h.addEventListener('pointerup', end);
+      h.addEventListener('pointercancel', end);
+    });
+
+    // ---- remember geometry for this tab ----
+    var GKEY = 'jmpa.win.' + name;
+    function saveGeom() {
+      try {
+        sessionStorage.setItem(GKEY, JSON.stringify({
+          l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight, max: el.classList.contains('max'),
+        }));
+      } catch (err) { /* storage unavailable */ }
+    }
+    try {
+      var g = JSON.parse(sessionStorage.getItem(GKEY));
+      if (g && typeof g.w === 'number' && typeof g.h === 'number') {
+        el.style.left = g.l + 'px';
+        el.style.top = g.t + 'px';
+        el.style.width = Math.max(MIN_W, g.w) + 'px';
+        el.style.height = Math.max(MIN_H, g.h) + 'px';
+        if (g.max) el.classList.add('max');
+      }    } catch (err) { /* ignore invalid storage */ }
+
+    // ---- keep a pixel canvas crisp: integer scale when it fits, otherwise fit-to-box ----
+    var body = el.querySelector('.win-body');
+    var cv = body && body.querySelector('canvas');
+    if (cv && window.ResizeObserver) {
+      var fit = function () {
+        var aw = body.clientWidth - 4;
+        var ah = matchMedia('(max-width: 720px)').matches ? 1e9 : body.clientHeight - 4; // small screens size by width.
+        if (aw <= 0 || ah <= 0) return;
+        var s = Math.min(aw / cv.width, ah / cv.height);
+        if (s >= 1) s = Math.floor(s);
+        cv.style.width = Math.floor(cv.width * s) + 'px';
+        cv.style.height = Math.floor(cv.height * s) + 'px';
+      };
+      new ResizeObserver(fit).observe(body);
+    }
     return wins[name];
   }
 
@@ -223,6 +315,22 @@
     setCrt(on);
     try { localStorage.setItem(CRT_KEY, on ? 'on' : 'off'); } catch (e) { /* storage unavailable */ }
   });
+
+  // ---- curvature, power ----
+  var crt = window.Crt && window.Crt.attach({
+    screen: screen,
+    glass: document.getElementById('glass'),
+    content: document.getElementById('crt-content'),
+    overlay: document.getElementById('crt')
+  });
+  if (crt) {
+    window.jmpaCrt = crt;
+    document.getElementById('shutdown').addEventListener('click', function () {
+      setStart(false);
+      crt.power(false);
+    });
+    crt.update();
+  }
 
   // ---- clock ----
   var clock = document.getElementById('clock');
