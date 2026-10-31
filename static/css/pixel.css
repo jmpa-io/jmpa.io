@@ -141,9 +141,6 @@ a { color: inherit; text-decoration: none; }
 .px-btn:hover .ring { fill: var(--accent-ink); }
 .px-btn .p1 { fill: var(--pal-primary, #0a2a6b); }
 .px-btn .p2 { fill: var(--pal-secondary, #2f7fae); }
-.palette-wrap { position: relative; display: inline-flex; }
-.px-btn .p1 { fill: var(--pal-primary, #0a2a6b); }
-.px-btn .p2 { fill: var(--pal-secondary, #2f7fae); }
 
 .palette-popup {
   display: none;
