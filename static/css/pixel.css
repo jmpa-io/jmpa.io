@@ -1,0 +1,432 @@
+/* jmpa.io - a pixel-art front door. Colours come from palette.js (--pal-*, set on <html>); the room scene derives its own
+   shades from --pal-primary / --pal-secondary so it follows the picker and day/night. No blur, no rounded corners. */
+
+@font-face {
+  font-family: 'Silkscreen';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/silkscreen-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Silkscreen';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/silkscreen-bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/inter-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/inter-700.woff2') format('woff2');
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overscroll-behavior: none; }
+
+/* no-JS fallbacks (navy); palette.js overrides these through the --pal-* mapping below. */
+:root {
+  --bg: #faf8f4;
+  --bg-sub: #f2ede6;
+  --bg-card: #ffffff;
+  --border: #e8e0d4;
+  --text: #1c1a17;
+  --muted: #5c5448;
+  --accent: #0a2a6b;
+  --accent-ink: #fff;
+  --heading: #0a2a6b;
+  --ink: #0a2a6b;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --pixel: 'Silkscreen', 'Courier New', ui-monospace, monospace;
+}
+html.dark {
+  --bg: #1e1b18;
+  --bg-sub: #272320;
+  --bg-card: #272320;
+  --border: #3a342c;
+  --text: #f5f0ea;
+  --muted: #b0a496;
+  --accent: #9db8ff;
+  --accent-ink: #111;
+  --heading: #f5f0ea;
+  --ink: #9db8ff;
+}
+html:root:root {
+  --bg: var(--pal-bg, #faf8f4);
+  --bg-sub: var(--pal-surface-2, #f2ede6);
+  --bg-card: var(--pal-surface, #ffffff);
+  --border: var(--pal-border, #e8e0d4);
+  --text: var(--pal-text, #1c1a17);
+  --muted: var(--pal-muted, #5c5448);
+  --accent: var(--pal-link, #0a2a6b);
+  --accent-ink: var(--pal-btn-text, #fff);
+  --heading: var(--pal-heading, #0a2a6b);
+  --ink: var(--pal-heading, #0a2a6b);
+}
+
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+::selection { background: var(--pal-sel-bg, #cfd9f5); color: var(--pal-sel-text, #111); }
+
+/* ── header: the logo and the two toggles ── */
+.bar {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  font-family: var(--pixel);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--heading);
+}
+.logo svg { width: 24px; height: 24px; flex: none; shape-rendering: crispEdges; }
+.logo .logo-body { fill: currentColor; }
+.logo .logo-screen { fill: var(--bg); }
+.logo .logo-spark { fill: var(--accent); }
+
+.px-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 var(--ink), 4px 4px 0 var(--ink);
+  cursor: pointer;
+}
+.px-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); background: var(--accent); color: var(--accent-ink); }
+.px-btn:active { transform: translate(4px, 4px); box-shadow: none; }
+.px-btn svg { width: 24px; height: 24px; display: block; shape-rendering: crispEdges; }
+.palette-wrap { position: relative; display: inline-flex; }
+.px-btn .ring { fill: var(--ink); }
+.px-btn:hover .ring { fill: var(--accent-ink); }
+.px-btn .p1 { fill: var(--pal-primary, #0a2a6b); }
+.px-btn .p2 { fill: var(--pal-secondary, #2f7fae); }
+.palette-wrap { position: relative; display: inline-flex; }
+.px-btn .p1 { fill: var(--pal-primary, #0a2a6b); }
+.px-btn .p2 { fill: var(--pal-secondary, #2f7fae); }
+
+.palette-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  z-index: 50;
+  width: 230px;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  background: var(--bg-card);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-family: var(--pixel);
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--text);
+}
+.palette-popup.open { display: flex; }
+.palette-popup label { display: flex; align-items: center; justify-content: space-between; gap: 10px; text-transform: uppercase; }
+.palette-popup input[type='color'] { width: 56px; height: 28px; padding: 0; border: 3px solid var(--ink); border-radius: 0; background: var(--bg-sub); cursor: pointer; }
+.palette-popup .reset {
+  align-self: flex-start;
+  padding: 4px 10px;
+  font: inherit;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--bg-sub);
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
+}
+.palette-popup .reset:hover { transform: translate(2px, 2px); box-shadow: none; background: var(--accent); color: var(--accent-ink); }
+.palette-popup .note { font-family: var(--font); font-size: 12px; color: var(--muted); }
+.palette-popup .note:empty { display: none; }
+@media (max-width: 559px) {
+  .palette-wrap { position: static; }
+  .palette-popup { right: 20px; left: 20px; width: auto; }
+}
+
+/* ── the stage: scene + a few words + the five doors ── */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.stage { display: flex; flex-direction: column; align-items: center; gap: 44px; width: 100%; }
+
+.room-frame {
+  --scale: 3;
+  margin: 0 8px 8px 0;
+  padding: 0;
+  line-height: 0;
+  border: 4px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink), 8px 8px 0 var(--ink);
+  flex: none;
+}
+.room {
+  display: block;
+  width: calc(96px * var(--scale));
+  height: calc(60px * var(--scale));
+  image-rendering: pixelated;
+}
+@media (min-width: 560px)  { .room-frame { --scale: 5; } }
+@media (min-width: 900px)  { .room-frame { --scale: 7; } }
+@media (min-width: 1200px) {
+  .stage { flex-direction: row; justify-content: center; gap: 72px; }
+  .room-frame { --scale: 6; }
+}
+@media (min-width: 1500px) { .room-frame { --scale: 7; } }
+
+.intro { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; width: 100%; max-width: 420px; flex: none; }
+.eyebrow { margin: 0; font-family: var(--pixel); font-size: 14px; line-height: 1.4; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+h1 { margin: 0; font-family: var(--pixel); font-weight: 700; font-size: 28px; line-height: 1.15; color: var(--heading); }
+.sub { margin: 0; color: var(--muted); }
+@media (min-width: 560px) { h1 { font-size: 36px; } }
+
+.doors { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 18px; width: 100%; }
+.door {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 10px 16px;
+  font-family: var(--pixel);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 4px solid var(--ink);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 var(--ink), 4px 4px 0 var(--ink), 6px 6px 0 var(--ink);
+}
+.door:hover, .door:focus-visible { background: var(--accent); color: var(--accent-ink); transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--ink); }
+.door:active { transform: translate(6px, 6px); box-shadow: none; }
+.door:focus-visible { outline-offset: 6px; }
+.door .jmpa-icon { width: 20px; height: 20px; flex: none; }
+.door .go { margin-left: auto; width: 12px; height: 12px; flex: none; fill: currentColor; shape-rendering: crispEdges; }
+
+/* ── footer ── */
+.jmpa-footer { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px 28px; }
+.jmpa-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 4px solid var(--ink);
+}
+.jmpa-footer-left { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; }
+.jmpa-footer-brand { font-family: var(--pixel); font-weight: 700; font-size: 16px; color: var(--heading); }
+.jmpa-footer-tagline { color: var(--muted); font-size: 0.875rem; }
+.jmpa-footer-right { display: flex; align-items: center; gap: 4px; }
+.jmpa-footer-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; color: var(--text); border: 3px solid transparent; }
+.jmpa-footer-icon svg { display: block; width: 16px; height: 16px; flex: none; }
+.jmpa-footer-icon:hover { color: var(--accent-ink); background: var(--accent); border-color: var(--ink); }
+.jmpa-footer-copy { margin: 14px 0 0; color: var(--muted); font-size: 0.8125rem; }
+
+@media (max-width: 559px) {
+  .bar { padding: 16px 20px 0; }
+  main { padding: 28px 20px 40px; }
+  .jmpa-footer { padding: 0 20px 24px; }
+  .jmpa-footer-inner { flex-direction: column; align-items: flex-start; }
+  .jmpa-footer-right { margin-left: -3px; }
+  .door { font-size: 16px; }
+}
+
+/* ── the room: shades derived from the picker's primary / secondary ── */
+.room {
+  --p: var(--pal-primary, #0a2a6b);
+  --s: var(--pal-secondary, #2f7fae);
+  --wall: color-mix(in srgb, var(--s) 32%, #fff);
+  --wall-b: color-mix(in srgb, var(--s) 32%, #fff);
+  --floor: color-mix(in srgb, var(--p) 38%, #fff);
+  --floor-d: color-mix(in srgb, var(--p) 48%, #fff);
+  --sky: color-mix(in srgb, var(--s) 42%, #fff);
+  --hill: color-mix(in srgb, var(--p) 34%, var(--sky));
+  --frame: color-mix(in srgb, var(--p) 8%, #fff);
+  --wood: color-mix(in srgb, var(--p) 10%, #d8a265);
+  --wood-hi: color-mix(in srgb, var(--p) 6%, #f0cb98);
+  --wood-d: color-mix(in srgb, var(--p) 28%, #946238);
+  --bezel: color-mix(in srgb, var(--p) 30%, #262b36);
+  --bezel-hi: color-mix(in srgb, var(--p) 25%, #4d5566);
+  --screen: color-mix(in srgb, var(--p) 55%, #04060e);
+  --bar: color-mix(in srgb, var(--p) 70%, #fff 8%);
+  --code-1: color-mix(in srgb, var(--s) 55%, #fff);
+  --code-2: #ffd36b;
+  --code-3: color-mix(in srgb, var(--p) 30%, #fff 70%);
+  --shirt: var(--p);
+  --shirt-d: color-mix(in srgb, var(--p) 70%, #000);
+  --pants: color-mix(in srgb, var(--p) 55%, #2a2f3a);
+  --pants-d: color-mix(in srgb, var(--p) 40%, #12151c);
+  --chair: color-mix(in srgb, var(--p) 25%, #3a3f4c);
+  --chair-d: color-mix(in srgb, var(--p) 20%, #1c2029);
+  --skin: #f0bf98;
+  --skin-d: #d79a74;
+  --hair: #3b2a22;
+  --hp: #ffc83d;
+  --hp-d: #d99a14;
+  --mug: #f7f2e8;
+  --mug-d: #8a6a4a;
+  --glow: color-mix(in srgb, var(--s) 70%, #fff);
+}
+html.dark .room {
+  --wall: color-mix(in srgb, var(--s) 16%, #05070e);
+  --wall-b: color-mix(in srgb, var(--s) 24%, #05070e);
+  --floor: color-mix(in srgb, var(--p) 34%, #05070e);
+  --floor-d: color-mix(in srgb, var(--p) 22%, #05070e);
+  --sky: color-mix(in srgb, var(--p) 45%, #03050b);
+  --hill: color-mix(in srgb, var(--p) 40%, #03050b);
+  --frame: color-mix(in srgb, var(--s) 38%, #05070e);
+  --wood: color-mix(in srgb, var(--p) 14%, #6b4524);
+  --wood-hi: color-mix(in srgb, var(--s) 22%, #8f6538);
+  --wood-d: color-mix(in srgb, var(--p) 20%, #3a2411);
+  --bezel: color-mix(in srgb, var(--s) 24%, #11141c);
+  --bezel-hi: color-mix(in srgb, var(--s) 36%, #2a3040);
+  --screen: color-mix(in srgb, var(--s) 45%, #0a1830);
+  --bar: color-mix(in srgb, var(--p) 55%, #fff 8%);
+  --shirt: color-mix(in srgb, var(--s) 62%, #1a2030);
+  --shirt-d: color-mix(in srgb, var(--s) 40%, #0b0f1a);
+  --pants: color-mix(in srgb, var(--p) 45%, #151a26);
+  --pants-d: color-mix(in srgb, var(--p) 30%, #07090f);
+  --chair: color-mix(in srgb, var(--s) 22%, #1d2230);
+  --chair-d: color-mix(in srgb, var(--s) 14%, #0a0c12);
+  --skin: #d9a47f;
+  --skin-d: #b07d5c;
+  --hair: #1d1511;
+  --mug: #d8d2c4;
+}
+.room .wl { fill: var(--wall); }
+.room .wb { fill: var(--wall-b); }
+.room .fl { fill: var(--floor); }
+.room .fd { fill: var(--floor-d); }
+.room .sky { fill: var(--sky); }
+.room .hill { fill: var(--hill); }
+.room .wf { fill: var(--frame); }
+.room .sun { fill: #ffd24a; }
+.room .cloud { fill: #fff; }
+.room .moon { fill: #f6f0cf; }
+.room .star { fill: #fff; }
+.room .bk1 { fill: var(--p); }
+.room .bk2 { fill: #e0a84a; }
+.room .bk3 { fill: color-mix(in srgb, var(--s) 80%, #fff); }
+.room .pt { fill: var(--wood-d); }
+.room .pl { fill: #4aa35a; }
+.room .pld { fill: #2f7a41; }
+.room .dk { fill: var(--wood); }
+.room .dh { fill: var(--wood-hi); }
+.room .ds { fill: var(--wood-d); }
+.room .mb { fill: var(--bezel); }
+.room .mh { fill: var(--bezel-hi); }
+.room .led { fill: #6dff9c; }
+.room .sc { fill: var(--screen); }
+.room .tb { fill: var(--bar); }
+.room .d1 { fill: #ff6b6b; }
+.room .d2 { fill: #ffd36b; }
+.room .d3 { fill: #6dff9c; }
+.room .c1 { fill: var(--code-1); }
+.room .c2 { fill: var(--code-2); }
+.room .c3 { fill: var(--code-3); }
+.room .cursor { fill: #fff; }
+.room .flicker { fill: #fff; opacity: 0; }
+.room .mg { fill: var(--mug); }
+.room .mgd { fill: var(--mug-d); }
+.room .mgs { fill: var(--p); }
+.room .st { fill: #fff; opacity: 0.8; }
+.room .ch { fill: var(--chair); }
+.room .chd { fill: var(--chair-d); }
+.room .pn { fill: var(--pants); }
+.room .pnd { fill: var(--pants-d); }
+.room .sn { fill: #1b1d24; }
+.room .sh { fill: var(--shirt); }
+.room .shd { fill: var(--shirt-d); }
+.room .sk { fill: var(--skin); }
+.room .skd { fill: var(--skin-d); }
+.room .hr { fill: var(--hair); }
+.room .eye { fill: #1b1d24; }
+.room .hp { fill: var(--hp); }
+.room .hpd { fill: var(--hp-d); }
+.room .lit { fill: var(--glow); opacity: 0; }
+.room .glow rect { fill: var(--glow); opacity: 0; }
+html.dark .room .glow rect { opacity: 0.09; }
+html.dark .room .glow .spill { opacity: 0.1; }
+html.dark .room .lit { opacity: 0.3; }
+.room .by-night { display: none; }
+html.dark .room .by-night { display: inline; }
+html.dark .room .by-day { display: none; }
+.room .h-b { display: none; }
+
+/* ── motion (off under prefers-reduced-motion; the still frame is complete without it) ── */
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes type-a { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes type-b { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
+@keyframes grow { 0% { transform: scaleX(0); } 85%, 100% { transform: scaleX(1); } }
+@keyframes advance { 0% { transform: translateX(-14px); } 85%, 100% { transform: translateX(0); } }
+@keyframes rise { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 0.85; } 100% { transform: translateY(-4px); opacity: 0; } }
+@keyframes flick { 0%, 92% { opacity: 0; } 93% { opacity: 0.07; } 95% { opacity: 0; } 97% { opacity: 0.04; } 100% { opacity: 0; } }
+@keyframes twinkle { 0%, 70% { opacity: 1; } 80%, 90% { opacity: 0.2; } 100% { opacity: 1; } }
+@keyframes nod { 0%, 88% { transform: translateY(0); } 92%, 96% { transform: translateY(1px); } 100% { transform: translateY(0); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .room .h-b { display: inline; }
+  .room .h-a { animation: type-a 0.4s steps(1) infinite; }
+  .room .h-b { animation: type-b 0.4s steps(1) infinite; }
+  .room .typing, .room .cursor-move { transform-box: fill-box; }
+  .room .typing { transform-origin: left center; animation: grow 6s steps(14) infinite; }
+  .room .cursor-move { animation: advance 6s steps(14) infinite; }
+  .room .cursor { animation: blink 0.8s steps(1) infinite; }
+  .room .st { animation: rise 2.4s steps(5) infinite; }
+  .room .st.b { animation-delay: 0.8s; }
+  .room .st.c { animation-delay: 1.6s; }
+  .room .flicker { animation: flick 5s steps(1) infinite; }
+  .room .star.s1 { animation: twinkle 3s steps(1) infinite; }
+  .room .star.s2 { animation: twinkle 4s steps(1) 1s infinite; }
+  .room .star.s3 { animation: twinkle 5s steps(1) 2s infinite; }
+  .room .head { animation: nod 7s steps(1) infinite; }
+}
