@@ -62,13 +62,15 @@ test.describe('colour picker', () => {
     await expect(page.locator(S.popup)).not.toHaveClass(/open/);
   });
 
-  test('colours drive page bg, cards, titles and the blobs, in both schemes', async ({ page }) => {
+  test('colours drive page bg, buttons, title and the room, in both schemes', async ({ page }) => {
     for (const scheme of ['light', 'dark'] as const) {
       const read = async () => ({
         bg: await css(page, 'body', 'background-color'),
-        card: await css(page, '.jmpa-link-card', 'background-color'),
-        title: await css(page, '.jmpa-link-title', 'color'),
-        blob: await css(page, '.jmpa-blob-a', 'background-color'),
+        card: await css(page, '.door', 'background-color'),
+        title: await css(page, 'h1', 'color'),
+        wall: await css(page, '.room .wl', 'fill'),
+        shirt: await css(page, '.room .sh', 'fill'),
+        screen: await css(page, '.room .sc', 'fill'),
       });
       await page.evaluate(() => localStorage.removeItem('palette-custom'));
       await page.reload();
@@ -145,7 +147,7 @@ test.describe('day/night scheme', () => {
       await page.reload();
       const svg = page.locator(S.toggle + ' svg');
       await expect(svg).toBeVisible();
-      expect(await svg.locator('path, circle').count()).toBeGreaterThan(0);
+      expect(await svg.locator('rect').count()).toBeGreaterThan(0);
     }
   });
 

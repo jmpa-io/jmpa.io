@@ -9,14 +9,13 @@ const LINKS = [
   { name: 'github.com/jmpa-io', href: 'https://github.com/jmpa-io', external: true },
 ];
 
-test.describe('home page links', () => {
+test.describe('home page', () => {
   test.beforeEach(async ({ page }) => { await page.goto('/'); });
 
-  test('one card per place, with the right href and target', async ({ page }) => {
-    const cards = page.locator('.jmpa-link-card');
-    await expect(cards).toHaveCount(LINKS.length);
+  test('each place is one pixel button with the right href and target', async ({ page }) => {
+    await expect(page.locator('a.door')).toHaveCount(LINKS.length);
     for (const l of LINKS) {
-      const a = page.locator('.jmpa-link-main', { hasText: new RegExp(`^\\s*${l.name.replace(/\./g, '\\.')}\\s*$`) });
+      const a = page.locator('a.door', { hasText: new RegExp(`^\\s*${l.name.replace(/\./g, '\\.')}\\s*$`) });
       await expect(a).toHaveAttribute('href', l.href);
       if (l.external) {
         await expect(a).toHaveAttribute('target', '_blank');
@@ -27,71 +26,86 @@ test.describe('home page links', () => {
     }
   });
 
-  test('deep links on the cards point at the right sites', async ({ page }) => {
-    const hrefs = await page.locator('.jmpa-link-sub').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href));
-    expect(hrefs).toEqual(expect.arrayContaining(['https://art.jmpa.io/art/', 'https://jcleal.me/posts/', 'https://jcleal.me/resume/', 'https://jcleal.me/workshops/']));
+  test('no place is listed twice (no header nav, no footer repeats)', async ({ page }) => {
+    const hrefs = await page.locator('a[href^="http"]').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href.replace(/\/$/, '')));
+    const places = hrefs.filter((h) => LINKS.some((l) => l.href === h));
+    expect(places.sort()).toEqual(LINKS.map((l) => l.href).sort());
+    await expect(page.locator('header a, header button')).toHaveCount(4); // logo, colours, theme (+ the picker's Reset inside the popup).
   });
 
-  test('nav and footer link to the same places', async ({ page }) => {
-    const nav = await page.locator('.jmpa-nav-links a').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href.replace(/\/$/, '')));
-    expect(nav).toEqual(LINKS.slice(0, 4).map((l) => l.href));
-    const foot = await page.locator('.jmpa-footer-link').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href.replace(/\/$/, '')));
-    expect(foot).toEqual(LINKS.slice(0, 4).map((l) => l.href));
-    await expect(page.locator('.jmpa-footer-icon[href="mailto:support@jmpa.io"]')).toHaveCount(1);
+  test('header is minimal: logo + the two toggles', async ({ page }) => {
+    await expect(page.locator('header.bar > a.logo')).toHaveAttribute('href', '/');
+    await expect(page.locator('header.bar > .palette-wrap #jmpa-palette-trigger')).toBeVisible();
+    await expect(page.locator('header.bar > #theme-toggle')).toBeVisible();
+    await expect(page.locator('nav.jmpa-nav, .jmpa-blob, #jmpa-hamburger')).toHaveCount(0);
   });
 
-  test('a card is clickable as a whole', async ({ page }) => {
-    const card = page.locator('.jmpa-link-card').first();
-    const b = (await card.boundingBox())!;
-    const hit = await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.className, [b.x + b.width / 2, b.y + 8]);
-    expect(String(hit)).toContain('jmpa-link-main');
+  test('buttons are chunky: hard border, stepped shadow, no blur, no radius; hover presses down', async ({ page }) => {
+    const door = page.locator('a.door').first();
+    const st = await door.evaluate((e) => { const c = getComputedStyle(e); return { bw: c.borderTopWidth, r: c.borderTopLeftRadius, sh: c.boxShadow, tr: c.transform }; });
+    expect(parseFloat(st.bw)).toBeGreaterThanOrEqual(3);
+    expect(st.r).toBe('0px');
+    expect(st.sh.split(/0px,\s/).length).toBeGreaterThanOrEqual(2); // stepped
+    expect(st.sh).not.toMatch(/\s[1-9]\d*px\s[1-9]\d*px\s[1-9]\d*px/); // offsets only, zero blur.
+    await door.hover();
+    expect(await door.evaluate((e) => getComputedStyle(e).transform)).not.toBe(st.tr);
   });
 
   test('overscroll-behavior stays none', async ({ page }) => {
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).overscrollBehaviorY)).toBe('none');
   });
 
+  test('pixel font is self-hosted (no external requests)', async ({ page }) => {
+    await page.evaluate(() => document.fonts.ready);
+    expect(await page.evaluate(() => document.fonts.check('16px Silkscreen'))).toBe(true);
+    expect(await page.locator('h1').evaluate((e) => getComputedStyle(e).fontFamily)).toContain('Silkscreen');
+    const res = await page.request.get('/fonts/Silkscreen-OFL.txt');
+    expect(res.status()).toBe(200);
+  });
+
   test('404 page builds and links home', async ({ page }) => {
     const res = await page.goto('/404.html');
     expect(res!.status()).toBe(200);
     await expect(page.locator('h1')).toHaveText('Nothing here.');
+    await expect(page.locator('a.door')).toHaveAttribute('href', '/');
   });
 });
 
-for (const [width, cols] of [[1600, 2], [900, 2], [390, 1]] as const) {
-  test(`layout at ${width}px: ${cols} column(s), no horizontal overflow, all cards inside the container`, async ({ page }) => {
+for (const [width, scale] of [[1600, 7], [900, 7], [390, 3]] as const) {
+  test(`layout at ${width}px: scene at ${scale}x, no horizontal overflow, everything inside the viewport`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    const xs = new Set<number>();
-    for (const c of await page.locator('.jmpa-link-card').all()) {
-      const b = (await c.boundingBox())!;
+    const scene = (await page.locator('svg.room').boundingBox())!;
+    expect([scene.width, scene.height]).toEqual([96 * scale, 60 * scale]);
+    for (const el of await page.locator('a.door, svg.room, .room-frame, header.bar > *, .jmpa-footer-inner').all()) {
+      const b = (await el.boundingBox())!;
       expect(b.x).toBeGreaterThanOrEqual(0);
       expect(b.x + b.width).toBeLessThanOrEqual(width);
-      xs.add(Math.round(b.x));
     }
-    expect(xs.size).toBe(cols);
-    expect(await page.locator('.jmpa-nav-links').isVisible()).toBe(width > 640);
-    expect(await page.locator('#jmpa-hamburger').isVisible()).toBe(width <= 640);
+    // the five buttons stay a single column.
+    const xs = new Set((await Promise.all((await page.locator('a.door').all()).map((a) => a.boundingBox()))).map((b) => Math.round(b!.x)));
+    expect(xs.size).toBe(1);
   });
 }
 
-test('hamburger opens the menu at 390 and Escape closes it', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
-  await page.locator('#jmpa-hamburger').click();
-  await expect(page.locator('#jmpa-mobile-menu a')).toHaveCount(4);
-  await expect(page.locator('#jmpa-mobile-menu')).toBeVisible();
-  await page.keyboard.press('Escape');
-  await expect(page.locator('#jmpa-mobile-menu')).toBeHidden();
+test('at 1600 the scene sits beside the buttons; at 900 and 390 it stacks above them', async ({ page }) => {
+  for (const [w, beside] of [[1600, true], [900, false], [390, false]] as const) {
+    await page.setViewportSize({ width: w, height: 900 });
+    await page.goto('/');
+    const scene = (await page.locator('.room-frame').boundingBox())!;
+    const door = (await page.locator('a.door').first().boundingBox())!;
+    expect(door.x >= scene.x + scene.width).toBe(beside);
+    if (!beside) expect(door.y).toBeGreaterThan(scene.y + scene.height);
+  }
 });
 
-test('keyboard tab order: logo, nav, colours, theme, then each card in order, then the footer', async ({ page }) => {
+test('keyboard tab order: logo, colours, theme, then the five buttons in order, then the footer icons', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/');
   const seen: string[] = [];
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 14; i++) {
     await page.keyboard.press('Tab');
     const d = await page.evaluate(() => {
       const e = document.activeElement as HTMLElement;
@@ -99,25 +113,22 @@ test('keyboard tab order: logo, nav, colours, theme, then each card in order, th
     });
     if (d) seen.push(d);
   }
-  const idx = (s: string) => seen.findIndex((x) => x.includes(s));
-  expect(seen[0]).toBe('/');
-  expect(idx('art.jmpa.io')).toBeGreaterThan(0);
-  expect(idx('#jmpa-palette-trigger')).toBeGreaterThan(idx('startpage.jcleal.me'));
-  expect(idx('#theme-toggle')).toBeGreaterThan(idx('#jmpa-palette-trigger'));
-  const cardArt = seen.indexOf('https://art.jmpa.io', idx('#theme-toggle'));
-  const cardGh = seen.indexOf('https://github.com/jmpa-io', idx('#theme-toggle'));
-  expect(cardArt).toBeGreaterThan(idx('#theme-toggle'));
-  expect(cardGh).toBeGreaterThan(cardArt);
-  expect(seen.indexOf('https://github.com/jmpa-io', cardGh + 1)).toBeGreaterThan(cardGh); // footer icon, after the cards
-  expect(await page.locator('.jmpa-link-main:focus-visible, :focus-visible').count()).toBeGreaterThanOrEqual(0);
+  expect(seen.slice(0, 8)).toEqual([
+    '/', '#jmpa-palette-trigger', '#theme-toggle',
+    'https://art.jmpa.io', 'https://jcleal.me', 'https://portfolio.jcleal.me', 'https://startpage.jcleal.me', 'https://github.com/jmpa-io',
+  ]);
+  expect(seen.slice(8, 10)).toEqual(['https://instagram.com/jmpa.io', 'mailto:support@jmpa.io']);
 });
 
-test('focus is visibly outlined on a card link', async ({ page }) => {
+test('focus is visibly outlined on a button', async ({ page }) => {
   await page.goto('/');
-  await page.locator('.jmpa-link-main').first().focus();
-  await page.keyboard.press('Shift+Tab');
   await page.keyboard.press('Tab');
-  expect(await page.locator('.jmpa-link-main').first().evaluate((e) => getComputedStyle(e).outlineStyle)).not.toBe('none');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  const a = page.locator('a.door').first();
+  await expect(a).toBeFocused();
+  expect(await a.evaluate((e) => getComputedStyle(e).outlineStyle)).not.toBe('none');
 });
 
 for (const scheme of ['light', 'dark'] as const) {
