@@ -1,51 +1,24 @@
-# The one place that lists everywhere jmpa.io points to. Edit here; the home page cards, the nav and the footer all read this file.
-#   name / url / desc / tag   what the card shows
-#   subs                      optional list of {name, url} deep links shown as chips on the card
-#   nav: true                 also show in the header nav
-#   footer: text | icon       how it appears in the footer (omit to leave it out)
-#   icon                      name from partials/jmpa-icon.html (github, instagram, mail, external)
+# The one place that lists everywhere jmpa.io points to. Edit here; the home page buttons and the footer icons read this file.
+#   name / url                what the button shows and where it goes
+#   icon                      name from partials/jmpa-icon.html (github, instagram, mail, external); shown on the button / footer icon
+#   label                     accessible name for icon-only links
 #   external: true            opens in a new tab (target=_blank rel=noopener noreferrer)
-#   card: false               footer/nav only, no card on the home page
+#   footer: icon              small icon link in the footer (omit to leave it out of the footer)
+#   card: false               not a button on the home page (footer only)
+# Each place appears once: either as a button or as a footer icon, never both.
 - name: art.jmpa.io
   url: https://art.jmpa.io
-  tag: Art
-  desc: Original watercolour paintings, one of a kind.
-  subs:
-    - { name: Gallery, url: "https://art.jmpa.io/art/" }
-    - { name: Commissions, url: "https://art.jmpa.io/commissions/" }
-  nav: true
-  footer: text
 - name: jcleal.me
   url: https://jcleal.me
-  tag: Blog
-  desc: Blog, about, resume and workshops.
-  subs:
-    - { name: Blog, url: "https://jcleal.me/posts/" }
-    - { name: Resume, url: "https://jcleal.me/resume/" }
-    - { name: Workshops, url: "https://jcleal.me/workshops/" }
-    - { name: Contact, url: "https://jcleal.me/contact/" }
-  nav: true
-  footer: text
 - name: portfolio.jcleal.me
   url: https://portfolio.jcleal.me
-  tag: Portfolio
-  desc: My work and projects, on a little retro desktop.
-  nav: true
-  footer: text
 - name: startpage.jcleal.me
   url: https://startpage.jcleal.me
-  tag: Startpage
-  desc: A terminal-style start page for the browser.
-  nav: true
-  footer: text
 - name: github.com/jmpa-io
   label: GitHub jmpa-io
   url: https://github.com/jmpa-io
-  tag: Code
-  desc: Open-source projects, tooling and these websites.
   icon: github
   external: true
-  footer: icon
 - name: Instagram
   label: Instagram @jmpa.io
   url: https://instagram.com/jmpa.io

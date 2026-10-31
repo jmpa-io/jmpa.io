@@ -4,14 +4,13 @@
 {{- partial "jmpa-head.html" . -}}
 </head>
 <body>
-{{- partial "jmpa-nav.html" . -}}
-<main class="jmpa-content-gradient">
-  <div class="jmpa-home">
-    <div class="jmpa-hero">
-      <p class="jmpa-hero-eyebrow">404</p>
-      <h1>Nothing here.</h1>
-      <p class="jmpa-hero-sub">That page doesn't exist. <a class="jmpa-link-sub" href="/">Head back home</a>.</p>
-    </div>
+{{- partial "jmpa-header.html" . -}}
+<main>
+  <div class="intro">
+    <p class="eyebrow">404</p>
+    <h1>Nothing here.</h1>
+    <p class="sub">That page doesn't exist.</p>
+    <a class="door" href="/"><span>Back home</span></a>
   </div>
 </main>
 {{- partial "jmpa-footer.html" . -}}
