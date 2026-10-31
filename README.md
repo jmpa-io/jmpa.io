@@ -8,8 +8,8 @@
 + 🚪 The front door: one simple page linking to everywhere I live online.
 ```
 
-`jmpa.io` looks and feels like [art.jmpa.io](https://art.jmpa.io) (same header, footer, type, blobs background and card
-style; `static/css/jmpa.css` and the head/nav/footer partials are copied from it) but it is just a list of places:
+`jmpa.io` is a deliberately small pixel-art page: an animated pixel scene of a guy typing at a PC (steaming mug, blinking
+cursor, flickering screen) with five chunky pixel buttons, each listed once:
 
 - [art.jmpa.io](https://art.jmpa.io) - original watercolour paintings
 - [jcleal.me](https://jcleal.me) - blog, about, resume, workshops
@@ -22,23 +22,32 @@ masters now live only in `portfolio.jcleal.me/public/crt.{js,css}`.
 
 ## Adding or changing a link
 
-Everything is data-driven from `data/links.yml`. The home page cards, the header nav and the footer all read it:
+Everything is data-driven from `data/links.yml`: the buttons beside the scene and the footer icons both read it:
 
 ```yaml
-- name: art.jmpa.io          # card title
-  url: https://art.jmpa.io
-  tag: Art                   # card eyebrow, also the footer text label
-  desc: Original watercolour paintings.
-  subs: [{ name: Gallery, url: "https://art.jmpa.io/art/" }]   # optional chips
-  nav: true                  # show in the header nav
-  footer: text               # text | icon | omit
-  icon: github               # icon name (partials/jmpa-icon.html), for footer: icon
+- name: github.com/jmpa-io   # button text
+  label: GitHub jmpa-io      # optional accessible name
+  url: https://github.com/jmpa-io
+  icon: github               # icon name (partials/jmpa-icon.html), shown on the button or as a footer icon
   external: true             # target=_blank rel="noopener noreferrer"
-  card: false                # footer/nav only, no card
+  footer: icon               # footer icon (with card: false it is footer-only)
+  card: false
 ```
 
-Page copy (heading, tagline, etc.) is in `config.yml` under `Params`. `config.yml` also limits `module.mounts` to the
-files this site uses, so stray local files can't break the build (previously only the home page was produced).
+Page copy (eyebrow, heading, sub text, footer tagline) is in `config.yml` under `Params`. `config.yml` also limits
+`module.mounts` to the files this site uses, so stray local files can't break the build.
+
+## The pixel scene
+
+- `layouts/partials/jmpa-room.html` is a 96x60 grid of `<rect>`s in one inline SVG (`role="img"` with alt text,
+  `shape-rendering="crispEdges"`, `image-rendering: pixelated`), shown at integer scales (3x / 5x / 7x) via `--scale`.
+- All colours come from the palette CSS variables (`color-mix` of `--pal-primary`/`--pal-secondary` in `static/css/pixel.css`),
+  so it follows the picker. Day is a bright room with a sun; night is a dark room lit by the monitor glow, with a moon and stars.
+- Animations (typing hands, code lines, cursor, steam, screen flicker, stars) are stepped CSS and only run under
+  `prefers-reduced-motion: no-preference`; otherwise a still frame is shown.
+- Headings and labels use self-hosted, subset [Silkscreen](https://fonts.google.com/specimen/Silkscreen)
+  (`static/fonts/silkscreen-*.woff2`, SIL OFL: `static/fonts/Silkscreen-OFL.txt`); body text stays in the system sans.
+- Buttons: 4px hard border, stepped drop shadow, no blur or radius, hover/focus/active press down.
 
 ## Colours and day/night
 
@@ -68,5 +77,7 @@ make e2e                                    # npm ci + playwright test against d
 cd e2e && npm run test:update               # refresh baselines (delete the snapshot dir to force a full regen)
 ```
 
-Specs: `links` (hrefs/targets, layout at 390/900/1600, no overflow, tab order, screenshots), `colours` (navy default,
-Reset, picker, AA sweep, scheme toggle), `footer` (alignment at 5 widths, AA) and `github` (GitHub mark on every GitHub link).
+Specs: `links` (hrefs/targets, button style, layout at 390/900/1600, no overflow, tab order, screenshots), `scene`
+(labelled image, pixelated integer-scale rendering, follows picker and day/night, animation and reduced-motion),
+`colours` (navy default, Reset, picker, AA sweep, scheme toggle), `footer` (alignment at 5 widths, AA) and `github`
+(GitHub mark on the GitHub link).
