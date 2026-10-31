@@ -43,6 +43,12 @@ make serve
 
 2. Using your browser, navigate to `localhost:1314`.
 
+## CRT screen and resizable windows
+
+The desktop is viewed through a curved CRT (`static/js/crt.js` + `static/css/crt.css`, master copies mirrored into `portfolio.jcleal.me/public/` by `make e2e-sync` in jcleal.me). Curvature is a real barrel distortion: an SVG `feDisplacementMap` fed by a generated radial map, with three passes for chromatic aberration that grows toward the edges. CSS 3D was considered but can only fake a tilted plane, so it was not built (reasoned, not measured). Filters don't change hit-testing, so `crt.js` re-targets pointer events through the inverse mapping (hover is not remapped). The Display slider scales curvature, glow and overlays (0 = flat); the CRT toggle off is fully flat. Curvature is off below 900px, on touch, and with reduced motion the flicker/band/grain stop. Measured in headless Chrome with curvature and animation on: avg 16.0ms, p95 17-18ms per frame (vsync-capped at 60fps).
+
+Windows resize from 8 pointer-captured handles (min 220x120, clamped to the desktop), double-click the title bar to maximise/restore; below ~700px windows are full-screen with no handles.
+
 ## Testing
 
 Playwright screenshot + interaction tests live in `e2e/` (they use your system Chrome; nothing is downloaded):
