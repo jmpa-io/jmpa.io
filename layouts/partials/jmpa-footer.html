@@ -1,20 +1,14 @@
 <footer class="jmpa-footer">
   <div class="jmpa-footer-inner">
     <div class="jmpa-footer-left">
-      <span class="jmpa-footer-brand">jmpa<span class="jmpa-brand-tld">.io</span></span>
+      <span class="jmpa-footer-brand">jmpa.io</span>
       <span class="jmpa-footer-tagline">{{ .Site.Params.footerTagline }}</span>
     </div>
     <nav class="jmpa-footer-right" aria-label="Footer">
-      {{ range where .Site.Data.links "footer" "text" }}
-      <a class="jmpa-footer-link" href="{{ .url }}">{{ .tag | default .name }}</a>
-      {{ end }}
       {{ range where .Site.Data.links "footer" "icon" }}
       <a class="jmpa-footer-icon" href="{{ .url }}" aria-label="{{ .label | default .name }}" title="{{ .label | default .name }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ partial "jmpa-icon.html" .icon }}</a>
       {{ end }}
     </nav>
   </div>
-  <div class="jmpa-footer-bottom">
-    <span>&copy; {{ now.Year }} jmpa</span>
-    <button class="jmpa-back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>
-  </div>
+  <p class="jmpa-footer-copy">&copy; {{ now.Year }} jmpa</p>
 </footer>

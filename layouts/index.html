@@ -4,29 +4,20 @@
 {{- partial "jmpa-head.html" . -}}
 </head>
 <body>
-{{- partial "jmpa-nav.html" . -}}
-<main class="jmpa-content-gradient">
-  <div class="jmpa-home">
-    <div class="jmpa-hero">
-      <p class="jmpa-hero-eyebrow">{{ .Site.Params.eyebrow }}</p>
+{{- partial "jmpa-header.html" . -}}
+<main>
+  <div class="stage">
+    {{- partial "jmpa-room.html" . -}}
+    <div class="intro">
+      <p class="eyebrow">{{ .Site.Params.eyebrow }}</p>
       <h1>{{ .Site.Params.heading }}</h1>
-      <p class="jmpa-hero-sub">{{ .Site.Params.sub }}</p>
+      <p class="sub">{{ .Site.Params.sub }}</p>
+      <ul class="doors" aria-label="Places">
+        {{ range .Site.Data.links }}{{ if ne .card false }}
+        <li><a class="door" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ with .icon }}{{ partial "jmpa-icon.html" . }}{{ end }}<span>{{ .name }}</span><svg class="go" viewBox="0 0 5 9" aria-hidden="true" focusable="false"><rect x="0" y="0" width="1" height="9"/><rect x="1" y="1" width="1" height="7"/><rect x="2" y="2" width="1" height="5"/><rect x="3" y="3" width="1" height="3"/><rect x="4" y="4" width="1" height="1"/></svg></a></li>
+        {{ end }}{{ end }}
+      </ul>
     </div>
-
-    <ul class="jmpa-links" aria-label="Places">
-      {{ range .Site.Data.links }}{{ if ne .card false }}
-      <li class="jmpa-link-card">
-        <p class="jmpa-link-tag">{{ .tag }}</p>
-        <h2 class="jmpa-link-title"><a class="jmpa-link-main" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ with .icon }}{{ partial "jmpa-icon.html" . }}{{ end }}<span>{{ .name }}</span></a></h2>
-        <p class="jmpa-link-desc">{{ .desc }}</p>
-        {{ with .subs }}
-        <div class="jmpa-link-subs">
-          {{ range . }}<a class="jmpa-link-sub" href="{{ .url }}">{{ .name }}</a>{{ end }}
-        </div>
-        {{ end }}
-      </li>
-      {{ end }}{{ end }}
-    </ul>
   </div>
 </main>
 {{- partial "jmpa-footer.html" . -}}

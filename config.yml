@@ -6,9 +6,9 @@ Params:
   description: "jmpa.io - the front door to my corner of the internet: art, blog, portfolio and start page."
   eyebrow: "Jordan Cleal · Melbourne"
   heading: "Everything, in one place."
-  sub: "Paintings, writing, projects and a start page. Pick a door."
+  sub: "Art, writing, projects and a start page."
   footerTagline: "The front door to everything Jordan makes."
-  # The places listed on the page (cards, nav, footer) come from data/links.yml.
+  # The places listed on the page (buttons, footer icons) come from data/links.yml.
 
 markup:
   goldmark:
