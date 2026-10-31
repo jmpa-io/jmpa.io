@@ -1,97 +1,34 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ .Site.Title }}</title>
-  <meta name="description" content="{{ .Site.Params.description }}">
-  <meta name="theme-color" content="#000000">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preload" href="/fonts/fira-code-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/crt.css">
-  <link rel="stylesheet" href="/css/desktop.css">
-  <script src="/js/palette.js"></script>
-  <script>
-    Palette.init({
-      triggerId: 'display-btn', popupId: 'display-dlg', toggleId: 'scheme-btn',
-      customIds: { primary: 'display-primary', secondary: 'display-secondary', reset: 'display-reset', note: 'display-note' },
-    });
-  </script>
+{{- partial "jmpa-head.html" . -}}
 </head>
 <body>
-  <div class="screen" id="screen">
-   <div class="glass" id="glass">
-    <div class="crt-content" id="crt-content">
-    <div class="desktop" id="desktop">
-      <h1 class="sr-only">jmpa</h1>
-      <nav class="icons" aria-label="Programs">
-        {{ range .Site.Params.programs }}
-        {{ if .window }}
-        <button class="icon" type="button" data-icon="{{ .icon }}" data-window="{{ .window }}"><span class="icon-img"></span><span class="icon-label">{{ .title }}</span></button>
-        {{ else }}
-        <a class="icon" href="{{ .url }}" data-icon="{{ .icon }}"{{ if .newtab }} target="_blank" rel="noopener"{{ end }}><span class="icon-img"></span><span class="icon-label">{{ .title }}</span></a>
-        {{ end }}
-        {{ end }}
-      </nav>
-
-      <section class="win" id="win-room" hidden aria-label="room.exe" style="left:160px;top:40px;width:590px;height:362px">
-        <div class="win-bar" data-drag>
-          <span class="win-title"><span class="icon-img" data-icon="monitor" data-size="16"></span> room.exe</span>
-          <span class="win-ctrl">
-            <button class="bevel" type="button" data-min aria-label="Minimise"><i class="g-min"></i></button>
-            <button class="bevel" type="button" data-max aria-label="Maximise"><i class="g-max"></i></button>
-            <button class="bevel" type="button" data-close aria-label="Close"><i class="g-close"></i></button>
-          </span>
-        </div>
-        <div class="win-body">
-          <canvas id="room" width="192" height="108" role="img"
-            aria-label="Pixel art of a person with headphones typing at a glowing computer in a dark room, rain falling outside the window."></canvas>
-        </div>
-      </section>
+{{- partial "jmpa-nav.html" . -}}
+<main class="jmpa-content-gradient">
+  <div class="jmpa-home">
+    <div class="jmpa-hero">
+      <p class="jmpa-hero-eyebrow">{{ .Site.Params.eyebrow }}</p>
+      <h1>{{ .Site.Params.heading }}</h1>
+      <p class="jmpa-hero-sub">{{ .Site.Params.sub }}</p>
     </div>
 
-    <div class="start-backdrop" id="start-backdrop" hidden></div>
-    <div class="start-menu" id="start-menu" role="menu" hidden>
-      <div class="start-banner" aria-hidden="true"><span>jmpa OS</span></div>
-      <div class="start-items">
-        {{ range .Site.Params.programs }}
-        {{ if .window }}
-        <button type="button" role="menuitem" data-icon="{{ .icon }}" data-size="32" data-window="{{ .window }}"><span class="icon-img"></span><span>{{ .title }}</span></button>
-        {{ else }}
-        <a role="menuitem" href="{{ .url }}" data-icon="{{ .icon }}" data-size="32"{{ if .newtab }} target="_blank" rel="noopener"{{ end }}><span class="icon-img"></span><span>{{ .title }}</span></a>
-        {{ end }}
-        {{ end }}
-        <button type="button" role="menuitem" id="shutdown"><span class="icon-img power-ico" aria-hidden="true">&#9211;</span><span>Shut Down</span></button>
-      </div>
-    </div>
-
-    <footer class="taskbar">
-      <button class="bevel start" id="start-btn" type="button" aria-expanded="false">
-        <span class="flag" aria-hidden="true"><i></i><i></i><i></i><i></i></span><strong>Start</strong>
-      </button>
-      <span class="tasks" id="tasks"></span>
-      <div class="display-dlg" id="display-dlg" role="dialog" aria-label="Display properties">
-        <div class="win-bar"><span class="win-title">Display</span></div>
-        <div class="dlg-body">
-          <label>Primary <input type="color" id="display-primary" value="#c04828"></label>
-          <label>Secondary <input type="color" id="display-secondary" value="#2f7fae"></label>
-          <button class="bevel" id="display-reset" type="button">Reset</button>
-          <p id="display-note" class="dlg-note" aria-live="polite"></p>
+    <ul class="jmpa-links" aria-label="Places">
+      {{ range .Site.Data.links }}{{ if ne .card false }}
+      <li class="jmpa-link-card">
+        <p class="jmpa-link-tag">{{ .tag }}</p>
+        <h2 class="jmpa-link-title"><a class="jmpa-link-main" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ with .icon }}{{ partial "jmpa-icon.html" . }}{{ end }}<span>{{ .name }}</span></a></h2>
+        <p class="jmpa-link-desc">{{ .desc }}</p>
+        {{ with .subs }}
+        <div class="jmpa-link-subs">
+          {{ range . }}<a class="jmpa-link-sub" href="{{ .url }}">{{ .name }}</a>{{ end }}
         </div>
-      </div>
-      <button class="bevel tray" id="display-btn" type="button" title="Display colours" aria-label="Display colours" aria-expanded="false"><span class="swatch" aria-hidden="true"></span></button>
-      <button class="bevel tray" id="scheme-btn" type="button" title="Toggle day/night" aria-label="Dark mode" aria-pressed="false"></button>
-      <button class="bevel tray" id="crt-btn" type="button" title="Toggle CRT effect" aria-pressed="true">CRT</button>
-      <span class="clock" id="clock"></span>
-    </footer>
-    </div>
-
-    <div class="crt" id="crt" aria-hidden="true"></div>
-   </div>
+        {{ end }}
+      </li>
+      {{ end }}{{ end }}
+    </ul>
   </div>
-  <script src="/js/room.js"></script>
-  <script src="/js/crt.js"></script>
-  <script src="/js/desktop.js"></script>
+</main>
+{{- partial "jmpa-footer.html" . -}}
 </body>
 </html>
