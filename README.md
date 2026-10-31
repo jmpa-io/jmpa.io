@@ -46,13 +46,19 @@ Page copy (eyebrow, heading, sub text, footer tagline) is in `config.yml` under 
 - Animations (typing hands, code lines, cursor, steam, screen flicker, stars) are stepped CSS and only run under
   `prefers-reduced-motion: no-preference`; otherwise a still frame is shown.
 - Headings and labels use self-hosted, subset [Silkscreen](https://fonts.google.com/specimen/Silkscreen)
-  (`static/fonts/silkscreen-*.woff2`, SIL OFL: `static/fonts/Silkscreen-OFL.txt`); body text stays in the system sans.
+  (`static/fonts/silkscreen-*.woff2`, SIL OFL: `static/fonts/Silkscreen-OFL.txt`); body text is self-hosted Inter
+  (`static/fonts/inter-*.woff2`, SIL OFL: `static/fonts/Inter-OFL.txt`). Both are `font-display: swap`; the Silkscreen weights are preloaded.
+- Security: the CSP is a `<meta>` tag in `jmpa-head.html` (`script-src 'self'`, no inline script/style, so the page's
+  setup lives in `static/js/init.js`); the headers a meta tag can't set (HSTS, nosniff, frame, referrer, permissions)
+  come from the `SecurityHeaders` response headers policy in `cf/website/template.yml`.
 - Buttons: 4px hard border, stepped drop shadow, no blur or radius, hover/focus/active press down.
+- No OpenTelemetry: this is a static page with no server code of its own, so there is nothing to trace; the CDN access logs
+  already cover traffic, and browser telemetry would add a third-party-style beacon (CSP `connect-src 'none'`) for no gain.
 
 ## Colours and day/night
 
 The header has a colour picker (Primary + Secondary, plus Reset) and a sun/moon toggle. **The default is navy
-`#0a2a6b` / `#2f7fae`** (passed to `Palette.init({ defaults })` in `layouts/partials/jmpa-head.html`; Reset returns to it).
+`#0a2a6b` / `#2f7fae`** (passed to `Palette.init({ defaults })` in `static/js/init.js`; Reset returns to it).
 Contrast stays AA in light and dark. Choices persist in `localStorage` (`palette-custom`, `scheme`) and apply before first paint.
 
 `static/js/palette.js` and `e2e/{playwright.config.ts,helpers/palette-helpers.ts,server.mjs}` are mirrored masters from
@@ -79,5 +85,6 @@ cd e2e && npm run test:update               # refresh baselines (delete the snap
 
 Specs: `links` (hrefs/targets, button style, layout at 390/900/1600, no overflow, tab order, screenshots), `scene`
 (labelled image, pixelated integer-scale rendering, follows picker and day/night, animation and reduced-motion),
-`colours` (navy default, Reset, picker, AA sweep, scheme toggle), `footer` (alignment at 5 widths, AA) and `github`
-(GitHub mark on the GitHub link).
+`colours` (navy default, Reset, picker, AA sweep, scheme toggle), `states` (hover/focus-ring contrast across the colour sweep),
+`security` (CSP, no inline script/style, nothing trips it), `footer` (alignment at 5 widths, AA) and `github`
+(GitHub mark on the GitHub link). `E2E_PORT=<port>` moves the test server off 4172 (build with a matching `--baseURL`).
