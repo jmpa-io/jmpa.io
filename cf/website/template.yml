@@ -58,6 +58,32 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Sub Access to ${Bucket}.
 
+  # The page's CSP lives in a <meta> tag (layouts/partials/jmpa-head.html); these are the headers a meta tag cannot set.
+  SecurityHeaders:
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Condition: CreateResources
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name: !Sub "${Environment}-jmpa-io-security-headers"
+        SecurityHeadersConfig:
+          StrictTransportSecurity:
+            AccessControlMaxAgeSec: 31536000
+            IncludeSubdomains: true
+            Override: true
+          ContentTypeOptions:
+            Override: true
+          FrameOptions:
+            FrameOption: DENY
+            Override: true
+          ReferrerPolicy:
+            ReferrerPolicy: strict-origin-when-cross-origin
+            Override: true
+        CustomHeadersConfig:
+          Items:
+            - Header: Permissions-Policy
+              Value: camera=(), microphone=(), geolocation=()
+              Override: true
+
   Distribution:
     Type: AWS::CloudFront::Distribution
     Condition: CreateResources
@@ -79,6 +105,7 @@ Resources:
             - HEAD
           Compress: true
           TargetOriginId: S3Origin
+          ResponseHeadersPolicyId: !Ref SecurityHeaders
           ForwardedValues:
             QueryString: true
           ViewerProtocolPolicy: redirect-to-https
