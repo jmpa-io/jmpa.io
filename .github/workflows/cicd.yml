@@ -48,8 +48,10 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+  # Deploys only run from main; every other branch stops after lint/build.
   deploy:
     needs: [build-website]
+    if: github.ref == 'refs/heads/main'
     uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@main
     with:
       templates: website
@@ -60,6 +62,7 @@ jobs:
 
   upload-website:
     needs: [deploy]
+    if: github.ref == 'refs/heads/main'
     uses: jmpa-io/pipelines/.github/workflows/50-upload-artifacts-to-s3.yml@main
     with:
       artifact: jmpa.io
