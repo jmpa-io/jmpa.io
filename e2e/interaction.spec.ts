@@ -1,5 +1,14 @@
 import { test, expect, external } from './fixtures';
 
+// These tests aim at layout boxes, so keep the screen flat; curvature is covered by crt.spec.ts / resize.spec.ts.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('seeded')) return;
+    sessionStorage.setItem('seeded', '1');
+    localStorage.setItem('jmpa.crt', 'off');
+  });
+});
+
 const gotoDesktop = async (page) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
@@ -175,18 +184,15 @@ test.describe('desktop pointer', () => {
     await gotoDesktop(page);
     const btn = page.locator('#crt-btn');
     const crt = () => page.locator('#screen').evaluate((e) => e.style.getPropertyValue('--crt'));
-    expect(await crt()).toBe('0.6');
-    await expect(btn).toHaveAttribute('aria-pressed', 'true');
+    expect(await crt()).toBe('0');
+    await expect(btn).toHaveAttribute('aria-pressed', 'false');
     expect(await page.locator('.crt').evaluate((e) => getComputedStyle(e).pointerEvents)).toBe('none');
     await btn.click();
-    expect(await crt()).toBe('0');
-    await expect(btn).toHaveAttribute('aria-pressed', 'false');
-    await page.reload();
-    expect(await crt()).toBe('0');
-    await expect(btn).toHaveAttribute('aria-pressed', 'false');
-    await btn.click();
+    expect(await crt()).toBe('0.6');
+    await expect(btn).toHaveAttribute('aria-pressed', 'true');
     await page.reload();
     expect(await crt()).toBe('0.6');
+    await expect(btn).toHaveAttribute('aria-pressed', 'true');
   });
 
   test('reduced motion stops the CRT animations', async ({ page }) => {
