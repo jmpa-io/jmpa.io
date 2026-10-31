@@ -5,34 +5,49 @@
 # `jmpa.io`
 
 ```diff
-+ 🖥️ A tiny Windows 98 desktop, viewed through a CRT. Every icon is a program that takes you somewhere else.
++ 🚪 The front door: one simple page linking to everywhere I live online.
 ```
 
-`jmpa.io` is purely a launcher: it doesn't render a CV or any content, it just links out
-to the rest of my corner of the internet ([art.jmpa.io](https://art.jmpa.io), [jcleal.me](https://jcleal.me),
-[portfolio.jcleal.me](https://portfolio.jcleal.me), ...). One program, `room.exe`, opens an in-page window with an animated pixel-art room.
+`jmpa.io` looks and feels like [art.jmpa.io](https://art.jmpa.io) (same header, footer, type, blobs background and card
+style; `static/css/jmpa.css` and the head/nav/footer partials are copied from it) but it is just a list of places:
 
-Click an icon to select it, double-click (or tap) to open it. The `CRT` button in the taskbar turns the CRT effect on/off (remembered).
+- [art.jmpa.io](https://art.jmpa.io) - original watercolour paintings
+- [jcleal.me](https://jcleal.me) - blog, about, resume, workshops
+- [portfolio.jcleal.me](https://portfolio.jcleal.me)
+- [startpage.jcleal.me](https://startpage.jcleal.me)
+- [github.com/jmpa-io](https://github.com/jmpa-io) - opens in a new tab
 
-## Adding a program
+The old Windows 98 desktop / CRT / resizable-window version is gone from the tree (it is in git history). The CRT
+masters now live only in `portfolio.jcleal.me/public/crt.{js,css}`.
 
-Programs live in `config.yml` under `Params.programs`. Each one shows up on the desktop and in the Start menu:
+## Adding or changing a link
+
+Everything is data-driven from `data/links.yml`. The home page cards, the header nav and the footer all read it:
 
 ```yaml
-Params:
-  programs:
-    - { title: art.exe, icon: palette, url: "https://art.jmpa.io" }                       # navigates away
-    - { title: github, icon: folder, url: "https://github.com/jmpa-io", newtab: true }    # opens a new tab
-    - { title: room.exe, icon: monitor, window: room }                                    # opens an in-page window
+- name: art.jmpa.io          # card title
+  url: https://art.jmpa.io
+  tag: Art                   # card eyebrow, also the footer text label
+  desc: Original watercolour paintings.
+  subs: [{ name: Gallery, url: "https://art.jmpa.io/art/" }]   # optional chips
+  nav: true                  # show in the header nav
+  footer: text               # text | icon | omit
+  icon: github               # icon name (partials/jmpa-icon.html), for footer: icon
+  external: true             # target=_blank rel="noopener noreferrer"
+  card: false                # footer/nav only, no card
 ```
 
-Valid `icon`s: `document`, `briefcase`, `folder`, `globe`, `monitor`, `palette` (16x16 pixel maps in `static/js/desktop.js`).
+Page copy (heading, tagline, etc.) is in `config.yml` under `Params`. `config.yml` also limits `module.mounts` to the
+files this site uses, so stray local files can't break the build (previously only the home page was produced).
 
 ## Colours and day/night
 
-The tray has a **Display** button (two colour inputs: Primary + Secondary, plus Reset) and a sun/moon button. Primary drives title bars, selection and Start accents; Secondary tints the wallpaper and taskbar. Contrast is kept AA in light and dark. Choices persist in `localStorage` (`palette-custom`, `scheme`) and are applied before first paint.
+The header has a colour picker (Primary + Secondary, plus Reset) and a sun/moon toggle. **The default is navy
+`#0a2a6b` / `#2f7fae`** (passed to `Palette.init({ defaults })` in `layouts/partials/jmpa-head.html`; Reset returns to it).
+Contrast stays AA in light and dark. Choices persist in `localStorage` (`palette-custom`, `scheme`) and apply before first paint.
 
-`static/js/palette.js` and `e2e/{playwright.config.ts,helpers/palette-helpers.ts,server.mjs}` are mirrored masters from `jcleal.me` - do not edit them here (`make e2e-sync` in `jcleal.me`).
+`static/js/palette.js` and `e2e/{playwright.config.ts,helpers/palette-helpers.ts,server.mjs}` are mirrored masters from
+`jcleal.me` - do not edit them here (`make e2e-sync` in `jcleal.me`). The per-site default lives in `e2e/site.ts`.
 
 ## Running locally?
 
@@ -43,21 +58,15 @@ make serve
 
 2. Using your browser, navigate to `localhost:1314`.
 
-## CRT screen and resizable windows
-
-The desktop is viewed through a curved CRT (`static/js/crt.js` + `static/css/crt.css`, master copies mirrored into `portfolio.jcleal.me/public/` by `make e2e-sync` in jcleal.me). Curvature is a real barrel distortion: an SVG `feDisplacementMap` fed by a generated radial map, with three passes for chromatic aberration that grows toward the edges. CSS 3D was considered but can only fake a tilted plane, so it was not built (reasoned, not measured). Filters don't change hit-testing, so `crt.js` re-targets pointer events through the inverse mapping (hover is not remapped). The Display slider scales curvature, glow and overlays (0 = flat); the CRT toggle off is fully flat. Curvature is off below 900px, on touch, and with reduced motion the flicker/band/grain stop. Measured in headless Chrome with curvature and animation on: avg 16.0ms, p95 17-18ms per frame (vsync-capped at 60fps).
-
-Windows resize from 8 pointer-captured handles (min 220x120, clamped to the desktop), double-click the title bar to maximise/restore; below ~700px windows are full-screen with no handles.
-
 ## Testing
 
-Playwright screenshot + interaction tests live in `e2e/` (they use your system Chrome; nothing is downloaded):
+Playwright tests live in `e2e/` (system Chrome; nothing is downloaded, external requests are blocked):
 
 ```bash
 make generate-website                       # builds into dist/public
-cd e2e && npm ci && SITE_DIR=../dist/public npx playwright test
-npm run test:update                         # refresh the baseline screenshots in e2e/screenshots.spec.ts-snapshots/
+make e2e                                    # npm ci + playwright test against dist/public
+cd e2e && npm run test:update               # refresh baselines (delete the snapshot dir to force a full regen)
 ```
 
-`make e2e` does the install + run in one go. External requests are blocked during tests, so they work offline.
-
+Specs: `links` (hrefs/targets, layout at 390/900/1600, no overflow, tab order, screenshots), `colours` (navy default,
+Reset, picker, AA sweep, scheme toggle), `footer` (alignment at 5 widths, AA) and `github` (GitHub mark on every GitHub link).
