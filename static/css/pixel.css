@@ -112,10 +112,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 1;
   color: var(--heading);
 }
-.logo svg { width: 24px; height: 24px; flex: none; shape-rendering: crispEdges; }
-.logo .logo-body { fill: currentColor; }
-.logo .logo-screen { fill: var(--bg); }
-.logo .logo-spark { fill: var(--accent); }
+.logo-img { width: 28px; height: 28px; flex: none; image-rendering: pixelated; border: 2px solid var(--ink); }
 
 .px-btn {
   position: relative;
@@ -148,39 +145,34 @@ a { color: inherit; text-decoration: none; }
   top: calc(100% + 14px);
   right: 0;
   z-index: 50;
-  width: 230px;
-  flex-direction: column;
-  gap: 12px;
-  padding: 14px;
-  background: var(--bg-card);
-  border: 3px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
+  width: 21rem;
+  max-width: calc(100vw - 40px);
+  /* shared colour panel (palette.js): square pixel borders, hard shadow, Silkscreen headings */
+  --pm-fg: var(--text);
+  --pm-bg: var(--bg-card);
+  --pm-border: var(--ink);
+  --pm-bw: 3px;
+  --pm-radius: 0;
+  --pm-shadow: 4px 4px 0 var(--ink);
+  --pm-font: var(--font);
+  --pm-muted: var(--muted);
+  --pm-heading: var(--text);
+  --pm-ctl-bg: var(--bg-sub);
+  --pm-ctl-border: var(--ink);
+  --pm-ctl-bw: 3px;
+  --pm-ctl-radius: 0;
+  --pm-accent: var(--accent);
+  --pm-label-case: uppercase;
   font-family: var(--pixel);
   font-size: 12px;
   line-height: 1.3;
   color: var(--text);
 }
-.palette-popup.open { display: flex; }
-.palette-popup label { display: flex; align-items: center; justify-content: space-between; gap: 10px; text-transform: uppercase; }
-.palette-popup input[type='color'] { width: 56px; height: 28px; padding: 0; border: 3px solid var(--ink); border-radius: 0; background: var(--bg-sub); cursor: pointer; }
-.palette-popup .reset {
-  align-self: flex-start;
-  padding: 4px 10px;
-  font: inherit;
-  text-transform: uppercase;
-  color: var(--text);
-  background: var(--bg-sub);
-  border: 3px solid var(--ink);
-  border-radius: 0;
-  box-shadow: 2px 2px 0 var(--ink);
-  cursor: pointer;
-}
-.palette-popup .reset:hover { transform: translate(2px, 2px); box-shadow: none; background: var(--accent); color: var(--accent-ink); }
-.palette-popup .note { font-family: var(--font); font-size: 12px; color: var(--muted); }
-.palette-popup .note:empty { display: none; }
+.palette-popup.open { display: block; }
 @media (max-width: 559px) {
+  .bar { position: relative; }
   .palette-wrap { position: static; }
-  .palette-popup { right: 20px; left: 20px; width: auto; }
+  .palette-popup { right: 20px; left: 20px; width: auto; max-width: none; }
 }
 
 /* ── the stage: scene + a few words + the five doors ── */
