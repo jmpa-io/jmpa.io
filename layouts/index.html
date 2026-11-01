@@ -1,63 +1,25 @@
 <!DOCTYPE html>
-<html lang="{{ .Lang }}">
-{{- partial "head.html" . -}}
+<html lang="{{ .Site.LanguageCode }}">
+<head>
 {{- partial "jmpa-head.html" . -}}
+</head>
 <body>
-{{- partial "jmpa-nav.html" . -}}
-{{- partial "jmpa-cart.html" . -}}
-<div class="jmpa-content-gradient">
-
-<div class="jmpa-home">
-
-  <div class="jmpa-hero">
-    <p class="jmpa-hero-eyebrow">Original watercolour paintings · Melbourne</p>
-    <h1>Art made by hand.</h1>
-    <p class="jmpa-hero-sub">Every piece is one of a kind. No prints, no editions - just paint on paper, available to own.</p>
-    <div class="jmpa-hero-actions">
-      <a href="/art" class="jmpa-hero-cta jmpa-hero-cta-icon">Browse the gallery <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      <a href="/commissions" class="jmpa-hero-cta-ghost jmpa-hero-cta-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>Commissions</a>
+{{- partial "jmpa-header.html" . -}}
+<main>
+  <div class="stage">
+    {{- partial "jmpa-room.html" . -}}
+    <div class="intro">
+      <p class="eyebrow">{{ .Site.Params.eyebrow }}</p>
+      <h1>{{ .Site.Params.heading }}</h1>
+      <p class="sub">{{ .Site.Params.sub }}</p>
+      <ul class="doors" aria-label="Places">
+        {{ range .Site.Data.links }}{{ if ne .card false }}
+        <li><a class="door" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ with .icon }}{{ partial "jmpa-icon.html" . }}{{ end }}<span>{{ .name }}</span><svg class="go" viewBox="0 0 5 9" aria-hidden="true" focusable="false"><rect x="0" y="0" width="1" height="9"/><rect x="1" y="1" width="1" height="7"/><rect x="2" y="2" width="1" height="5"/><rect x="3" y="3" width="1" height="3"/><rect x="4" y="4" width="1" height="1"/></svg></a></li>
+        {{ end }}{{ end }}
+      </ul>
     </div>
   </div>
-
-</div>
-
-{{ $sold := where .Site.Data.art "sold" true }}
-{{ if gt (len $sold) 0 }}
-<div class="jmpa-sold-section">
-  <div class="jmpa-sold-top">
-    <div>
-      <p class="jmpa-sold-eyebrow">Sold</p>
-      <h2 class="jmpa-sold-heading">Recently sold.</h2>
-    </div>
-    <a href="/art" class="jmpa-hero-cta-ghost jmpa-hero-cta-icon">View the gallery <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-  </div>
-  <div class="art-cards jmpa-sold-cards">
-    {{ range last 3 $sold }}
-    <div class="art-card">
-      {{ $img := .image }}
-      {{ if not $img }}{{ with .images }}{{ $img = index . 0 }}{{ end }}{{ end }}
-      <div class="art-card-img-wrap">
-        {{ if $img }}
-          <img class="art-card-img" src="{{ $img }}" alt="{{ .title }}" />
-        {{ else }}
-          <div class="art-card-img-placeholder">photo coming soon</div>
-        {{ end }}
-      </div>
-      <div class="art-card-body">
-        <div class="art-card-tag">Original · Handmade</div>
-        <div class="art-card-title">{{ .title }}</div>
-        {{ with .medium }}<div class="art-card-medium">{{ . }}</div>{{ end }}
-        <div class="art-card-price">{{ .price }}</div>
-        <div class="art-sold-badge">Sold</div>
-      </div>
-    </div>
-    {{ end }}
-  </div>
-</div>
-{{ end }}
-
-</div>
-
+</main>
 {{- partial "jmpa-footer.html" . -}}
 </body>
 </html>

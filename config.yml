@@ -1,58 +1,33 @@
 baseURL: https://jmpa.io
 languageCode: en-us
 title: jmpa
-theme: jmpa
 
 Params:
-  logo: https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
-  favicon: /favicon.ico
-  description: "jmpa.io - art store and portfolio by Jordan Cleal"
-  images:
-    - >-
-      https://raw.githubusercontent.com/jmpa-io/.github/master/logo.png
+  description: "jmpa.io - the front door to my corner of the internet: art, blog, portfolio and start page."
+  eyebrow: "Jordan Cleal · Melbourne"
+  heading: "Everything, in one place."
+  sub: "Art, writing, projects and a start page."
+  footerTagline: "The front door to everything Jordan makes."
+  # The places listed on the page (buttons, footer icons) come from data/links.yml.
 
-# menu.
-menu:
-  main:
-    - name: Gallery
-      url: /art
-      weight: 1
-
-    - name: About
-      url: /about
-      weight: 2
-
-    - name: Commissions
-      url: /commissions
-      weight: 3
-
-    - name: Shipping
-      url: /shipping
-      weight: 4
-
-  social:
-    - name: GitHub
-      url: https://github.com/jmpa-io
-      weight: 1
-
-    - name: Email
-      url: mailto:support@jmpa.io
-      weight: 2
-
-# syntax highlighting.
 markup:
-  highlight:
-    style: dracula
   goldmark:
     renderer:
       unsafe: true
 
-# setup 404s.
-# https://moonbooth.com/hugo/custom-404/
-redirects:
-  - from: /*
-    to: /404/
-    status: 404
+# a single page: the home page (plus 404.html).
+disableKinds:
+  - taxonomy
+  - term
+  - RSS
+  - section
 
-# remove s's in titles.
-pluralizeListTitles: false
+# Only these paths are part of the site, so stray local files (old content/ or layouts/ experiments) can't break or extend the build.
+module:
+  mounts:
+    - { source: content/_index.md, target: content/_index.md }
+    - { source: layouts/index.html, target: layouts/index.html }
+    - { source: layouts/404.html, target: layouts/404.html }
+    - { source: layouts/partials, target: layouts/partials }
+    - { source: data/links.yml, target: data/links.yml }
+    - { source: static, target: static }
