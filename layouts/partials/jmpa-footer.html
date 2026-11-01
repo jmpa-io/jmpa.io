@@ -5,7 +5,7 @@
       <span class="jmpa-footer-tagline">{{ .Site.Params.footerTagline }}</span>
     </div>
     <nav class="jmpa-footer-right" aria-label="Footer">
-      {{ range where .Site.Data.links "footer" "icon" }}
+      {{ range .Site.Data.links.footer }}
       <a class="jmpa-footer-icon" href="{{ .url }}" aria-label="{{ .label | default .name }}" title="{{ .label | default .name }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ partial "jmpa-icon.html" .icon }}</a>
       {{ end }}
     </nav>
