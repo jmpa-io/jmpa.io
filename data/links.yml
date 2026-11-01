@@ -1,0 +1,34 @@
+# The one place that lists everywhere jmpa.io points to. Edit here; the home page buttons and the footer icons read this file.
+#   name / url                what the button shows and where it goes
+#   icon                      name from partials/jmpa-icon.html (github, instagram, mail, external); shown on the button / footer icon
+#   label                     accessible name for icon-only links
+#   external: true            opens in a new tab (target=_blank rel=noopener noreferrer)
+#   footer: icon              small icon link in the footer (omit to leave it out of the footer)
+#   card: false               not a button on the home page (footer only)
+# Each place appears once: either as a button or as a footer icon, never both.
+- name: art.jmpa.io
+  url: https://art.jmpa.io
+- name: jcleal.me
+  url: https://jcleal.me
+- name: portfolio.jcleal.me
+  url: https://portfolio.jcleal.me
+- name: startpage.jcleal.me
+  url: https://startpage.jcleal.me
+- name: github.com/jmpa-io
+  label: GitHub jmpa-io
+  url: https://github.com/jmpa-io
+  icon: github
+  external: true
+- name: Instagram
+  label: Instagram @jmpa.io
+  url: https://instagram.com/jmpa.io
+  icon: instagram
+  external: true
+  footer: icon
+  card: false
+- name: Email
+  label: Email support@jmpa.io
+  url: mailto:support@jmpa.io
+  icon: mail
+  footer: icon
+  card: false

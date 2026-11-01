@@ -58,6 +58,32 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Sub Access to ${Bucket}.
 
+  # The page's CSP lives in a <meta> tag (layouts/partials/jmpa-head.html); these are the headers a meta tag cannot set.
+  SecurityHeaders:
+    Type: AWS::CloudFront::ResponseHeadersPolicy
+    Condition: CreateResources
+    Properties:
+      ResponseHeadersPolicyConfig:
+        Name: !Sub "${Environment}-jmpa-io-security-headers"
+        SecurityHeadersConfig:
+          StrictTransportSecurity:
+            AccessControlMaxAgeSec: 31536000
+            IncludeSubdomains: true
+            Override: true
+          ContentTypeOptions:
+            Override: true
+          FrameOptions:
+            FrameOption: DENY
+            Override: true
+          ReferrerPolicy:
+            ReferrerPolicy: strict-origin-when-cross-origin
+            Override: true
+        CustomHeadersConfig:
+          Items:
+            - Header: Permissions-Policy
+              Value: camera=(), microphone=(), geolocation=()
+              Override: true
+
   Distribution:
     Type: AWS::CloudFront::Distribution
     Condition: CreateResources
@@ -79,13 +105,18 @@ Resources:
             - HEAD
           Compress: true
           TargetOriginId: S3Origin
+          ResponseHeadersPolicyId: !Ref SecurityHeaders
           ForwardedValues:
             QueryString: true
           ViewerProtocolPolicy: redirect-to-https
+        # S3 answers 403 (not 404) for missing keys when the origin has no ListBucket permission.
         CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 404
+            ResponsePagePath: /404.html
           - ErrorCode: 404
-            ResponseCode: 200
-            ResponsePagePath: /index.html
+            ResponseCode: 404
+            ResponsePagePath: /404.html
         PriceClass: PriceClass_All
         ViewerCertificate:
           AcmCertificateArn: !Ref AcmCertificateArn

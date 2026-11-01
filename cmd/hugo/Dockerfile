@@ -1,4 +1,5 @@
-FROM klakegg/hugo:0.93.2-alpine
+# config.yml mounts single files, which Hugo 0.93 (the old klakegg image) rejects.
+FROM hugomods/hugo:exts-0.139.0
 
 # setup user.
 ARG UID=1000
