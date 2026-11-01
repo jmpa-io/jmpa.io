@@ -163,10 +163,7 @@ a { color: inherit; text-decoration: none; }
   line-height: 1;
   color: var(--heading);
 }
-.logo svg { width: 24px; height: 24px; flex: none; shape-rendering: crispEdges; }
-.logo .logo-body { fill: currentColor; }
-.logo .logo-screen { fill: var(--bg); }
-.logo .logo-spark { fill: var(--hi); }
+.logo-mark { width: 32px; height: 32px; flex: none; display: block; filter: drop-shadow(1px 0 0 var(--ink)) drop-shadow(-1px 0 0 var(--ink)) drop-shadow(0 1px 0 var(--ink)) drop-shadow(0 -1px 0 var(--ink)); }
 
 .px-btn {
   position: relative;
