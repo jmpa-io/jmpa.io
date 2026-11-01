@@ -18,31 +18,31 @@ test.beforeEach(async ({ page }) => {
   await page.evaluate(() => document.fonts.ready);
 });
 
-test.describe('navy default', () => {
-  test('first load is navy #0a2a6b / #2f7fae with nothing stored', async ({ page }) => {
-    expect(DEFAULT_PAIR).toEqual(['#0a2a6b', '#2f7fae']);
+test.describe('midnight default', () => {
+  test('first load is #4f8cff / #22d3ee with nothing stored', async ({ page }) => {
+    expect(DEFAULT_PAIR).toEqual(['#4f8cff', '#22d3ee']);
     expect(await storedColours(page)).toBeNull();
-    expect(await palVar(page)).toBe('#0a2a6b');
-    expect(await palVar(page, '--pal-secondary')).toBe('#2f7fae');
+    expect(await palVar(page)).toBe('#4f8cff');
+    expect(await palVar(page, '--pal-secondary')).toBe('#22d3ee');
     await openPopup(page);
-    await expect(page.locator(S.primary)).toHaveValue('#0a2a6b');
-    await expect(page.locator(S.secondary)).toHaveValue('#2f7fae');
+    await expect(page.locator(S.primary)).toHaveValue('#4f8cff');
+    await expect(page.locator(S.secondary)).toHaveValue('#22d3ee');
   });
 
-  test('Reset returns to navy (not sunset) and clears storage', async ({ page }) => {
+  test('Reset returns to the variant default and clears storage', async ({ page }) => {
     await setColours(page, '#118833', '#aa22cc');
     expect(await palVar(page)).toBe('#118833');
     await resetColours(page);
     expect(await storedColours(page)).toBeNull();
-    await expect(page.locator(S.primary)).toHaveValue('#0a2a6b');
-    expect(await palVar(page)).toBe('#0a2a6b');
+    await expect(page.locator(S.primary)).toHaveValue('#4f8cff');
+    expect(await palVar(page)).toBe('#4f8cff');
   });
 
   for (const bad of ['{"primary":"red;}"}', '{"primary":"#12345","secondary":"#aa22cc"}', 'not json']) {
-    test(`corrupt storage falls back to navy: ${bad}`, async ({ page }) => {
+    test(`corrupt storage falls back to the default: ${bad}`, async ({ page }) => {
       await page.evaluate((v) => localStorage.setItem('palette-custom', v), bad);
       await page.reload();
-      expect(await palVar(page)).toBe('#0a2a6b');
+      expect(await palVar(page)).toBe('#4f8cff');
     });
   }
 
@@ -62,15 +62,13 @@ test.describe('colour picker', () => {
     await expect(page.locator(S.popup)).not.toHaveClass(/open/);
   });
 
-  test('colours drive page bg, buttons, title and the room, in both schemes', async ({ page }) => {
+  test('colours drive page bg, cards, title, and buttons, in both schemes', async ({ page }) => {
     for (const scheme of ['light', 'dark'] as const) {
       const read = async () => ({
         bg: await css(page, 'body', 'background-color'),
-        card: await css(page, '.door', 'background-color'),
+        card: await css(page, '.card', 'border-color'),
         title: await css(page, 'h1', 'color'),
-        wall: await css(page, '.room .wl', 'fill'),
-        shirt: await css(page, '.room .sh', 'fill'),
-        screen: await css(page, '.room .sc', 'fill'),
+        btn: await css(page, '.btn', 'background-color'),
       });
       await page.evaluate(() => localStorage.removeItem('palette-custom'));
       await page.reload();
@@ -94,7 +92,7 @@ test.describe('colour picker', () => {
   test('note appears only when a pick had to be adjusted', async ({ page }) => {
     await setColours(page, '#fffde0', '#fffde0');
     await expect(page.locator(S.note)).not.toBeEmpty();
-    await seedColours(page, '#8a3a20', '#2a6590');
+    await seedColours(page, '#7cc4ff', '#6ee7b7');
     await openPopup(page);
     await expect(page.locator(S.note)).toBeEmpty();
   });
@@ -125,11 +123,11 @@ test.describe('contrast AA across picks (whole page)', () => {
 
 test.describe('day/night scheme', () => {
   for (const os of ['light', 'dark'] as const) {
-    test(`defaults to the OS (${os}) with no stored choice`, async ({ page }) => {
+    test(`dark is the default whatever the OS says (${os}) with no stored choice`, async ({ page }) => {
       await emulateScheme(page, os);
       await page.evaluate(() => localStorage.removeItem('scheme'));
       await page.reload();
-      expect(await isDark(page)).toBe(os === 'dark');
+      expect(await isDark(page)).toBe(true);
     });
   }
 
@@ -142,23 +140,20 @@ test.describe('day/night scheme', () => {
 
   test('toggle shows a visible sun/moon icon in both schemes', async ({ page }) => {
     for (const scheme of ['light', 'dark'] as const) {
-      await page.emulateMedia({ colorScheme: scheme });
-      await page.evaluate(() => localStorage.removeItem('scheme'));
+      await page.evaluate((s) => localStorage.setItem('scheme', s), scheme);
       await page.reload();
       const svg = page.locator(S.toggle + ' svg');
       await expect(svg).toBeVisible();
-      expect(await svg.locator('rect').count()).toBeGreaterThan(0);
+      expect(await svg.locator('path, circle').count()).toBeGreaterThan(0);
     }
   });
 
   test('toggle persists under `scheme` across reload', async ({ page }) => {
-    await emulateScheme(page, 'light');
-    await page.reload();
-    await toggleScheme(page);
-    expect(await storedScheme(page)).toBe('dark');
-    await page.reload();
-    expect(await isDark(page)).toBe(true);
     await toggleScheme(page);
     expect(await storedScheme(page)).toBe('light');
+    await page.reload();
+    expect(await isDark(page)).toBe(false);
+    await toggleScheme(page);
+    expect(await storedScheme(page)).toBe('dark');
   });
 });

@@ -41,7 +41,7 @@ test('footer is slim: brand, tagline, two icons and the copyright', async ({ pag
   }
   for (const svg of await page.locator('.jmpa-footer-icon svg').all()) {
     const s = await box(svg);
-    expect([s.width, s.height]).toEqual([16, 16]);
+    expect([s.width, s.height]).toEqual([18, 18]);
   }
 });
 
