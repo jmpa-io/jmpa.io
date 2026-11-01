@@ -30,7 +30,7 @@ test.describe('home page', () => {
     const hrefs = await page.locator('a[href^="http"]').evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href.replace(/\/$/, '')));
     const places = hrefs.filter((h) => LINKS.some((l) => l.href === h));
     expect(places.sort()).toEqual(LINKS.map((l) => l.href).sort());
-    await expect(page.locator('header a, header button')).toHaveCount(4); // logo, colours, theme (+ the picker's Reset inside the popup).
+    await expect(page.locator('header a, header button').and(page.locator(':not(#jmpa-palette-popup *)'))).toHaveCount(3); // logo, colours, theme (the popup's own controls are covered in modal.spec).
   });
 
   test('header is minimal: logo + the two toggles', async ({ page }) => {
