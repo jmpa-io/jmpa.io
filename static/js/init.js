@@ -9,6 +9,7 @@
   };
   var m = /[?&]v=([123])(?:&|$)/.exec(location.search);
   if (m) root.setAttribute('data-variant', m[1]);
+  try { if (localStorage.getItem('jmpa-kb') === 'off') root.setAttribute('data-kb', 'off'); } catch (e) { /* storage unavailable */ }
   var variant = DEFAULTS[root.getAttribute('data-variant')] ? root.getAttribute('data-variant') : '1';
   root.setAttribute('data-variant', variant);
 
@@ -29,10 +30,10 @@
     toggleId: 'theme-toggle',
     onScheme: function (scheme, toggle) {
       if (!toggle) return;
-      var a = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 12 12" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true">';
+      var a = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
       toggle.innerHTML = scheme === 'light'
-        ? a + '<rect x="3" y="1" width="4" height="1"/><rect x="2" y="2" width="3" height="1"/><rect x="1" y="3" width="3" height="6"/><rect x="2" y="9" width="8" height="1"/><rect x="3" y="10" width="7" height="1"/><rect x="9" y="8" width="2" height="1"/></svg>'
-        : a + '<rect x="3" y="3" width="6" height="6"/><rect x="4" y="2" width="4" height="8"/><rect x="2" y="4" width="8" height="4"/><rect x="5" y="0" width="2" height="1"/><rect x="5" y="11" width="2" height="1"/><rect x="0" y="5" width="1" height="2"/><rect x="11" y="5" width="1" height="2"/></svg>';
+        ? a + '<path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></svg>'
+        : a + '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
     }
   });
 })();
