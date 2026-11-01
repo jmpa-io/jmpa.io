@@ -1,0 +1,38 @@
+{{- /* The monitor: static content, it only reacts to the visitor (keyboard.js switches the page and the echo line). */ -}}
+{{- $links := slice -}}
+{{- range .Site.Data.links.categories }}{{ range .links }}{{ $links = $links | append . }}{{ end }}{{ end -}}
+<div class="monitor">
+  <figure class="screen" id="screen" data-page="about" aria-label="Jordan's terminal">
+    <div class="scr-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="scr-title">jordan@jmpa: ~</span></div>
+    <div class="scr-body">
+      <div class="pg" data-pg="about">
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> whoami</p>
+        <p class="t out who">{{ .Site.Params.eyebrow }}</p>
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> cat tagline</p>
+        <p class="t out">{{ .Site.Params.sub }}</p>
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> ls links/</p>
+        <p class="t out ls">{{ range $links }}<span>{{ .key | default .name }}</span> {{ end }}</p>
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> <span class="caret"></span></p>
+      </div>
+      <div class="pg" data-pg="links" hidden>
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> ls -l links/</p>
+        {{- range $i, $l := $links }}
+        <p class="t row"><span class="fk">F{{ add $i 1 }}</span><span class="nm">{{ $l.key | default $l.name }}</span><span class="url">{{ replaceRE "^https?://" "" $l.url }}</span></p>
+        {{- end }}
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> <span class="caret"></span></p>
+      </div>
+      <div class="pg" data-pg="help" hidden>
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> help</p>
+        <p class="t row"><span class="fk">F1-F{{ len $links }}</span><span class="out">open a link (the keys on the top row)</span></p>
+        <p class="t row"><span class="fk">theme</span><span class="out">switch dark and light</span></p>
+        <p class="t row"><span class="fk">bird</span><span class="out">send the budgie flying</span></p>
+        <p class="t row"><span class="fk">page</span><span class="out">cycle this screen: about, links, help</span></p>
+        <p class="t row"><span class="fk">esc</span><span class="out">back to the first page</span></p>
+        <p class="t out">Tap or click the keys below. Tab and Enter work on them too.</p>
+        <p class="t"><span class="pr">jordan@jmpa</span><span class="op">:</span><span class="pa">~</span><span class="op">$</span> <span class="caret"></span></p>
+      </div>
+    </div>
+    <div class="status"><span id="st-page">about</span><span class="st-r" id="echo">tap a key below</span></div>
+  </figure>
+  <div class="stand" aria-hidden="true"></div>
+</div>

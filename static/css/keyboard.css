@@ -1,0 +1,119 @@
+/* The on-screen keyboard (65% ANSI, 16 units wide). Raised 3D keycaps in the crozzle button/tile style: a lighter top face on a darker body, a bottom edge for
+   thickness and a soft drop shadow. A pressed key (.down, :active) sinks, its bottom edge collapses and the face flips to the accent. */
+:root {
+  --kw: min(calc(100vw - 16px), 760px);
+  --u: calc(var(--kw) / 16);
+  --kh: calc(var(--u) * 0.88);
+  --dock-h: calc(var(--kh) * 6.25 + 30px);
+}
+@media (max-width: 599px) { :root { --kh: calc(var(--u) * 1.32); } }
+
+.kbd-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  padding: 12px 8px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-sub) 96%, transparent), color-mix(in srgb, var(--bg) 92%, #000));
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -14px 30px -18px rgba(0, 0, 0, 0.5);
+  user-select: none;
+  -webkit-user-select: none;
+}
+html[data-kb='off'] .kbd-dock { display: none; }
+
+.kbd {
+  --key-top: color-mix(in srgb, var(--bg-card) 84%, var(--text) 16%);
+  --key-hi: color-mix(in srgb, var(--key-top) 80%, #fff 20%);
+  --key-side: color-mix(in srgb, var(--bg-card) 88%, #000);
+  --key-edge: color-mix(in srgb, var(--bg-card) 40%, #000);
+  --key-ink: var(--text);
+  --key-sub: color-mix(in srgb, var(--text) 78%, var(--key-top));
+  --key-drop: rgba(0, 0, 0, 0.55);
+  width: var(--kw);
+  margin: 0 auto;
+  font-size: clamp(9px, calc(var(--u) * 0.32), 14px);
+  line-height: 1;
+}
+html:not(.dark) .kbd {
+  --key-top: color-mix(in srgb, #fff 88%, var(--bg-sub));
+  --key-hi: #fff;
+  --key-side: color-mix(in srgb, var(--border) 85%, #fff);
+  --key-edge: color-mix(in srgb, var(--border) 70%, #000 30%);
+  --key-drop: rgba(15, 30, 80, 0.28);
+}
+.kbd-row { display: flex; height: var(--kh); }
+.kbd-row.r0 { height: calc(var(--kh) * 1.3); margin-bottom: 3px; }
+.k {
+  --w: 1;
+  flex: var(--w) 1 0;
+  min-width: 0;
+  display: block;
+  padding: 2px 2px 6px;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--key-ink);
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.k.w1125 { --w: 1.125; }
+.k.w125 { --w: 1.25; }
+.k.w15 { --w: 1.5; }
+.k.w175 { --w: 1.75; }
+.k.w2 { --w: 2; }
+.k.w225 { --w: 2.25; }
+.k.w625 { --w: 6.25; }
+.cap {
+  display: block;
+  height: 100%;
+  padding: 2px 3px 4px;
+  border-radius: calc(var(--u) * 0.16);
+  background: var(--key-side);
+  box-shadow: 0 3px 0 var(--key-edge), 0 7px 9px -3px var(--key-drop);
+  transition: transform 0.09s ease-out, box-shadow 0.09s ease-out;
+}
+.face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--u) * 0.11);
+  color: var(--key-ink);
+  background: linear-gradient(180deg, var(--key-hi), var(--key-top) 70%);
+  box-shadow: inset 0 1px 0 var(--key-hi), inset 0 -2px 0 rgba(0, 0, 0, 0.16);
+  transition: background-color 0.09s, color 0.09s;
+}
+.face .s { color: var(--key-sub); font-size: 0.86em; }
+.face svg { width: 1.5em; height: 1.5em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.face .jmpa-icon { width: 1.45em; height: 1.45em; }
+.face .lg { font-size: 0.9em; }
+.face .fn { position: absolute; }
+.k .fn { display: none; }
+.k.mod .face { color: var(--key-sub); font-size: 0.82em; }
+.k.link .face { color: var(--key-ink); font-weight: 700; }
+.k.act .face { color: var(--key-ink); }
+.k.link .cap, .k.act .cap { background: color-mix(in srgb, var(--accent) 38%, var(--key-side)); }
+@media (hover: hover) {
+  .k:not(.down):hover .cap { transform: translateY(-1px); box-shadow: 0 4px 0 var(--key-edge), 0 9px 11px -3px var(--key-drop); }
+  .k:not(.down):hover .face { background: linear-gradient(180deg, var(--key-hi), color-mix(in srgb, var(--key-top) 86%, var(--accent) 14%) 70%); }
+}
+.k:focus-visible { outline: none; }
+.k:focus-visible .cap { outline: 2px solid var(--accent); outline-offset: 2px; }
+.k.down .cap, .k:active .cap { transform: translateY(3px); box-shadow: 0 0 0 var(--key-edge), 0 1px 3px -1px var(--key-drop); transition-duration: 0s; }
+.k.down .face, .k:active .face { color: var(--accent-ink); background: var(--accent); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3); transition-duration: 0s; }
+.k.down .face .s { color: var(--accent-ink); }
+@media (max-width: 599px) {
+  .face .s { display: none; }
+  .face { gap: 0; }
+  .k.link .lg, .k.act .lg { display: none; }
+  .cap { padding: 2px 2px 3px; }
+}
+@media (prefers-reduced-motion: reduce) { .cap, .face { transition: none; } }
