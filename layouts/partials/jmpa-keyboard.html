@@ -1,0 +1,44 @@
+{{- /* The on-screen keyboard (65% ANSI), rendered here so the keys are real HTML. Top row = one keycap per link in data/links.yml (real <a>) plus a few action keys (<button>, wired in keyboard.js); everything else is a visual key that depresses when tapped.Pointer/touch UI only: nothing listens to the real keyboard.
+Key notation: code§legend§shifted legend§width in units§extra classes */ -}}
+{{- $links := slice -}}
+{{- range .Site.Data.links.categories }}{{ range .links }}{{ $links = $links | append . }}{{ end }}{{ end -}}
+{{- $rows := slice
+  "Backquote§`§~§1 Digit1§1§!§1 Digit2§2§@§1 Digit3§3§#§1 Digit4§4§$§1 Digit5§5§%§1 Digit6§6§^§1 Digit7§7§&§1 Digit8§8§*§1 Digit9§9§(§1 Digit0§0§)§1 Minus§-§_§1 Equal§=§+§1 Backspace§bksp§§2§mod Delete§del§§1§mod"
+  "Tab§tab§§1.5§mod KeyQ§Q§§1 KeyW§W§§1 KeyE§E§§1 KeyR§R§§1 KeyT§T§§1 KeyY§Y§§1 KeyU§U§§1 KeyI§I§§1 KeyO§O§§1 KeyP§P§§1 BracketLeft§[§{§1 BracketRight§]§}§1 Backslash§\\§|§1.5 PageUp§pg+§§1§mod"
+  "CapsLock§caps§§1.75§mod KeyA§A§§1 KeyS§S§§1 KeyD§D§§1 KeyF§F§§1 KeyG§G§§1 KeyH§H§§1 KeyJ§J§§1 KeyK§K§§1 KeyL§L§§1 Semicolon§;§:§1 Quote§'§\"§1 Enter§enter§§2.25§mod PageDown§pg-§§1§mod"
+  "ShiftLeft§shift§§2.25§mod KeyZ§Z§§1 KeyX§X§§1 KeyC§C§§1 KeyV§V§§1 KeyB§B§§1 KeyN§N§§1 KeyM§M§§1 Comma§,§<§1 Period§.§>§1 Slash§/§?§1 ShiftRight§shift§§1.75§mod ArrowUp§§§1§mod End§end§§1§mod"
+  "ControlLeft§ctrl§§1.25§mod MetaLeft§win§§1.25§mod AltLeft§alt§§1.25§mod Space§§§6.25 AltRight§alt§§1§mod Fn§fn§§1§mod ControlRight§ctrl§§1§mod ArrowLeft§§§1§mod ArrowDown§§§1§mod ArrowRight§§§1§mod"
+-}}
+{{- $arrows := dict "ArrowUp" "M12 19V6M6 11l6-6 6 6" "ArrowDown" "M12 5v13M6 13l6 6 6-6" "ArrowLeft" "M19 12H6M11 6l-6 6 6 6" "ArrowRight" "M5 12h13M13 6l6 6-6 6" -}}
+{{- $acts := slice
+  (dict "code" "Escape" "action" "home" "legend" "esc" "name" "Home screen" "d" "M3 11l9-8 9 8M5 10v10h14V10")
+  (dict "code" "ActTheme" "action" "theme" "legend" "theme" "name" "Switch dark or light" "d" "M12 8a4 4 0 100 8 4 4 0 000-8zM12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5")
+  (dict "code" "ActBird" "action" "bird" "legend" "bird" "name" "Send the budgie flying" "d" "M3 16c4 0 7-3 8-8l3 2c2-1 4-1 6 1-2 0-3 1-3 2 0 5-6 8-11 7zM15 9.5h.01")
+  (dict "code" "ActPage" "action" "page" "legend" "page" "name" "Next screen page" "d" "M5 4h14a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2zM8 21h8M12 17v4")
+  (dict "code" "ActHelp" "action" "help" "legend" "help" "name" "Help" "d" "M12 3a9 9 0 100 18 9 9 0 000-18zM9.5 9.5a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.5M12 17h.01")
+-}}
+<div class="kbd-dock" id="kbd-dock" role="group" aria-label="Keyboard: the links are keys">
+  <div class="kbd" id="kbd">
+    <div class="kbd-row r0">
+      {{- $esc := index $acts 0 }}
+      <button type="button" class="k act mod w1" data-key="{{ $esc.code }}" data-action="{{ $esc.action }}" aria-label="{{ $esc.name }}"><span class="cap"><span class="face"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $esc.d }}"/></svg><span class="lg">{{ $esc.legend }}</span></span></span></button>
+      {{- range $i, $l := $links }}
+      <a class="k link w15" data-key="F{{ add $i 1 }}" href="{{ $l.url }}"{{ if $l.external }} target="_blank" rel="noopener noreferrer"{{ end }} aria-label="{{ $l.label | default $l.name }}"><span class="cap"><span class="face">{{ partial "jmpa-icon.html" $l.icon }}<span class="lg">{{ $l.key | default $l.name }}</span><span class="fn">F{{ add $i 1 }}</span></span></span></a>
+      {{- end }}
+      {{- range $j, $a := $acts }}{{ if gt $j 0 }}
+      <button type="button" class="k act w1125" data-key="{{ $a.code }}" data-action="{{ $a.action }}" aria-label="{{ $a.name }}"><span class="cap"><span class="face"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ $a.d }}"/></svg><span class="lg">{{ $a.legend }}</span></span></span></button>
+      {{- end }}{{ end }}
+    </div>
+    {{- range $rows }}
+    <div class="kbd-row">
+      {{- range split . " " }}
+      {{- $f := split . "§" }}
+      {{- $code := index $f 0 }}{{ $lg := index $f 1 }}{{ $up := index $f 2 }}{{ $w := index $f 3 }}{{ $cls := "" }}{{ if gt (len $f) 4 }}{{ $cls = index $f 4 }}{{ end }}
+      <span class="k w{{ replace $w "." "" }}{{ with $cls }} {{ . }}{{ end }}" data-key="{{ $code }}" aria-hidden="true"><span class="cap"><span class="face">
+        {{- with index $arrows $code }}<svg viewBox="0 0 24 24"><path d="{{ . }}"/></svg>{{ else }}{{ with $up }}<span class="s">{{ . }}</span>{{ end }}<span>{{ $lg }}</span>{{ end -}}
+      </span></span></span>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+</div>

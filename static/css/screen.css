@@ -1,0 +1,75 @@
+/* The hero monitor: a static terminal. Content only changes when the visitor presses something (keyboard.js sets data-page and the echo line). */
+.monitor { position: relative; z-index: 1; width: 100%; max-width: 760px; justify-self: center; }
+.screen {
+  --lh: 22px;
+  --ed-bg: color-mix(in srgb, var(--bg) 55%, #000);
+  --ed-bar: color-mix(in srgb, var(--bg-card) 70%, #000);
+  --ed-line: color-mix(in srgb, var(--border) 85%, transparent);
+  --ed-text: var(--text);
+  --ed-dim: color-mix(in srgb, var(--muted) 85%, var(--ed-bg));
+  --tk-fn: #67e8f9;
+  --tk-str: #a7f3c0;
+  --tk-num: #ffc27a;
+  --tk-kw: #8fb4ff;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: var(--lh);
+  color: var(--ed-text);
+  background: var(--ed-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -32px color-mix(in srgb, var(--accent) 60%, transparent), 0 0 0 5px color-mix(in srgb, var(--bg-card) 80%, #000), 0 0 0 6px var(--border);
+}
+html:not(.dark) .screen {
+  --ed-bg: #ffffff;
+  --ed-bar: #eef2fb;
+  --ed-text: #0f172a;
+  --ed-dim: #475569;
+  --tk-fn: #0e6f86;
+  --tk-str: #107a3f;
+  --tk-num: #9a4a07;
+  --tk-kw: #1d4ed8;
+}
+.scr-bar { display: flex; align-items: center; gap: 12px; height: 38px; padding: 0 14px; background: var(--ed-bar); border-bottom: 1px solid var(--ed-line); }
+.dots { display: inline-flex; gap: 7px; }
+.dots i { width: 11px; height: 11px; border-radius: 50%; }
+.dots i:nth-child(1) { background: #ff6b6b; }
+.dots i:nth-child(2) { background: #ffd36b; }
+.dots i:nth-child(3) { background: #6dff9c; }
+.scr-title { margin: 0 auto; padding-right: 54px; font-size: 12px; color: var(--ed-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.scr-body { height: calc(var(--lh) * 9 + 28px); padding: 14px 18px; overflow: hidden; }
+.pg[hidden] { display: none; }
+.t { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.pr { color: var(--tk-fn); font-weight: 700; }
+.pa { color: var(--tk-kw); }
+.op { color: var(--ed-dim); }
+.out { color: var(--ed-text); padding-left: 2ch; }
+.who { color: var(--heading); font-weight: 700; }
+.ls span { display: inline-block; margin-right: 1.5ch; color: var(--tk-str); }
+.row { display: grid; grid-template-columns: 7ch 9ch minmax(0, 1fr); gap: 0 2ch; padding-left: 2ch; }
+.row .fk { color: var(--tk-num); }
+.row .nm { color: var(--tk-str); }
+.row .url { color: var(--ed-dim); }
+.pg[data-pg='help'] .row { grid-template-columns: 8ch minmax(0, 1fr); }
+.pg[data-pg='help'] .row .out { padding-left: 0; }
+.caret { display: inline-block; width: 8px; height: 1.1em; vertical-align: text-bottom; background: var(--accent); }
+@media (prefers-reduced-motion: no-preference) { .caret { animation: caret 1.06s steps(1) infinite; } }
+@keyframes caret { 50% { opacity: 0; } }
+.status { display: flex; align-items: center; gap: 16px; height: 30px; padding: 0 14px; font-size: 12px; color: var(--accent-ink); background: var(--accent); }
+.status .st-r { margin-left: auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.status > span { white-space: nowrap; }
+
+.stand { display: flex; flex-direction: column; align-items: center; }
+.stand::before { content: ''; width: 72px; height: 22px; background: linear-gradient(90deg, color-mix(in srgb, var(--bg-card) 70%, #000), color-mix(in srgb, var(--border) 80%, var(--bg-card)), color-mix(in srgb, var(--bg-card) 70%, #000)); }
+.stand::after { content: ''; width: 190px; height: 9px; border-radius: 6px 6px 2px 2px; background: color-mix(in srgb, var(--border) 85%, var(--bg-card)); box-shadow: 0 6px 14px -6px #000; }
+
+@media (max-width: 599px) {
+  .screen { --lh: 19px; font-size: 11.5px; }
+  .scr-body { height: calc(var(--lh) * 10 + 20px); padding: 10px 12px; }
+  .row { grid-template-columns: 5ch 8ch minmax(0, 1fr); gap: 0 1ch; }
+  .pg[data-pg='help'] .row { grid-template-columns: 7ch minmax(0, 1fr); }
+  .scr-title { padding-right: 40px; font-size: 11px; }
+  .stand::before { width: 48px; height: 14px; }
+  .stand::after { width: 120px; }
+}
