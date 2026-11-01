@@ -10,7 +10,8 @@ for (const path of ['/', '/404.html']) {
     expect(csp).toContain("default-src 'none'");
     expect(csp).not.toMatch(/unsafe-(inline|eval)/);
     expect(await page.locator('script:not([src])').count()).toBe(0);
-    expect(await page.locator('body [style]').count()).toBe(0);
+    // inline style attributes are CSP-blocked in markup; the picker's preview cards set theirs through the CSSOM, which the CSP allows.
+    expect(await page.locator('body [style]:not(#jmpa-palette-popup *)').count()).toBe(0);
 
     // the colour picker and the day/night toggle (the only scripted behaviour) still work under it.
     await setColours(page, '#118833', '#aa22cc');
