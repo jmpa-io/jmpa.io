@@ -41,12 +41,17 @@
   </header>
   <button type="button" class="hero-btn" id="hero-btn" aria-label="Change the scene" title="Click to change the scene"><img class="hero" id="hero" src="/walls/meadow-day.png" width="960" height="540" alt="Pixel art of a hoodie in a landscape" /></button>
   {{ $i := 0 }}
-  <ul class="grid">
-    {{ range .Site.Data.links.categories }}{{ range .links }}
-    <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><span class="ico">{{ partial "jmpa-icon.html" .icon }}</span><b>{{ .name }}</b><small>{{ .desc }}</small></a></li>
-    {{ $i = add $i 1 }}
-    {{ end }}{{ end }}
-  </ul>
+  {{ range .Site.Data.links.categories }}
+  <section aria-labelledby="{{ .id }}">
+    <h2 id="{{ .id }}"><span>{{ .title }}</span></h2>
+    <ul class="grid">
+      {{ range .links }}
+      <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><span class="ico">{{ partial "jmpa-icon.html" .icon }}</span><b>{{ .name }}</b><small>{{ .desc }}</small></a></li>
+      {{ $i = add $i 1 }}
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
 </main>
 </body>
 </html>
