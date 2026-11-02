@@ -31,7 +31,7 @@ test.describe('jmpa.io simple page', () => {
   test('the list is centred', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/');
-    const box = await page.locator('ul').first().boundingBox();
+    const box = await page.locator('ul.grid').boundingBox();
     expect(box).not.toBeNull();
     expect(Math.abs(box!.x + box!.width / 2 - 640)).toBeLessThan(2);
   });
@@ -109,7 +109,7 @@ test.describe('jmpa.io simple page', () => {
     await page.setViewportSize({ width: 1600, height: 900 });
     await page.goto('/');
     const tools = await page.locator('.tools').boundingBox();
-    const list = await page.locator('ul').first().boundingBox();
+    const list = await page.locator('ul.grid').boundingBox();
     expect(tools!.x + tools!.width).toBeLessThanOrEqual(list!.x + list!.width + 2);
   });
 
@@ -118,7 +118,7 @@ test.describe('jmpa.io simple page', () => {
     await page.goto('/');
     const xs = await page.locator('ul.grid li a').evaluateAll((as) => [...new Set(as.map((a) => Math.round(a.getBoundingClientRect().x)))]);
     expect(xs.length).toBe(2);
-    await expect(page.locator('ul.grid li a .ico svg')).toHaveCount(LINKS.length + 1);
+    await expect(page.locator('li a .ico svg')).toHaveCount(LINKS.length + 1);
     await page.setViewportSize({ width: 390, height: 800 });
     const xs2 = await page.locator('ul.grid li a').evaluateAll((as) => [...new Set(as.map((a) => Math.round(a.getBoundingClientRect().x)))]);
     expect(xs2.length).toBe(1);
@@ -137,9 +137,22 @@ test.describe('jmpa.io simple page', () => {
     await page.keyboard.press('Tab'); // colours
     await page.keyboard.press('Tab'); // day / night
     await page.keyboard.press('Tab'); // logo
-    await page.keyboard.press('Tab'); // scene
     await page.keyboard.press('Tab');
-    await expect(link(page, 'Resume & Blog')).toBeFocused();
+    await expect(link(page, 'Instagram')).toBeFocused();
+  });
+
+  test('Instagram and Email sit under the tagline, and the jmpa.io links come first with art first', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/');
+    const tag = await page.locator('header p').boundingBox();
+    const ig = await link(page, 'Instagram').boundingBox();
+    const mail = await link(page, 'Email').boundingBox();
+    const hero = await page.locator('#hero').boundingBox();
+    expect(ig!.y).toBeGreaterThanOrEqual(tag!.y + tag!.height);
+    expect(Math.abs(ig!.y - mail!.y)).toBeLessThan(2);
+    expect(mail!.y + mail!.height).toBeLessThanOrEqual(hero!.y);
+    const order = await page.locator('ul.grid li a b').allTextContents();
+    expect(order).toEqual(['art.jmpa.io', 'github.com/jmpa-io', 'portfolio.jcleal.me', 'startpage.jcleal.me', 'Resume & Blog', 'github.com/jcleal']);
   });
 
   test('does not scroll sideways on a phone', async ({ page }) => {
