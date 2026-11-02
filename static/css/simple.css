@@ -1,8 +1,17 @@
+:root { --bg: #0b1020; --fg: #e6edff; --link: #7dd3fc; --hover: #6ee7b7; }
+@media (prefers-color-scheme: light) {
+  :root { --bg: #f4f1e8; --fg: #1a2238; --link: #1d4ed8; --hover: #047857; }
+}
+html:has(#theme:checked) { --bg: #f4f1e8; --fg: #1a2238; --link: #1d4ed8; --hover: #047857; }
+@media (prefers-color-scheme: light) {
+  html:has(#theme:checked) { --bg: #0b1020; --fg: #e6edff; --link: #7dd3fc; --hover: #6ee7b7; }
+}
 html, body { height: 100%; margin: 0; }
 body {
-  background: #0b1020;
-  color: #e6edff;
+  background: var(--bg);
+  color: var(--fg);
   font: 400 1.1rem/1.4 "Fira Code", ui-monospace, monospace;
+  transition: background .3s, color .3s;
 }
 main {
   min-height: 100%;
@@ -17,5 +26,19 @@ main {
 .hero { max-width: 100%; height: auto; image-rendering: pixelated; }
 ul { list-style: none; margin: 0; padding: 0; text-align: center; }
 li { margin: .5rem 0; }
-a { color: #7dd3fc; text-decoration: none; }
-a:hover, a:focus-visible { text-decoration: underline; color: #6ee7b7; }
+a { color: var(--link); text-decoration: none; }
+a:hover, a:focus-visible { text-decoration: underline; color: var(--hover); }
+.sr { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.mode { position: fixed; top: 1rem; right: 1rem; width: 28px; height: 28px; color: var(--fg); cursor: pointer; opacity: .8; }
+.mode:hover, #theme:focus-visible + .mode { opacity: 1; outline: 2px solid var(--link); outline-offset: 4px; }
+.mode svg { width: 100%; height: 100%; }
+/* show the symbol for the mode you would switch to */
+.mode .sun { display: block; }
+.mode .moon { display: none; }
+@media (prefers-color-scheme: light) { .mode .sun { display: none; } .mode .moon { display: block; } }
+#theme:checked + .mode .sun { display: none; }
+#theme:checked + .mode .moon { display: block; }
+@media (prefers-color-scheme: light) {
+  #theme:checked + .mode .sun { display: block; }
+  #theme:checked + .mode .moon { display: none; }
+}
