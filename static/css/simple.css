@@ -35,8 +35,7 @@ main {
   gap: 1.6rem;
 }
 header { text-align: center; display: grid; justify-items: center; gap: .15rem; }
-.logo { width: 56px; height: 56px; }
-html.dark .logo { filter: invert(1); }
+.logo { width: 56px; height: 56px; border-radius: 14px; border: 3px solid var(--edge); box-shadow: 0 3px 0 var(--edge); }
 h1 { margin: .2rem 0 0; font-size: 2rem; letter-spacing: -.02em; }
 header p { margin: 0; font-size: .85rem; opacity: .75; }
 .hero {
