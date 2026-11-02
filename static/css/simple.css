@@ -1,16 +1,16 @@
-:root { --bg: #0b1020; --fg: #e6edff; --link: #7dd3fc; --hover: #6ee7b7; }
-@media (prefers-color-scheme: light) {
-  :root { --bg: #f4f1e8; --fg: #1a2238; --link: #1d4ed8; --hover: #047857; }
+:root {
+  --bg: #fff4e6; --fg: #3a2e5d; --edge: #3a2e5d; --shadow: #7bdff2;
+  --c1: #ffb5c2; --c2: #b2f7ef; --c3: #f7d6e0; --c4: #eff7f6; --c5: #fcefb4;
 }
-html:has(#theme:checked) { --bg: #f4f1e8; --fg: #1a2238; --link: #1d4ed8; --hover: #047857; }
-@media (prefers-color-scheme: light) {
-  html:has(#theme:checked) { --bg: #0b1020; --fg: #e6edff; --link: #7dd3fc; --hover: #6ee7b7; }
+html:has(#theme:checked) {
+  --bg: #1d1a33; --fg: #f1e9ff; --edge: #f1e9ff; --shadow: #5b4b9a;
+  --c1: #8f4f66; --c2: #3d7f7a; --c3: #7a4d93; --c4: #4a5a86; --c5: #8a7a3d;
 }
 html, body { height: 100%; margin: 0; }
 body {
   background: var(--bg);
   color: var(--fg);
-  font: 400 1.1rem/1.4 "Fira Code", ui-monospace, monospace;
+  font: 700 1.05rem/1.2 "Fira Code", ui-monospace, monospace;
   transition: background .3s, color .3s;
 }
 main {
@@ -19,36 +19,37 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.8rem;
   padding: 2rem 1rem;
   box-sizing: border-box;
 }
-.hero { max-width: 100%; height: auto; image-rendering: pixelated; }
-ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: stretch; gap: .6rem; width: min(100%, 22rem); }
+.hero { width: 400px; max-width: 100%; height: auto; image-rendering: pixelated; border: 4px solid var(--edge); border-radius: 18px; box-shadow: 8px 8px 0 var(--shadow); }
+ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .9rem; width: min(100%, 22rem); }
 li { margin: 0; }
 a {
   display: block;
   text-align: center;
-  padding: .7rem 1rem;
-  color: var(--link);
+  padding: .85rem;
+  color: var(--fg);
   text-decoration: none;
-  border: 2px solid var(--link);
-  border-radius: 10px;
-  transition: background .15s, color .15s, transform .1s;
+  border: 3px solid var(--edge);
+  border-radius: 16px;
+  box-shadow: 0 6px 0 var(--edge);
+  transition: transform .08s, box-shadow .08s;
 }
-a:hover, a:focus-visible { background: var(--link); color: var(--bg); outline: none; }
-a:active { transform: translateY(1px); }
+li:nth-child(5n+1) a { background: var(--c1); }
+li:nth-child(5n+2) a { background: var(--c2); }
+li:nth-child(5n+3) a { background: var(--c3); }
+li:nth-child(5n+4) a { background: var(--c4); }
+li:nth-child(5n) a { background: var(--c5); }
+a:hover, a:focus-visible { transform: translateY(2px); box-shadow: 0 4px 0 var(--edge); outline: none; }
+a:active { transform: translateY(6px); box-shadow: 0 0 0 var(--edge); }
 .sr { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.mode { position: fixed; top: 1rem; right: 1rem; width: 28px; height: 28px; color: var(--fg); cursor: pointer; opacity: .8; }
-.mode:hover, #theme:focus-visible + .mode { opacity: 1; outline: 2px solid var(--link); outline-offset: 4px; }
+.mode { position: fixed; top: 1rem; right: 1rem; width: 30px; height: 30px; color: var(--fg); cursor: pointer; }
+.mode:hover, #theme:focus-visible + .mode { outline: 2px solid var(--edge); outline-offset: 4px; border-radius: 6px; }
 .mode svg { width: 100%; height: 100%; }
 /* show the symbol for the mode you would switch to */
-.mode .sun { display: block; }
-.mode .moon { display: none; }
-@media (prefers-color-scheme: light) { .mode .sun { display: none; } .mode .moon { display: block; } }
-#theme:checked + .mode .sun { display: none; }
-#theme:checked + .mode .moon { display: block; }
-@media (prefers-color-scheme: light) {
-  #theme:checked + .mode .sun { display: block; }
-  #theme:checked + .mode .moon { display: none; }
-}
+.mode .sun { display: none; }
+.mode .moon { display: block; }
+#theme:checked + .mode .sun { display: block; }
+#theme:checked + .mode .moon { display: none; }
