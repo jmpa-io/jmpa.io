@@ -41,12 +41,14 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     showLogo(currentLogo());
-    var btn = document.getElementById('logo-btn');
-    if (!btn) return;
-    btn.addEventListener('click', function () {
-      var next = LOGOS[(LOGOS.indexOf(currentLogo()) + 1) % LOGOS.length];
-      try { localStorage.setItem(LOGO_KEY, next); } catch (e) { /* storage unavailable */ }
-      showLogo(next);
+    ['logo-btn', 'hero-btn'].forEach(function (id) {
+      var btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var next = LOGOS[(LOGOS.indexOf(currentLogo()) + 1) % LOGOS.length];
+        try { localStorage.setItem(LOGO_KEY, next); } catch (e) { /* storage unavailable */ }
+        showLogo(next);
+      });
     });
   });
 })();

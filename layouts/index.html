@@ -32,7 +32,7 @@
     <h1>jmpa.io</h1>
     <p>the front door to my corner of the internet</p>
   </header>
-  <img class="hero" id="hero" src="/walls/meadow-day.png" width="960" height="540" alt="Pixel art of a hoodie in a landscape" />
+  <button type="button" class="hero-btn" id="hero-btn" aria-label="Change the scene" title="Click to change the scene"><img class="hero" id="hero" src="/walls/meadow-day.png" width="960" height="540" alt="Pixel art of a hoodie in a landscape" /></button>
   {{ $i := 0 }}
   <ul class="grid">
     {{ range .Site.Data.links.categories }}{{ range .links }}
