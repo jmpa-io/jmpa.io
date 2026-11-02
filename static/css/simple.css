@@ -51,15 +51,12 @@ header p { margin: 0; font-size: .85rem; opacity: .75; }
 }
 .night, html.dark .day { display: none; }
 html.dark .night { display: block; }
-.hero-icon { display: none; width: 320px; max-width: 100%; height: auto; image-rendering: pixelated; border: 4px solid var(--edge); border-radius: 28px; box-shadow: 8px 8px 0 var(--shadow); }
-html[data-view="icon"] .hero-icon { display: block; }
-html[data-view="icon"] .hero { display: none !important; }
 
 section { width: 100%; }
 h2 { margin: 0 0 .6rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-align: center; opacity: .7; }
 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
 ul.grid { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; width: 100%; }
-.hero { max-width: 26rem; }
+.hero { max-width: 100%; }
 .ico { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; margin-bottom: .2rem; border: 3px solid var(--edge); border-radius: 12px; background: var(--bg); }
 .ico svg { width: 1.3rem; height: 1.3rem; }
 li { margin: 0; }
