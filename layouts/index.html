@@ -1,45 +1,28 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}" data-variant="{{ .Site.Params.variant | default 1 }}">
+<html lang="{{ .Site.LanguageCode }}">
 <head>
-{{- partial "jmpa-head.html" . -}}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'" />
+<title>{{ .Site.Title }}</title>
+<meta name="description" content="{{ .Site.Params.description }}" />
+<meta name="theme-color" content="#0b1020" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="stylesheet" href="/css/simple.css" />
 </head>
 <body>
-{{- partial "jmpa-header.html" . -}}
 <main>
-  <section class="hero" aria-label="Intro">
-    <div class="intro">
-      <p class="eyebrow">{{ .Site.Params.eyebrow }}</p>
-      <h1>{{ .Site.Params.heading }}</h1>
-      <p class="sub">{{ .Site.Params.sub }}</p>
-      <div class="hero-links">
-        <a class="btn" href="#writing">Writing &amp; CV</a>
-        <a class="btn ghost" href="#code">Code</a>
-      </div>
-    </div>
-    <div class="scene">
-      {{- partial "jmpa-sprites.html" . -}}
-      {{- partial "jmpa-screen.html" . -}}
-    </div>
-  </section>
-  <div class="cats">
-    {{ range .Site.Data.links.categories }}
-    <section class="cat" id="{{ .id }}" aria-labelledby="cat-{{ .id }}">
-      <div class="cat-head"><h2 id="cat-{{ .id }}">{{ .title }}</h2>{{ with .blurb }}<p>{{ . }}</p>{{ end }}</div>
-      <ul class="cards">
-        {{ range .links }}
-        <li><a class="card" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}{{ with .label }} aria-label="{{ . }}"{{ end }}>
-          <span class="card-icon">{{ partial "jmpa-icon.html" .icon }}</span>
-          <span class="card-body"><span class="card-title">{{ .name }}</span><span class="card-desc">{{ .desc }}</span></span>
-          <svg class="card-go" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
-        </a></li>
-        {{ end }}
-      </ul>
-    </section>
+  <img class="hero" src="/programming.gif" width="480" height="320" alt="Pixel art of me programming at a desk" />
+  <ul>
+    {{ range .Site.Data.links.categories }}{{ range .links }}
+    <li><a href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .name }}</a></li>
+    {{ end }}{{ end }}
+    {{ range .Site.Data.links.footer }}
+    <li><a href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .name }}</a></li>
     {{ end }}
-  </div>
+  </ul>
 </main>
-{{- partial "jmpa-footer.html" . -}}
-{{- partial "jmpa-keyboard.html" . -}}
-<script src="/js/keyboard.js"></script>
 </body>
 </html>
