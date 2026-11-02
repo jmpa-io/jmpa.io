@@ -92,6 +92,14 @@ test.describe('jmpa.io simple page', () => {
     const second = await logo.getAttribute('src');
     expect(second).toBe(seen[1]);
     await expect(favicon).toHaveAttribute('href', second!.replace('-192', '-32'));
+    await page.locator('#hero-btn').click(); // the big scene cycles too
+    await expect(logo).not.toHaveAttribute('src', second!);
+    await page.locator('#logo-btn').click();
+    await page.locator('#logo-btn').click();
+    await page.locator('#logo-btn').click();
+    await page.locator('#logo-btn').click();
+    await page.locator('#logo-btn').click();
+    await expect(logo).toHaveAttribute('src', second!);
     await page.reload();
     await expect(logo).toHaveAttribute('src', second!);
     expect(await hero.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
@@ -129,6 +137,7 @@ test.describe('jmpa.io simple page', () => {
     await page.keyboard.press('Tab'); // colours
     await page.keyboard.press('Tab'); // day / night
     await page.keyboard.press('Tab'); // logo
+    await page.keyboard.press('Tab'); // scene
     await page.keyboard.press('Tab');
     await expect(link(page, 'Resume & Blog')).toBeFocused();
   });
