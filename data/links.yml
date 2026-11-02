@@ -16,8 +16,41 @@
 #
 # footer:       small icon links in the footer (name, url, label, icon, external).
 categories:
-  - id: writing
-    title: Writing & CV
+  - id: jmpa
+    title: jmpa.io
+    blurb: The jmpa corner.
+    links:
+      - name: art.jmpa.io
+        url: https://art.jmpa.io
+        desc: My art, in one gallery.
+        icon: art
+        key: art
+        external: true
+      - name: github.com/jmpa-io
+        url: https://github.com/jmpa-io
+        desc: "The jmpa organisation: sites and tools."
+        icon: github
+        key: org
+        external: true
+        label: GitHub jmpa-io
+  - id: sites
+    title: More sites
+    blurb: Projects and tools.
+    links:
+      - name: portfolio.jcleal.me
+        url: https://portfolio.jcleal.me
+        desc: A selection of projects and case studies.
+        icon: projects
+        key: work
+        external: true
+      - name: startpage.jcleal.me
+        url: https://startpage.jcleal.me
+        desc: My browser start page.
+        icon: tools
+        key: start
+        external: true
+  - id: me
+    title: Me
     blurb: Words, and where I've worked.
     links:
       - name: Resume & Blog
@@ -26,10 +59,6 @@ categories:
         icon: resume
         key: cv
         external: true
-  - id: code
-    title: Code
-    blurb: Where the source lives.
-    links:
       - name: github.com/jcleal
         url: https://github.com/jcleal
         desc: My personal account and projects.
@@ -37,43 +66,6 @@ categories:
         key: git
         external: true
         label: GitHub jcleal
-      - name: github.com/jmpa-io
-        url: https://github.com/jmpa-io
-        desc: "The jmpa organisation: sites and tools."
-        icon: github
-        key: org
-        external: true
-        label: GitHub jmpa-io
-  - id: work
-    title: Work & projects
-    blurb: Things I've built.
-    links:
-      - name: portfolio.jcleal.me
-        url: https://portfolio.jcleal.me
-        desc: A selection of projects and case studies.
-        icon: projects
-        key: work
-        external: true
-  - id: art
-    title: Art
-    blurb: Pixels, mostly.
-    links:
-      - name: art.jmpa.io
-        url: https://art.jmpa.io
-        desc: My art, in one gallery.
-        icon: art
-        key: art
-        external: true
-  - id: tools
-    title: Tools
-    blurb: Small things I use every day.
-    links:
-      - name: startpage.jcleal.me
-        url: https://startpage.jcleal.me
-        desc: My browser start page.
-        icon: tools
-        key: start
-        external: true
 
 footer:
   - name: Instagram

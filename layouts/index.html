@@ -31,6 +31,13 @@
     <button type="button" class="logo-btn" id="logo-btn" aria-label="Change the logo" title="Click to change the logo"><img class="logo" id="logo" src="/logos/meadow-day-192.png" width="72" height="72" alt="" /></button>
     <h1>jmpa.io</h1>
     <p>the front door to my corner of the internet</p>
+    <ul class="social">
+      {{ $j := 0 }}
+      {{ range .Site.Data.links.footer }}
+      <li><a class="k{{ mod $j 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }} aria-label="{{ .label }}"><span class="ico">{{ partial "jmpa-icon.html" .icon }}</span><b>{{ .name }}</b></a></li>
+      {{ $j = add $j 1 }}
+      {{ end }}
+    </ul>
   </header>
   <button type="button" class="hero-btn" id="hero-btn" aria-label="Change the scene" title="Click to change the scene"><img class="hero" id="hero" src="/walls/meadow-day.png" width="960" height="540" alt="Pixel art of a hoodie in a landscape" /></button>
   {{ $i := 0 }}
@@ -39,10 +46,6 @@
     <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><span class="ico">{{ partial "jmpa-icon.html" .icon }}</span><b>{{ .name }}</b><small>{{ .desc }}</small></a></li>
     {{ $i = add $i 1 }}
     {{ end }}{{ end }}
-    {{ range .Site.Data.links.footer }}
-    <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><span class="ico">{{ partial "jmpa-icon.html" .icon }}</span><b>{{ .name }}</b><small>{{ .label }}</small></a></li>
-    {{ $i = add $i 1 }}
-    {{ end }}
   </ul>
 </main>
 </body>
