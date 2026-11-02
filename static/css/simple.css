@@ -55,7 +55,7 @@ html.dark .night { display: block; }
 section { width: 100%; }
 h2 { display: flex; align-items: center; gap: .8rem; margin: 0 0 .9rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 h2::before, h2::after { content: ''; flex: 1; border-top: 4px solid var(--edge); }
-h2 span { padding: .25rem .9rem; border: 3px solid var(--edge); border-radius: 999px; background: oklch(from var(--p) var(--tile-l) var(--tile-c) h); box-shadow: 0 3px 0 var(--edge); }
+h2 span { padding: .25rem .9rem; border: 3px solid var(--edge); border-radius: 999px; background: #ffe629; color: #2b2140; box-shadow: 0 3px 0 var(--edge); }
 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
 ul.social { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: .6rem; }
 ul.social a { flex-direction: row; padding: .35rem .8rem .35rem .4rem; gap: .5rem; border-radius: 14px; box-shadow: 0 4px 0 var(--edge); }
