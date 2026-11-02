@@ -1,4 +1,9 @@
 
+# The deploy container mounts the repo at /go/src/app, so Makefile.common.mk's
+# `REPO = $(shell basename $(shell git rev-parse --show-toplevel))` would resolve to 'app' and
+# beat the REPO the pipeline passes in, making the SSM lookups below miss. Pin it.
+override REPO := jmpa.io
+
 # Default PROJECT, if not given by another Makefile.
 ifndef PROJECT
 PROJECT=jmpa.io
@@ -62,6 +67,10 @@ website: ADDITIONAL_PARAMETER_OVERRIDES="AcmCertificateArn=$(CERT_ARN) "
 website: ADDITIONAL_PARAMETER_OVERRIDES+="HostedZoneId=$(HOSTED_ZONE_ID) "
 website: deploy-website
 
+sync: ## Syncs the downloaded website artifact (dist/) to AWS S3; called by the 50-upload pipeline.
+sync: upload-bucket
+	aws s3 sync --delete dist/ s3://$(UPLOAD_BUCKET)/
+
 upload: ## Uploads generated website content to AWS S3. Be careful with this command!
 upload: upload-bucket
 	aws s3 sync --delete dist/public/ s3://$(UPLOAD_BUCKET)/
@@ -77,6 +86,7 @@ compile-website: cmd/hugo image-hugo
 compile-website: dist/public
 	@test -z "$(CI)" || echo "##[group]Compiling website."
 	docker run --rm \
+		--user $$(id -u):$$(id -g) \
 		-w /app \
 		-v "$(PWD):/app" \
 		-v "$(PWD)/public" \
