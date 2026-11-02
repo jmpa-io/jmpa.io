@@ -46,12 +46,16 @@ test.describe('jmpa.io simple page', () => {
     await expect(page.locator('html')).not.toHaveClass(/dark/);
     await expect(page.locator('img.hero.day')).toBeVisible();
     await expect(page.locator('img.hero.night')).toBeHidden();
+    await expect(page.locator('img.logo.day')).toBeVisible();
+    await expect(page.locator('img.logo.night')).toBeHidden();
     await toggle.click();
     await expect(page.locator('html')).toHaveClass(/dark/);
     expect(await toggle.innerHTML()).not.toBe(moon);
     expect(await bg()).not.toBe(day);
     await expect(page.locator('img.hero.night')).toBeVisible();
     await expect(page.locator('img.hero.day')).toBeHidden();
+    await expect(page.locator('img.logo.night')).toBeVisible();
+    await expect(page.locator('img.logo.day')).toBeHidden();
     expect(await page.locator('img.hero.night').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
     await page.reload();
     await expect(page.locator('html')).toHaveClass(/dark/);
