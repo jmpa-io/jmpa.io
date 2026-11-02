@@ -19,7 +19,8 @@
   <svg class="moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z"/></svg>
 </label>
 <main>
-  <img class="hero" src="/programming.gif" width="480" height="320" alt="Pixel art of me programming at a desk" />
+  <img class="hero day" src="/programming.gif" width="480" height="320" alt="Pixel art of me programming at a desk in a bright room" />
+  <img class="hero night" src="/programming-night.gif" width="480" height="320" alt="Pixel art of me programming at a desk at night" />
   <ul>
     {{ range .Site.Data.links.categories }}{{ range .links }}
     <li><a href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .name }}</a></li>
