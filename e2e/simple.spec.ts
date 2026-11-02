@@ -31,7 +31,7 @@ test.describe('jmpa.io simple page', () => {
   test('the list is centred', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/');
-    const box = await page.locator('ul.grid').boundingBox();
+    const box = await page.locator('ul.grid').first().boundingBox();
     expect(box).not.toBeNull();
     expect(Math.abs(box!.x + box!.width / 2 - 640)).toBeLessThan(2);
   });
@@ -109,7 +109,7 @@ test.describe('jmpa.io simple page', () => {
     await page.setViewportSize({ width: 1600, height: 900 });
     await page.goto('/');
     const tools = await page.locator('.tools').boundingBox();
-    const list = await page.locator('ul.grid').boundingBox();
+    const list = await page.locator('ul.grid').first().boundingBox();
     expect(tools!.x + tools!.width).toBeLessThanOrEqual(list!.x + list!.width + 2);
   });
 
@@ -151,6 +151,7 @@ test.describe('jmpa.io simple page', () => {
     expect(ig!.y).toBeGreaterThanOrEqual(tag!.y + tag!.height);
     expect(Math.abs(ig!.y - mail!.y)).toBeLessThan(2);
     expect(mail!.y + mail!.height).toBeLessThanOrEqual(hero!.y);
+    await expect(page.locator('section h2')).toHaveText(['Sites', 'Me']);
     const order = await page.locator('ul.grid li a b').allTextContents();
     expect(order).toEqual(['art.jmpa.io', 'github.com/jmpa-io', 'portfolio.jcleal.me', 'startpage.jcleal.me', 'Resume & Blog', 'github.com/jcleal']);
   });

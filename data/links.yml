@@ -16,9 +16,9 @@
 #
 # footer:       small icon links in the footer (name, url, label, icon, external).
 categories:
-  - id: jmpa
-    title: jmpa.io
-    blurb: The jmpa corner.
+  - id: sites
+    title: Sites
+    blurb: Everything I run.
     links:
       - name: art.jmpa.io
         url: https://art.jmpa.io
@@ -33,10 +33,6 @@ categories:
         key: org
         external: true
         label: GitHub jmpa-io
-  - id: sites
-    title: More sites
-    blurb: Projects and tools.
-    links:
       - name: portfolio.jcleal.me
         url: https://portfolio.jcleal.me
         desc: A selection of projects and case studies.
