@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /var/task/inventory-linux-arm64

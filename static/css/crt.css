@@ -1,0 +1,172 @@
+/* MASTER COPY (jmpa.io/static/css/crt.css) - mirrored byte-identically into portfolio.jcleal.me/public/crt.css; do not edit per-repo.
+ * Layered CRT for the Win98 desktops. Everything scales with --crt (0..1) on .screen; 0 is completely flat.
+ * Only transform/opacity animate; all overlays are pointer-events:none. Curvature itself is crt.js (SVG displacement).
+ *
+ *   .screen            black monitor bezel (>= 900px), fixed to the viewport
+ *     .glass           the curved glass: rounded corners, clips everything
+ *       .crt-content   the desktop (SVG-filtered by crt.js)
+ *       .crt           overlay: scanlines + phosphor mask, vignette, glass reflection, grain, rolling band, flicker
+ *       .crt-standby   "click to power on" (only after Shut Down)
+ */
+.screen {
+  --crt: 0.6;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  overflow: hidden;
+}
+@media (min-width: 900px) {
+  .screen {
+    padding: calc(var(--crt) * 20px);
+    background: linear-gradient(150deg, #2b2b30, #0c0c0e 55%, #1a1a1e);
+    box-shadow: inset 0 0 0 calc(var(--crt) * 2px) #000, inset 0 calc(var(--crt) * 3px) 0 rgba(255, 255, 255, 0.07);
+  }
+}
+.glass {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: calc(var(--crt) * 28px);
+  background: #000;
+}
+.crt-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  transform-origin: center;
+}
+
+/* ---- overlay ---- */
+.crt {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 24% 14%, rgba(255, 255, 255, calc(var(--crt) * 0.1)), transparent 38%), /* glass reflection */
+    radial-gradient(ellipse at center, rgba(255, 255, 255, calc(var(--crt) * 0.05)) 0, transparent 55%), /* brighter centre */
+    radial-gradient(ellipse at center, transparent 48%, rgba(0, 0, 0, calc(var(--crt) * 0.6)) 100%); /* vignette */
+  box-shadow:
+    inset 0 0 calc(var(--crt) * 110px) rgba(0, 0, 0, 0.7),
+    inset 0 0 calc(var(--crt) * 8px) calc(var(--crt) * 2px) #000;
+}
+.crt::before { /* scanlines (3px period, slow drift) + RGB phosphor triad */
+  content: '';
+  position: absolute;
+  inset: -6px 0;
+  mix-blend-mode: multiply;
+  background:
+    repeating-linear-gradient(to bottom, rgba(0, 0, 0, calc(var(--crt) * 0.3)) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(to right,
+      rgba(255, 170, 170, calc(var(--crt) * 0.5)) 0 1px,
+      rgba(170, 255, 170, calc(var(--crt) * 0.5)) 1px 2px,
+      rgba(170, 170, 255, calc(var(--crt) * 0.5)) 2px 3px);
+  animation: crt-drift 3s linear infinite;
+}
+.crt::after { /* rolling brightness band */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 26%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, calc(var(--crt) * 0.07)), transparent);
+  transform: translateY(-100%);
+  animation: crt-roll 6s linear infinite;
+}
+.crt-grain {
+  position: absolute;
+  inset: -50%;
+  opacity: calc(var(--crt) * 0.1);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: crt-grain 0.6s steps(1) infinite;
+}
+.crt-flicker { /* 1-2% brightness jitter */
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  animation: crt-flicker 4.3s steps(1) infinite;
+}
+.crt-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+}
+@keyframes crt-drift { to { transform: translateY(3px); } }
+@keyframes crt-roll { to { transform: translateY(500%); } }
+@keyframes crt-grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-30px, 20px); }
+  50% { transform: translate(25px, -35px); }
+  75% { transform: translate(-15px, -25px); }
+}
+@keyframes crt-flicker {
+  0%, 100% { opacity: 0; }
+  11% { opacity: calc(var(--crt) * 0.03); }
+  12% { opacity: 0; }
+  47% { opacity: calc(var(--crt) * 0.02); }
+  49% { opacity: 0; }
+  83% { opacity: calc(var(--crt) * 0.035); }
+  84% { opacity: 0; }
+}
+
+/* bloom / glow on bright text and title bars */
+.glass .win.focused .win-title {
+  text-shadow:
+    calc(var(--crt) * 0.7px) 0 rgba(255, 0, 60, 0.3),
+    calc(var(--crt) * -0.7px) 0 rgba(0, 200, 255, 0.3),
+    0 0 calc(var(--crt) * 7px) rgba(255, 255, 255, 0.55);
+}
+.glass .win.focused .win-bar { box-shadow: 0 0 calc(var(--crt) * 16px) color-mix(in oklch, var(--blue, #1084d0) 55%, transparent); }
+
+/* ---- power on / off ---- */
+.crt-poweron .crt-content { animation: crt-on 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.crt-poweron .crt-flash { animation: crt-flash 0.6s ease-out both; }
+@keyframes crt-on {
+  0% { transform: scale(0.35, 0.004); opacity: 0.3; }
+  42% { transform: scale(1, 0.004); opacity: 1; }
+  100% { transform: none; }
+}
+@keyframes crt-flash { 0% { opacity: 0; } 40% { opacity: 0.9; } 100% { opacity: 0; } }
+.crt-off .crt-content { animation: crt-off 0.45s ease-in both; }
+@keyframes crt-off {
+  0% { transform: none; opacity: 1; }
+  60% { transform: scale(1, 0.004); opacity: 1; }
+  100% { transform: scale(0, 0.004); opacity: 0; visibility: hidden; }
+}
+.crt-off .crt { opacity: 0; transition: opacity 0.3s; }
+.crt-standby {
+  position: absolute;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  background: #000;
+  border: 0;
+  color: #9a9a9a;
+  font: inherit;
+  cursor: pointer;
+  animation: crt-standby-in 0.5s 0.4s both;
+}
+.crt-standby[hidden] { display: none; }
+.crt-standby:focus-visible { outline: 1px dotted #9a9a9a; outline-offset: -8px; }
+.crt-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.7); }
+@keyframes crt-standby-in { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .crt::before, .crt::after, .crt-grain, .crt-flicker, .crt-flash { animation: none; }
+  .crt-poweron .crt-content, .crt-off .crt-content, .crt-standby { animation: none; }
+  .crt-off .crt-content { visibility: hidden; }
+}
