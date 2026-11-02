@@ -35,26 +35,16 @@
   <img class="hero day" src="/programming.gif" width="480" height="320" alt="Pixel art of me programming at a desk in a bright room" />
   <img class="hero night" src="/programming-night.gif" width="480" height="320" alt="Pixel art of me programming at a desk at night" />
   {{ $i := 0 }}
-  {{ range .Site.Data.links.categories }}
-  <section aria-labelledby="{{ .id }}">
-    <h2 id="{{ .id }}">{{ .title }}</h2>
-    <ul>
-      {{ range .links }}
-      <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><b>{{ .name }}</b><small>{{ .desc }}</small></a></li>
-      {{ $i = add $i 1 }}
-      {{ end }}
-    </ul>
-  </section>
-  {{ end }}
-  <section aria-labelledby="elsewhere">
-    <h2 id="elsewhere">Elsewhere</h2>
-    <ul class="row">
-      {{ range .Site.Data.links.footer }}
-      <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><b>{{ .name }}</b></a></li>
-      {{ $i = add $i 1 }}
-      {{ end }}
-    </ul>
-  </section>
+  <ul class="grid">
+    {{ range .Site.Data.links.categories }}{{ range .links }}
+    <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><span class="ico">{{ partial "jmpa-icon.html" .icon }}</span><b>{{ .name }}</b><small>{{ .desc }}</small></a></li>
+    {{ $i = add $i 1 }}
+    {{ end }}{{ end }}
+    {{ range .Site.Data.links.footer }}
+    <li><a class="k{{ mod $i 5 }}" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}><span class="ico">{{ partial "jmpa-icon.html" .icon }}</span><b>{{ .name }}</b><small>{{ .label }}</small></a></li>
+    {{ $i = add $i 1 }}
+    {{ end }}
+  </ul>
 </main>
 </body>
 </html>

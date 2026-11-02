@@ -26,7 +26,7 @@ body {
   transition: background .3s, color .3s;
 }
 main {
-  max-width: 26rem;
+  max-width: 40rem;
   margin: 0 auto;
   padding: 3.5rem 1rem 3rem;
   display: flex;
@@ -55,10 +55,14 @@ html.dark .night { display: block; }
 section { width: 100%; }
 h2 { margin: 0 0 .6rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-align: center; opacity: .7; }
 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
-ul.row { flex-direction: row; }
-ul.row li { flex: 1; }
+ul.grid { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; width: 100%; }
+.hero { max-width: 26rem; }
+.ico { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; margin-bottom: .2rem; border: 3px solid var(--edge); border-radius: 12px; background: var(--bg); }
+.ico svg { width: 1.3rem; height: 1.3rem; }
 li { margin: 0; }
 a {
+  height: 100%;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +88,7 @@ a:hover, a:focus-visible { transform: translateY(2px); box-shadow: 0 4px 0 var(-
 a:focus-visible { outline: 3px solid var(--edge); outline-offset: 3px; }
 a:active { transform: translateY(6px); box-shadow: 0 0 0 var(--edge); }
 
-.tools { position: absolute; top: 1rem; right: max(1rem, calc(50% - 12rem)); display: flex; gap: .5rem; z-index: 5; }
+.tools { position: absolute; top: 1rem; right: max(1rem, calc(50% - 19rem)); display: flex; gap: .5rem; z-index: 5; }
 .tool {
   width: 38px; height: 38px; padding: 7px;
   display: grid; place-items: center;
@@ -114,5 +118,5 @@ a:active { transform: translateY(6px); box-shadow: 0 0 0 var(--edge); }
   box-shadow: 6px 6px 0 var(--shadow);
 }
 .palette-popup.open { display: block; }
-@media (max-width: 420px) { ul.row { flex-direction: column; } }
+@media (max-width: 560px) { ul.grid { grid-template-columns: 1fr; } main { max-width: 26rem; } .tools { right: 1rem; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

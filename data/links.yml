@@ -20,23 +20,17 @@ categories:
     title: Writing & CV
     blurb: Words, and where I've worked.
     links:
-      - name: Resume
-        url: https://jcleal.me/resume
-        desc: Experience, skills and what I'm working on.
+      - name: Resume & Blog
+        url: https://jcleal.me
+        desc: Experience, skills, notes and write-ups.
         icon: resume
         key: cv
-        external: true
-      - name: Blog
-        url: https://jcleal.me
-        desc: Notes and write-ups.
-        icon: blog
-        key: blog
         external: true
   - id: code
     title: Code
     blurb: Where the source lives.
     links:
-      - name: GitHub
+      - name: github.com/jcleal
         url: https://github.com/jcleal
         desc: My personal account and projects.
         icon: github
