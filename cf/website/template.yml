@@ -84,6 +84,29 @@ Resources:
               Value: camera=(), microphone=(), geolocation=()
               Override: true
 
+  # S3 (via an origin access identity) has no index-document handling, so '/' and '/foo/' would 403.
+  # Rewrite directory-style URLs to their index.html before they reach the origin.
+  DirectoryIndexFunction:
+    Type: AWS::CloudFront::Function
+    Condition: CreateResources
+    Properties:
+      Name: !Sub ${AWS::StackName}-directory-index
+      AutoPublish: true
+      FunctionConfig:
+        Comment: Serve index.html for directory-style URLs.
+        Runtime: cloudfront-js-2.0
+      FunctionCode: |
+        function handler(event) {
+          var request = event.request;
+          var uri = request.uri;
+          if (uri.endsWith('/')) {
+            request.uri += 'index.html';
+          } else if (uri.indexOf('.', uri.lastIndexOf('/')) === -1) {
+            request.uri += '/index.html';
+          }
+          return request;
+        }
+
   Distribution:
     Type: AWS::CloudFront::Distribution
     Condition: CreateResources
@@ -106,6 +129,9 @@ Resources:
           Compress: true
           TargetOriginId: S3Origin
           ResponseHeadersPolicyId: !Ref SecurityHeaders
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt DirectoryIndexFunction.FunctionMetadata.FunctionARN
           ForwardedValues:
             QueryString: true
           ViewerProtocolPolicy: redirect-to-https
