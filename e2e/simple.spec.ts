@@ -152,8 +152,9 @@ test.describe('jmpa.io simple page', () => {
     expect(Math.abs(ig!.y - mail!.y)).toBeLessThan(2);
     expect(mail!.y + mail!.height).toBeLessThanOrEqual(hero!.y);
     await expect(page.locator('section h2')).toHaveText(['Sites', 'Me']);
+    await expect(page.locator('header ul.social li a')).toHaveText(['Instagram', 'Email', 'github.com/jmpa-io']);
     const order = await page.locator('ul.grid li a b').allTextContents();
-    expect(order).toEqual(['art.jmpa.io', 'github.com/jmpa-io', 'portfolio.jcleal.me', 'startpage.jcleal.me', 'Resume & Blog', 'github.com/jcleal']);
+    expect(order).toEqual(['art.jmpa.io', 'portfolio.jcleal.me', 'startpage.jcleal.me', 'Resume & Blog', 'github.com/jcleal']);
   });
 
   test('does not scroll sideways on a phone', async ({ page }) => {

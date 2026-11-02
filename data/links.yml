@@ -26,13 +26,6 @@ categories:
         icon: art
         key: art
         external: true
-      - name: github.com/jmpa-io
-        url: https://github.com/jmpa-io
-        desc: "The jmpa organisation: sites and tools."
-        icon: github
-        key: org
-        external: true
-        label: GitHub jmpa-io
       - name: portfolio.jcleal.me
         url: https://portfolio.jcleal.me
         desc: A selection of projects and case studies.
@@ -73,3 +66,8 @@ footer:
     label: Email support@jmpa.io
     url: mailto:support@jmpa.io
     icon: mail
+  - name: github.com/jmpa-io
+    label: GitHub jmpa-io
+    url: https://github.com/jmpa-io
+    icon: github
+    external: true
