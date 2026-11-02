@@ -4,9 +4,8 @@ import type { Page } from '@playwright/test';
 const link = (page: Page, name: string) => page.locator('a', { has: page.locator('b', { hasText: new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`) }) });
 
 const LINKS: [string, string][] = [
-  ['Resume', 'https://jcleal.me/resume'],
-  ['Blog', 'https://jcleal.me'],
-  ['GitHub', 'https://github.com/jcleal'],
+  ['Resume & Blog', 'https://jcleal.me'],
+  ['github.com/jcleal', 'https://github.com/jcleal'],
   ['github.com/jmpa-io', 'https://github.com/jmpa-io'],
   ['portfolio.jcleal.me', 'https://portfolio.jcleal.me'],
   ['art.jmpa.io', 'https://art.jmpa.io'],
@@ -107,6 +106,17 @@ test.describe('jmpa.io simple page', () => {
     expect(tools!.x + tools!.width).toBeLessThanOrEqual(list!.x + list!.width + 2);
   });
 
+  test('links sit in two columns on desktop and one on a phone, each with an icon', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/');
+    const xs = await page.locator('ul.grid li a').evaluateAll((as) => [...new Set(as.map((a) => Math.round(a.getBoundingClientRect().x)))]);
+    expect(xs.length).toBe(2);
+    await expect(page.locator('ul.grid li a .ico svg')).toHaveCount(LINKS.length + 1);
+    await page.setViewportSize({ width: 390, height: 800 });
+    const xs2 = await page.locator('ul.grid li a').evaluateAll((as) => [...new Set(as.map((a) => Math.round(a.getBoundingClientRect().x)))]);
+    expect(xs2.length).toBe(1);
+  });
+
   test('only same-origin scripts, no inline script, and no external requests', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -121,7 +131,7 @@ test.describe('jmpa.io simple page', () => {
     await page.keyboard.press('Tab'); // day / night
     await page.keyboard.press('Tab'); // logo
     await page.keyboard.press('Tab');
-    await expect(link(page, 'Resume')).toBeFocused();
+    await expect(link(page, 'Resume & Blog')).toBeFocused();
   });
 
   test('does not scroll sideways on a phone', async ({ page }) => {
@@ -136,7 +146,7 @@ test.describe('jmpa.io simple page', () => {
     expect(slugs.length).toBe(6);
     for (const s of slugs) {
       await page.goto(`/designs/${s}`);
-      await expect(page.locator('li a')).toHaveCount(LINKS.length + 1);
+      await expect(page.locator('li a')).toHaveCount(9);
       await expect(page.locator('img.hero.day')).toBeVisible();
     }
   });
