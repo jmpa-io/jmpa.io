@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "test": "playwright test",
+    "screenshots": "playwright test screenshots.spec.ts",
     "test:update": "playwright test --update-snapshots"
   },
   "devDependencies": {
