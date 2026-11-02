@@ -4,23 +4,27 @@
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
 <meta name="description" content="{{ .Site.Params.description }}" />
-<meta name="theme-color" content="#0a2a6b" />
-<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="theme-color" content="{{ index (slice "#070b16" "#06161f" "#0f1724") (sub (int (.Site.Params.variant | default 1)) 1) }}" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+{{- $share := printf "/share-v%d.png" (int (.Site.Params.variant | default 1)) }}
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{{ .Site.Title }}" />
 <meta property="og:description" content="{{ .Site.Params.description }}" />
-<meta property="og:url" content="{{ .Permalink }}" />
-<meta property="og:image" content="{{ "og-image.png" | absURL }}" />
+<meta property="og:image" content="{{ $share | absURL }}" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="{{ "og-image.png" | absURL }}" />
-<link rel="preload" href="/fonts/silkscreen-bold.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/silkscreen-regular.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/css/pixel.css" />
-<!-- colours + day/night are applied here, before first paint; the default pair is navy (art.jmpa.io keeps sunset) -->
+<meta name="twitter:image" content="{{ $share | absURL }}" />
+<link rel="preload" href="/hoodie-18.png" as="image" type="image/png" />
+<link rel="preload" href="/fonts/firacode-400.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/firacode-700.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/css/site.css" />
+<link rel="stylesheet" href="/css/screen.css" />
+<link rel="stylesheet" href="/css/scene.css" />
+<link rel="stylesheet" href="/css/keyboard.css" />
+<!-- colours + day/night are applied here, before first paint; the default pair and scheme come from the theme variant (init.js) -->
 <script src="/js/palette.js"></script>
 <script src="/js/init.js"></script>

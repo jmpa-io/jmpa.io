@@ -1,4 +1,4 @@
-// Contrast of the interactive states (hover, keyboard focus) on the pixel buttons, across the sweep pairs and both schemes.
+// Contrast of the interactive states (hover, keyboard focus) on the link cards, across the sweep pairs and both schemes.
 import { test, expect } from './fixtures';
 import { SWEEP, ensureScheme, seedColours, settleStyles, type Scheme } from './helpers/palette-helpers';
 
@@ -45,15 +45,15 @@ for (const scheme of ['light', 'dark'] as Scheme[]) {
       await seedColours(page, p, s);
       await ensureScheme(page, scheme);
 
-      for (const sel of ['a.door', '#theme-toggle', '.jmpa-footer-icon']) {
+      for (const sel of ['a.card', '#theme-toggle', '.jmpa-footer-icon']) {
         const hovered = await measure(sel, 'hover')(page);
         expect(hovered.text, `${sel} hover label`).toBeGreaterThanOrEqual(TEXT_MIN);
         await page.mouse.move(0, 0);
       }
-      const focused = await measure('a.door', 'focus')(page);
+      const focused = await measure('a.card', 'focus')(page);
       expect(focused.ringDrawn).toBe(true);
-      expect(focused.ring, 'door focus ring vs page').toBeGreaterThanOrEqual(UI_MIN);
-      expect(focused.text, 'door focus label').toBeGreaterThanOrEqual(TEXT_MIN);
+      expect(focused.ring, 'card focus ring vs page').toBeGreaterThanOrEqual(UI_MIN);
+      expect(focused.text, 'card focus label').toBeGreaterThanOrEqual(TEXT_MIN);
     });
   }
 }

@@ -1,34 +1,93 @@
-# The one place that lists everywhere jmpa.io points to. Edit here; the home page buttons and the footer icons read this file.
-#   name / url                what the button shows and where it goes
-#   icon                      name from partials/jmpa-icon.html (github, instagram, mail, external); shown on the button / footer icon
-#   label                     accessible name for icon-only links
-#   external: true            opens in a new tab (target=_blank rel=noopener noreferrer)
-#   footer: icon              small icon link in the footer (omit to leave it out of the footer)
-#   card: false               not a button on the home page (footer only)
-# Each place appears once: either as a button or as a footer icon, never both.
-- name: art.jmpa.io
-  url: https://art.jmpa.io
-- name: jcleal.me
-  url: https://jcleal.me
-- name: portfolio.jcleal.me
-  url: https://portfolio.jcleal.me
-- name: startpage.jcleal.me
-  url: https://startpage.jcleal.me
-- name: github.com/jmpa-io
-  label: GitHub jmpa-io
-  url: https://github.com/jmpa-io
-  icon: github
-  external: true
-- name: Instagram
-  label: Instagram @jmpa.io
-  url: https://instagram.com/jmpa.io
-  icon: instagram
-  external: true
-  footer: icon
-  card: false
-- name: Email
-  label: Email support@jmpa.io
-  url: mailto:support@jmpa.io
-  icon: mail
-  footer: icon
-  card: false
+# The one place that lists everywhere jmpa.io points to. Edit here; the home page cards and the footer icons read this file.
+#
+# categories:   shown in order as headed sections on the home page. Each has:
+#   id          anchor / aria id (lowercase, no spaces)
+#   title       the section heading
+#   blurb       one short line under the heading
+#   links:      the cards in that category (a category with no links is not worth having; e2e fails on it)
+#     name      card title
+#     url       where it goes
+#     desc      one-line description
+#     icon      name from partials/jmpa-icon.html (github, art, blog, resume, projects, tools)
+#     key       short legend (max ~5 characters) printed on this link's keycap in the on-screen keyboard; every link becomes one key
+#               on the top row, in the order listed here (F1, F2, ...)
+#     external  true for off-domain links: opens in a new tab with rel="noopener noreferrer"
+#     label     optional accessible-name override (defaults to name)
+#
+# footer:       small icon links in the footer (name, url, label, icon, external).
+categories:
+  - id: writing
+    title: Writing & CV
+    blurb: Words, and where I've worked.
+    links:
+      - name: Resume
+        url: https://jcleal.me/resume
+        desc: Experience, skills and what I'm working on.
+        icon: resume
+        key: cv
+        external: true
+      - name: Blog
+        url: https://jcleal.me
+        desc: Notes and write-ups.
+        icon: blog
+        key: blog
+        external: true
+  - id: code
+    title: Code
+    blurb: Where the source lives.
+    links:
+      - name: GitHub
+        url: https://github.com/jcleal
+        desc: My personal account and projects.
+        icon: github
+        key: git
+        external: true
+        label: GitHub jcleal
+      - name: github.com/jmpa-io
+        url: https://github.com/jmpa-io
+        desc: "The jmpa organisation: sites and tools."
+        icon: github
+        key: org
+        external: true
+        label: GitHub jmpa-io
+  - id: work
+    title: Work & projects
+    blurb: Things I've built.
+    links:
+      - name: portfolio.jcleal.me
+        url: https://portfolio.jcleal.me
+        desc: A selection of projects and case studies.
+        icon: projects
+        key: work
+        external: true
+  - id: art
+    title: Art
+    blurb: Pixels, mostly.
+    links:
+      - name: art.jmpa.io
+        url: https://art.jmpa.io
+        desc: My art, in one gallery.
+        icon: art
+        key: art
+        external: true
+  - id: tools
+    title: Tools
+    blurb: Small things I use every day.
+    links:
+      - name: startpage.jcleal.me
+        url: https://startpage.jcleal.me
+        desc: My browser start page.
+        icon: tools
+        key: start
+        external: true
+
+footer:
+  - name: Instagram
+    label: Instagram @jmpa.io
+    url: https://instagram.com/jmpa.io
+    icon: instagram
+    external: true
+  - name: Email
+    label: Email support@jmpa.io
+    url: mailto:support@jmpa.io
+    icon: mail

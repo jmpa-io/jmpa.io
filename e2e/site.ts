@@ -14,7 +14,7 @@ export const site: {
   name: 'jmpa.io',
   port: Number(process.env.E2E_PORT || 4172), // E2E_PORT runs a second checkout/worktree beside the first.
   siteDir: '../public',
-  defaults: ['#0a2a6b', '#2f7fae'], // deep navy
+  defaults: ['#4f8cff', '#22d3ee'], // V1 midnight terminal (the default variant)
   snapshotTemplate: '{testDir}/{testFileName}-snapshots/{arg}{ext}',
   projects: [{ name: 'chrome', use: { viewport: { width: 1280, height: 800 } } }], // each test sets the viewport it needs.
   sel: {
