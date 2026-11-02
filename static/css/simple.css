@@ -24,10 +24,20 @@ main {
   box-sizing: border-box;
 }
 .hero { max-width: 100%; height: auto; image-rendering: pixelated; }
-ul { list-style: none; margin: 0; padding: 0; text-align: center; }
-li { margin: .5rem 0; }
-a { color: var(--link); text-decoration: none; }
-a:hover, a:focus-visible { text-decoration: underline; color: var(--hover); }
+ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: stretch; gap: .6rem; width: min(100%, 22rem); }
+li { margin: 0; }
+a {
+  display: block;
+  text-align: center;
+  padding: .7rem 1rem;
+  color: var(--link);
+  text-decoration: none;
+  border: 2px solid var(--link);
+  border-radius: 10px;
+  transition: background .15s, color .15s, transform .1s;
+}
+a:hover, a:focus-visible { background: var(--link); color: var(--bg); outline: none; }
+a:active { transform: translateY(1px); }
 .sr { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .mode { position: fixed; top: 1rem; right: 1rem; width: 28px; height: 28px; color: var(--fg); cursor: pointer; opacity: .8; }
 .mode:hover, #theme:focus-visible + .mode { opacity: 1; outline: 2px solid var(--link); outline-offset: 4px; }
