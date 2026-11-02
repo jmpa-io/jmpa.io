@@ -1,6 +1,7 @@
 @font-face{font-family:"Fira Code";src:url(/fonts/firacode-400.woff2) format("woff2");font-weight:400}@font-face{font-family:"Fira Code";src:url(/fonts/firacode-700.woff2) format("woff2");font-weight:700}
 *{box-sizing:border-box}html,body{height:100%;margin:0}main{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:2rem 1rem}ul{list-style:none;margin:0;padding:0}a{text-decoration:none}img.hero{max-width:100%;height:auto;image-rendering:pixelated}
-body{background:#0a0f0a;color:#b6ffb6;font:400 1.05rem/1.5 "Fira Code",monospace;text-shadow:0 0 6px #4cff4c}
-body:after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 1px,transparent 1px 3px);box-shadow:inset 0 0 140px #000}
-.hero{width:400px;border:10px solid #1c231c;border-radius:18px;filter:saturate(.7) brightness(1.1)}
-ul{text-align:center}a{color:#b6ffb6}a:hover{color:#fff;text-shadow:0 0 12px #fff}
+body{background:linear-gradient(180deg,#ff9a8b 0,#ff6a88 40%,#6a3093 100%);color:#fff;font:700 1.05rem/1.2 "Fira Code",monospace}
+.hero{width:400px;border-radius:50% 50% 12px 12px/30% 30% 12px 12px;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+ul{width:min(100%,22rem);display:flex;flex-direction:column;gap:.7rem}
+a{display:block;text-align:center;padding:.85rem;border-radius:999px;color:#fff;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6)}
+a:hover{background:#fff;color:#6a3093}

@@ -1,6 +1,0 @@
-@font-face{font-family:"Fira Code";src:url(/fonts/firacode-400.woff2) format("woff2");font-weight:400}@font-face{font-family:"Fira Code";src:url(/fonts/firacode-700.woff2) format("woff2");font-weight:700}
-*{box-sizing:border-box}html,body{height:100%;margin:0}main{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:2rem 1rem}ul{list-style:none;margin:0;padding:0}a{text-decoration:none}img.hero{max-width:100%;height:auto;image-rendering:pixelated}
-body{background:#000;color:#33ff66;font:400 1rem/1.6 "Fira Code",monospace}
-.hero{width:360px;filter:grayscale(1) sepia(1) hue-rotate(70deg) saturate(3);border:1px solid #33ff66}
-ul{text-align:left}li:before{content:"$ open ";color:#1a9940}
-a{color:#33ff66}a:hover{background:#33ff66;color:#000}
