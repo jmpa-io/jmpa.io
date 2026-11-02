@@ -36,11 +36,14 @@ endif
 hosted-zone-id:
 	$(eval HOSTED_ZONE_ID ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/hosted-zone/id --query 'Parameter.Value' --output text))
 
+# The bucket is named after the domain (see cf/website/template.yml), in every environment.
+UPLOAD_BUCKET ?= $(PARAM_PREFIX)
+
 upload-bucket:
-	$(eval UPLOAD_BUCKET ?= $(shell aws ssm get-parameter --name /$(PARAM_PREFIX)/bucket --query 'Parameter.Value' --output text))
+	@true
 
 cert-arn:
-	$(eval CERT_ARN ?= $(shell aws ssm get-parameter --region us-east-1 --name /certs/$(REPO)/arn --query 'Parameter.Value' --output text))
+	$(eval CERT_ARN ?= $(shell aws ssm get-parameter --region us-east-1 --name /certs/$(PARAM_PREFIX)/arn --query 'Parameter.Value' --output text))
 
 pull-config: ## Prints the config pulled from AWS.
 pull-config: hosted-zone-id upload-bucket cert-arn
@@ -61,15 +64,29 @@ cert: AWS_REGION=us-east-1
 cert: ADDITIONAL_PARAMETER_OVERRIDES="HostedZoneId=$(HOSTED_ZONE_ID) "
 cert: deploy-cert
 
+# The live prod stack predates the <project>-website-<env> naming, so keep its name and CI updates it in place.
+ifeq ($(ENVIRONMENT),prod)
+override STACK_NAME := jmpa-io
+endif
+
 website: ## Deploys the 'website' stack.
+# Prod keeps the zone and certificate it already has (a deploy reuses the previous values of parameters not given).
+ifneq ($(ENVIRONMENT),prod)
 website: hosted-zone-id cert-arn
-website: ADDITIONAL_PARAMETER_OVERRIDES="AcmCertificateArn=$(CERT_ARN) "
+website: ADDITIONAL_PARAMETER_OVERRIDES+="AcmCertificateArn=$(CERT_ARN) "
 website: ADDITIONAL_PARAMETER_OVERRIDES+="HostedZoneId=$(HOSTED_ZONE_ID) "
+endif
 website: deploy-website
 
 sync: ## Syncs the downloaded website artifact (dist/) to AWS S3; called by the 50-upload pipeline.
 sync: upload-bucket
 	aws s3 sync --delete dist/ s3://$(UPLOAD_BUCKET)/
+ifeq ($(ENVIRONMENT),prod)
+	@# The live site sits behind CloudFront; drop its cached copies so visitors get the new content.
+	id="$$(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items[?@=='$(PARAM_PREFIX)']].Id | [0]" --output text)"; \
+	test -n "$$id" -a "$$id" != None || { echo "no CloudFront distribution has the alias $(PARAM_PREFIX)"; exit 1; }; \
+	aws cloudfront create-invalidation --distribution-id "$$id" --paths '/*'
+endif
 
 upload: ## Uploads generated website content to AWS S3. Be careful with this command!
 upload: upload-bucket
