@@ -1,0 +1,71 @@
+/* Pixel-art hero sprites (static/img, drawn by tools/gen_sprites.py). Each sprite is a sheet of equal frames shown through a fixed window, scaled by an
+   integer factor with nearest-neighbour. Frames: person 0 open / 1 blink; budgie 0 idle, 1 blink, 2 hop, 3 wings up, 4 level, 5 down; props 0-1 mug, 2 plant. */
+:root { --px: 5; --bpx: 3; --ppx: 2; --mt: 190px; --ps: 3; }
+@media (max-width: 599px) { :root { --px: 3; --bpx: 2; --ppx: 2; --mt: 130px; --ps: 2; } }
+
+.scene { position: relative; width: 100%; max-width: 760px; justify-self: center; padding-top: var(--mt); container-type: inline-size; overflow-x: clip; }
+.sprites { position: absolute; inset: 0; pointer-events: none; }
+.spr {
+  --fx: calc(var(--fw) * var(--s) * -1px);
+  position: absolute;
+  display: block;
+  width: calc(var(--fw) * var(--s) * 1px);
+  height: calc(var(--fh) * var(--s) * 1px);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: calc(var(--fw) * var(--fn) * var(--s) * 1px) calc(var(--fh) * var(--s) * 1px);
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+.person { --fw: 56; --fh: 64; --fn: 2; --s: var(--ps); background-image: url('/img/person.png'); left: 6%; top: calc(var(--mt) - (var(--fh) - 2) * var(--s) * 1px); z-index: 0; }
+.prop { --fw: 12; --fh: 16; --fn: 3; --s: var(--ppx); background-image: url('/img/props.png'); z-index: 2; top: calc(var(--mt) - var(--fh) * var(--s) * 1px + var(--s) * 1px); }
+.mug { left: 54%; }
+.plant { right: 3%; background-position: calc(var(--fx) * 2) 0; }
+.bird { --fw: 20; --fh: 16; --fn: 6; --s: var(--bpx); z-index: 2; }
+.perch { background-image: url('/img/budgie-green.png'); right: 14%; top: calc(var(--mt) - var(--fh) * var(--s) * 1px + var(--s) * 2px); }
+.static { background-image: url('/img/budgie-blue.png'); left: 38%; top: calc(var(--mt) - var(--fh) * var(--s) * 1px + var(--s) * 2px); }
+.fly { position: absolute; left: 0; top: 0; width: 100%; height: var(--mt); z-index: 0; display: none; }
+.flyer { background-image: url('/img/budgie-blue.png'); left: 0; top: calc(var(--s) * 8px); background-position: calc(var(--fx) * 4) 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .static { display: none; }
+  .fly { display: block; opacity: 0; animation: fly 30s linear infinite; will-change: transform; }
+  .flyer { animation: flap 0.45s steps(1) infinite; }
+  .person { animation: blink 6.5s steps(1) infinite 1s; }
+  .perch { animation: idle 14s steps(1) infinite; }
+  .mug { animation: steam 1.6s steps(1) infinite; }
+  .fly.go { animation: fly-go 5s linear 1; opacity: 1; }
+  html.is-hidden .spr, html.is-hidden .fly { animation-play-state: paused; }
+}
+@keyframes blink { 0%, 100% { background-position: 0 0; } 94% { background-position: var(--fx) 0; } 97% { background-position: 0 0; } }
+@keyframes idle {
+  0%, 100% { background-position: 0 0; }
+  18% { background-position: var(--fx) 0; }
+  20% { background-position: 0 0; }
+  52% { background-position: calc(var(--fx) * 2) 0; }
+  56% { background-position: 0 0; }
+  80% { background-position: var(--fx) 0; }
+  82% { background-position: 0 0; }
+}
+@keyframes steam { 0%, 100% { background-position: 0 0; } 50% { background-position: var(--fx) 0; } }
+@keyframes flap {
+  0% { background-position: calc(var(--fx) * 3) 0; }
+  25% { background-position: calc(var(--fx) * 4) 0; }
+  50% { background-position: calc(var(--fx) * 5) 0; }
+  75% { background-position: calc(var(--fx) * 4) 0; }
+}
+@keyframes fly {
+  0%, 17% { opacity: 0; transform: translate(-14cqw, 14px); }
+  18% { opacity: 1; transform: translate(-12cqw, 14px); }
+  22% { transform: translate(26cqw, -6px); }
+  26% { transform: translate(60cqw, 12px); }
+  30% { opacity: 1; transform: translate(98cqw, -10px); }
+  31%, 100% { opacity: 0; transform: translate(112cqw, -10px); }
+}
+@keyframes fly-go {
+  0% { opacity: 1; transform: translate(-14cqw, 20px); }
+  25% { transform: translate(24cqw, -8px); }
+  50% { transform: translate(50cqw, 12px); }
+  75% { transform: translate(82cqw, -6px); }
+  100% { opacity: 1; transform: translate(112cqw, 10px); }
+}
