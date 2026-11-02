@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
 <head>
-{{- partial "jmpa-head.html" . -}}
+{{- partial "head.html" . -}}
 </head>
 <body>
-{{- partial "jmpa-header.html" . -}}
-<main>
-  <div class="intro">
-    <p class="eyebrow">404</p>
-    <h1>Nothing here.</h1>
-    <p class="sub">That page doesn't exist.</p>
-    <a class="door" href="/"><span>Back home</span></a>
-  </div>
-</main>
-{{- partial "jmpa-footer.html" . -}}
+  <main>
+    <h1>404<span class="cursor">_</span></h1>
+    <p class="sub">nothing here.</p>
+    <nav aria-label="Links"><section class="group"><ul><li><a href="/">back home</a></li></ul></section></nav>
+  </main>
 </body>
 </html>
