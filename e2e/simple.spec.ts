@@ -14,11 +14,11 @@ const LINKS: [string, string][] = [
 ];
 
 test.describe('jmpa.io simple page', () => {
-  test('shows the programming gif and every link as a button', async ({ page }) => {
+  test('shows the big logo and every link as a button', async ({ page }) => {
     await page.goto('/');
-    const hero = page.locator('img.hero.day');
-    await expect(hero).toBeVisible();
-    expect(await hero.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    await expect(page.locator('img.hero')).toHaveCount(0);
+    const big = await page.locator('#logo').boundingBox();
+    expect(big!.width).toBeGreaterThanOrEqual(150);
     for (const [name, href] of LINKS) {
       const a = link(page, name);
       await expect(a).toHaveAttribute('href', href);
@@ -36,24 +36,19 @@ test.describe('jmpa.io simple page', () => {
     expect(Math.abs(box!.x + box!.width / 2 - 640)).toBeLessThan(2);
   });
 
-  test('day/night toggle swaps the symbol, the colours and the gif, and is remembered', async ({ page }) => {
+  test('day/night toggle swaps the symbol, the colours and the logo, and is remembered', async ({ page }) => {
     await page.goto('/');
     const toggle = page.locator('#theme-toggle');
     const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     const day = await bg();
     const moon = await toggle.innerHTML();
     await expect(page.locator('html')).not.toHaveClass(/dark/);
-    await expect(page.locator('img.hero.day')).toBeVisible();
-    await expect(page.locator('img.hero.night')).toBeHidden();
     await expect(page.locator('#logo')).toHaveAttribute('src', /meadow-day-192/);
     await toggle.click();
     await expect(page.locator('html')).toHaveClass(/dark/);
     expect(await toggle.innerHTML()).not.toBe(moon);
     expect(await bg()).not.toBe(day);
-    await expect(page.locator('img.hero.night')).toBeVisible();
-    await expect(page.locator('img.hero.day')).toBeHidden();
     await expect(page.locator('#logo')).toHaveAttribute('src', /night-192/);
-    expect(await page.locator('img.hero.night').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
     await page.reload();
     await expect(page.locator('html')).toHaveClass(/dark/);
     await toggle.click();

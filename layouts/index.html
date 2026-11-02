@@ -28,12 +28,10 @@
 </div>
 <main>
   <header>
-    <button type="button" class="logo-btn" id="logo-btn" aria-label="Change the logo" title="Click to change the logo"><img class="logo" id="logo" src="/logos/meadow-day-192.png" width="72" height="72" alt="" /></button>
+    <button type="button" class="logo-btn" id="logo-btn" aria-label="Change the logo" title="Click to change the logo"><img class="logo" id="logo" src="/logos/meadow-day-192.png" width="192" height="192" alt="" /></button>
     <h1>jmpa.io</h1>
     <p>the front door to my corner of the internet</p>
   </header>
-  <img class="hero day" src="/programming.gif" width="480" height="320" alt="Pixel art of me programming at a desk in a bright room" />
-  <img class="hero night" src="/programming-night.gif" width="480" height="320" alt="Pixel art of me programming at a desk at night" />
   {{ $i := 0 }}
   <ul class="grid">
     {{ range .Site.Data.links.categories }}{{ range .links }}
