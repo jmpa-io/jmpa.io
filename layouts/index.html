@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
 <head>
-{{- partial "jmpa-head.html" . -}}
+{{- partial "head.html" . -}}
 </head>
 <body>
-{{- partial "jmpa-header.html" . -}}
-<main>
-  <div class="stage">
-    {{- partial "jmpa-room.html" . -}}
-    <div class="intro">
-      <p class="eyebrow">{{ .Site.Params.eyebrow }}</p>
-      <h1>{{ .Site.Params.heading }}</h1>
-      <p class="sub">{{ .Site.Params.sub }}</p>
-      <ul class="doors" aria-label="Places">
-        {{ range .Site.Data.links }}{{ if ne .card false }}
-        <li><a class="door" href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ with .icon }}{{ partial "jmpa-icon.html" . }}{{ end }}<span>{{ .name }}</span><svg class="go" viewBox="0 0 5 9" aria-hidden="true" focusable="false"><rect x="0" y="0" width="1" height="9"/><rect x="1" y="1" width="1" height="7"/><rect x="2" y="2" width="1" height="5"/><rect x="3" y="3" width="1" height="3"/><rect x="4" y="4" width="1" height="1"/></svg></a></li>
-        {{ end }}{{ end }}
-      </ul>
-    </div>
-  </div>
-</main>
-{{- partial "jmpa-footer.html" . -}}
+  <main>
+    <canvas id="room" width="192" height="108" role="img"
+      aria-label="Pixel art of a person with headphones typing at a glowing computer in a dark room, rain falling outside the window."></canvas>
+    <h1>jmpa<span class="cursor">_</span></h1>
+    <p class="sub">something is brewing. in the meantime:</p>
+    <nav aria-label="Links">
+      {{- range .Site.Data.links }}
+      <section class="group" aria-labelledby="cat-{{ .id }}">
+        <h2 id="cat-{{ .id }}">{{ .category }}</h2>
+        <ul>
+          {{- range .links }}
+          <li><a href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }}{{ with .label }} aria-label="{{ . }}"{{ end }}>{{ if eq .icon "github" }}{{ partial "github-icon.html" . }}{{ end }}{{ .name }}</a></li>
+          {{- end }}
+        </ul>
+      </section>
+      {{- end }}
+    </nav>
+  </main>
+  <script src="/js/room.js"></script>
 </body>
 </html>

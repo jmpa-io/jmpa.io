@@ -1,34 +1,46 @@
-# The one place that lists everywhere jmpa.io points to. Edit here; the home page buttons and the footer icons read this file.
-#   name / url                what the button shows and where it goes
-#   icon                      name from partials/jmpa-icon.html (github, instagram, mail, external); shown on the button / footer icon
-#   label                     accessible name for icon-only links
-#   external: true            opens in a new tab (target=_blank rel=noopener noreferrer)
-#   footer: icon              small icon link in the footer (omit to leave it out of the footer)
-#   card: false               not a button on the home page (footer only)
-# Each place appears once: either as a button or as a footer icon, never both.
-- name: art.jmpa.io
-  url: https://art.jmpa.io
-- name: jcleal.me
-  url: https://jcleal.me
-- name: portfolio.jcleal.me
-  url: https://portfolio.jcleal.me
-- name: startpage.jcleal.me
-  url: https://startpage.jcleal.me
-- name: github.com/jmpa-io
-  label: GitHub jmpa-io
-  url: https://github.com/jmpa-io
-  icon: github
-  external: true
-- name: Instagram
-  label: Instagram @jmpa.io
-  url: https://instagram.com/jmpa.io
-  icon: instagram
-  external: true
-  footer: icon
-  card: false
-- name: Email
-  label: Email support@jmpa.io
-  url: mailto:support@jmpa.io
-  icon: mail
-  footer: icon
-  card: false
+# Everywhere jmpa.io points to, grouped by category. Edit here; the home page reads this file.
+#   id / category   section key (unique, used for the heading id) and its visible heading
+#   links:          name (text shown), url, label (optional accessible name),
+#                   icon: github (adds the GitHub mark), external: true (new tab, rel=noopener noreferrer)
+- id: art
+  category: Art
+  links:
+    - name: art.jmpa.io
+      url: https://art.jmpa.io
+- id: writing
+  category: Writing & CV
+  links:
+    - name: Resume
+      url: https://jcleal.me/resume
+    - name: Blog
+      url: https://jcleal.me
+- id: work
+  category: Work & tools
+  links:
+    - name: portfolio.jcleal.me
+      url: https://portfolio.jcleal.me
+    - name: startpage.jcleal.me
+      url: https://startpage.jcleal.me
+- id: code
+  category: Code
+  links:
+    - name: GitHub
+      label: GitHub jcleal
+      url: https://github.com/jcleal
+      icon: github
+      external: true
+    - name: github.com/jmpa-io
+      label: GitHub jmpa-io
+      url: https://github.com/jmpa-io
+      icon: github
+      external: true
+- id: elsewhere
+  category: Elsewhere
+  links:
+    - name: Instagram
+      label: Instagram @jmpa.io
+      url: https://instagram.com/jmpa.io
+      external: true
+    - name: Email
+      label: Email support@jmpa.io
+      url: mailto:support@jmpa.io
