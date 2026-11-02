@@ -46,16 +46,14 @@ test.describe('jmpa.io simple page', () => {
     await expect(page.locator('html')).not.toHaveClass(/dark/);
     await expect(page.locator('img.hero.day')).toBeVisible();
     await expect(page.locator('img.hero.night')).toBeHidden();
-    await expect(page.locator('img.logo.day')).toBeVisible();
-    await expect(page.locator('img.logo.night')).toBeHidden();
+    await expect(page.locator('#logo')).toHaveAttribute('src', /meadow-day-192/);
     await toggle.click();
     await expect(page.locator('html')).toHaveClass(/dark/);
     expect(await toggle.innerHTML()).not.toBe(moon);
     expect(await bg()).not.toBe(day);
     await expect(page.locator('img.hero.night')).toBeVisible();
     await expect(page.locator('img.hero.day')).toBeHidden();
-    await expect(page.locator('img.logo.night')).toBeVisible();
-    await expect(page.locator('img.logo.day')).toBeHidden();
+    await expect(page.locator('#logo')).toHaveAttribute('src', /night-192/);
     expect(await page.locator('img.hero.night').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
     await page.reload();
     await expect(page.locator('html')).toHaveClass(/dark/);
@@ -81,6 +79,34 @@ test.describe('jmpa.io simple page', () => {
     await expect(page.locator('#jmpa-palette-popup')).toBeHidden();
   });
 
+  test('clicking the logo steps through the logos and favicons, and is remembered', async ({ page }) => {
+    await page.goto('/');
+    const logo = page.locator('#logo');
+    const favicon = page.locator('link[rel="icon"][type="image/png"][sizes="32x32"]');
+    const seen: string[] = [];
+    for (let i = 0; i < 6; i++) {
+      seen.push((await logo.getAttribute('src'))!);
+      await page.locator('#logo-btn').click();
+    }
+    expect(new Set(seen).size).toBe(6);
+    expect(await logo.getAttribute('src')).toBe(seen[0]); // wrapped around
+    await page.locator('#logo-btn').click();
+    const second = await logo.getAttribute('src');
+    expect(second).toBe(seen[1]);
+    await expect(favicon).toHaveAttribute('href', second!.replace('-192', '-32'));
+    await page.reload();
+    await expect(logo).toHaveAttribute('src', second!);
+    expect(await logo.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+  });
+
+  test('the colour and day/night buttons sit within the content column', async ({ page }) => {
+    await page.setViewportSize({ width: 1600, height: 900 });
+    await page.goto('/');
+    const tools = await page.locator('.tools').boundingBox();
+    const list = await page.locator('ul').first().boundingBox();
+    expect(tools!.x + tools!.width).toBeLessThanOrEqual(list!.x + list!.width + 2);
+  });
+
   test('only same-origin scripts, no inline script, and no external requests', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -93,6 +119,7 @@ test.describe('jmpa.io simple page', () => {
     await page.goto('/');
     await page.keyboard.press('Tab'); // colours
     await page.keyboard.press('Tab'); // day / night
+    await page.keyboard.press('Tab'); // logo
     await page.keyboard.press('Tab');
     await expect(link(page, 'Resume')).toBeFocused();
   });

@@ -35,7 +35,10 @@ main {
   gap: 1.6rem;
 }
 header { text-align: center; display: grid; justify-items: center; gap: .15rem; }
-.logo { width: 72px; height: 72px; image-rendering: pixelated; border-radius: 16px; border: 3px solid var(--edge); box-shadow: 0 4px 0 var(--edge); }
+.logo-btn { padding: 0; border: 0; background: none; cursor: pointer; border-radius: 16px; }
+.logo-btn:focus-visible { outline: 3px solid var(--edge); outline-offset: 4px; }
+.logo-btn:active .logo { transform: translateY(3px); }
+.logo { display: block; width: 72px; height: 72px; image-rendering: pixelated; border-radius: 16px; border: 3px solid var(--edge); box-shadow: 0 4px 0 var(--edge); transition: transform .08s; }
 h1 { margin: .2rem 0 0; font-size: 2rem; letter-spacing: -.02em; }
 header p { margin: 0; font-size: .85rem; opacity: .75; }
 .hero {
@@ -81,7 +84,7 @@ a:hover, a:focus-visible { transform: translateY(2px); box-shadow: 0 4px 0 var(-
 a:focus-visible { outline: 3px solid var(--edge); outline-offset: 3px; }
 a:active { transform: translateY(6px); box-shadow: 0 0 0 var(--edge); }
 
-.tools { position: fixed; top: 1rem; right: 1rem; display: flex; gap: .5rem; z-index: 5; }
+.tools { position: absolute; top: 1rem; right: max(1rem, calc(50% - 12rem)); display: flex; gap: .5rem; z-index: 5; }
 .tool {
   width: 38px; height: 38px; padding: 7px;
   display: grid; place-items: center;
