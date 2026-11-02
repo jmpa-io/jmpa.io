@@ -78,24 +78,27 @@ test.describe('jmpa.io simple page', () => {
     await expect(page.locator('#jmpa-palette-popup')).toBeHidden();
   });
 
-  test('clicking the logo steps through the logos and favicons, and is remembered', async ({ page }) => {
+  test('clicking the logo steps through the desktop scene then each icon, and is remembered', async ({ page }) => {
     await page.goto('/');
     const logo = page.locator('#logo');
     const favicon = page.locator('link[rel="icon"][type="image/png"][sizes="32x32"]');
+    await expect(page.locator('img.hero.day')).toBeVisible();
+    await expect(page.locator('#hero-icon')).toBeHidden();
     const seen: string[] = [];
     for (let i = 0; i < 6; i++) {
-      seen.push((await logo.getAttribute('src'))!);
       await page.locator('#logo-btn').click();
+      await expect(page.locator('#hero-icon')).toBeVisible();
+      await expect(page.locator('img.hero.day')).toBeHidden();
+      seen.push((await page.locator('#hero-icon').getAttribute('src'))!);
+      expect(await logo.getAttribute('src')).toBe(seen[i]);
     }
     expect(new Set(seen).size).toBe(6);
-    expect(await logo.getAttribute('src')).toBe(seen[0]); // wrapped around
-    await page.locator('#logo-btn').click();
-    const second = await logo.getAttribute('src');
-    expect(second).toBe(seen[1]);
-    await expect(favicon).toHaveAttribute('href', second!.replace('-192', '-32'));
+    await expect(favicon).toHaveAttribute('href', seen[5].replace('-192', '-32'));
     await page.reload();
-    await expect(logo).toHaveAttribute('src', second!);
-    expect(await logo.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    await expect(page.locator('#hero-icon')).toHaveAttribute('src', seen[5]);
+    expect(await page.locator('#hero-icon').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    await page.locator('#logo-btn').click();
+    await expect(page.locator('img.hero.day')).toBeVisible(); // wrapped back to the desktop scene
   });
 
   test('the colour and day/night buttons sit within the content column', async ({ page }) => {
