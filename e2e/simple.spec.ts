@@ -16,7 +16,7 @@ const LINKS: [string, string][] = [
 test.describe('jmpa.io simple page', () => {
   test('shows the programming gif and every link as a button', async ({ page }) => {
     await page.goto('/');
-    const hero = page.locator('img.hero.day');
+    const hero = page.locator('#hero');
     await expect(hero).toBeVisible();
     expect(await hero.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
     for (const [name, href] of LINKS) {
@@ -36,24 +36,20 @@ test.describe('jmpa.io simple page', () => {
     expect(Math.abs(box!.x + box!.width / 2 - 640)).toBeLessThan(2);
   });
 
-  test('day/night toggle swaps the symbol, the colours and the gif, and is remembered', async ({ page }) => {
+  test('day/night toggle swaps the symbol, the colours and the scene, and is remembered', async ({ page }) => {
     await page.goto('/');
     const toggle = page.locator('#theme-toggle');
     const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     const day = await bg();
     const moon = await toggle.innerHTML();
     await expect(page.locator('html')).not.toHaveClass(/dark/);
-    await expect(page.locator('img.hero.day')).toBeVisible();
-    await expect(page.locator('img.hero.night')).toBeHidden();
     await expect(page.locator('#logo')).toHaveAttribute('src', /meadow-day-192/);
     await toggle.click();
     await expect(page.locator('html')).toHaveClass(/dark/);
     expect(await toggle.innerHTML()).not.toBe(moon);
     expect(await bg()).not.toBe(day);
-    await expect(page.locator('img.hero.night')).toBeVisible();
-    await expect(page.locator('img.hero.day')).toBeHidden();
     await expect(page.locator('#logo')).toHaveAttribute('src', /night-192/);
-    expect(await page.locator('img.hero.night').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    await expect(page.locator('#hero')).toHaveAttribute('src', '/walls/night.png');
     await page.reload();
     await expect(page.locator('html')).toHaveClass(/dark/);
     await toggle.click();
@@ -78,27 +74,27 @@ test.describe('jmpa.io simple page', () => {
     await expect(page.locator('#jmpa-palette-popup')).toBeHidden();
   });
 
-  test('clicking the logo steps through the desktop scene then each icon, and is remembered', async ({ page }) => {
+  test('clicking the logo steps through the themes: logo, favicon and scene change together, and is remembered', async ({ page }) => {
     await page.goto('/');
     const logo = page.locator('#logo');
+    const hero = page.locator('#hero');
     const favicon = page.locator('link[rel="icon"][type="image/png"][sizes="32x32"]');
-    await expect(page.locator('img.hero.day')).toBeVisible();
-    await expect(page.locator('#hero-icon')).toBeHidden();
     const seen: string[] = [];
     for (let i = 0; i < 6; i++) {
+      seen.push((await logo.getAttribute('src'))!);
+      const theme = seen[i].match(/logos\/(.+)-192/)![1];
+      await expect(hero).toHaveAttribute('src', `/walls/${theme}.png`);
       await page.locator('#logo-btn').click();
-      await expect(page.locator('#hero-icon')).toBeVisible();
-      await expect(page.locator('img.hero.day')).toBeHidden();
-      seen.push((await page.locator('#hero-icon').getAttribute('src'))!);
-      expect(await logo.getAttribute('src')).toBe(seen[i]);
     }
     expect(new Set(seen).size).toBe(6);
-    await expect(favicon).toHaveAttribute('href', seen[5].replace('-192', '-32'));
-    await page.reload();
-    await expect(page.locator('#hero-icon')).toHaveAttribute('src', seen[5]);
-    expect(await page.locator('#hero-icon').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    expect(await logo.getAttribute('src')).toBe(seen[0]); // wrapped around
     await page.locator('#logo-btn').click();
-    await expect(page.locator('img.hero.day')).toBeVisible(); // wrapped back to the desktop scene
+    const second = await logo.getAttribute('src');
+    expect(second).toBe(seen[1]);
+    await expect(favicon).toHaveAttribute('href', second!.replace('-192', '-32'));
+    await page.reload();
+    await expect(logo).toHaveAttribute('src', second!);
+    expect(await hero.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
   });
 
   test('the colour and day/night buttons sit within the content column', async ({ page }) => {
