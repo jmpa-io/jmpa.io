@@ -1,0 +1,21 @@
+html, body { height: 100%; margin: 0; }
+body {
+  background: #0b1020;
+  color: #e6edff;
+  font: 400 1.1rem/1.4 "Fira Code", ui-monospace, monospace;
+}
+main {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+.hero { max-width: 100%; height: auto; image-rendering: pixelated; }
+ul { list-style: none; margin: 0; padding: 0; text-align: center; }
+li { margin: .5rem 0; }
+a { color: #7dd3fc; text-decoration: none; }
+a:hover, a:focus-visible { text-decoration: underline; color: #6ee7b7; }
