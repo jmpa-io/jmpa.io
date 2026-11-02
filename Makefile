@@ -112,6 +112,11 @@ e2e: ## Runs the Playwright screenshot + interaction tests against dist/public (
 
 PHONY += e2e
 
+screenshots: ## Writes full-page PNGs of every wall theme (desktop/phone, light/dark) to e2e/screenshots (run `make generate-website` first).
+	cd e2e && npm ci && SITE_DIR=../dist/public npx playwright test screenshots.spec.ts
+
+PHONY += screenshots
+
 ---: ## ---
 
 # Includes the common Makefile.
