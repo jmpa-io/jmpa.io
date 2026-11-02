@@ -1,4 +1,7 @@
 import { test, expect, external } from './fixtures';
+import type { Page } from '@playwright/test';
+
+const link = (page: Page, name: string) => page.locator('a', { has: page.locator('b', { hasText: new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`) }) });
 
 const LINKS: [string, string][] = [
   ['Resume', 'https://jcleal.me/resume'],
@@ -18,52 +21,76 @@ test.describe('jmpa.io simple page', () => {
     await expect(hero).toBeVisible();
     expect(await hero.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
     for (const [name, href] of LINKS) {
-      const a = page.getByRole('link', { name, exact: true });
+      const a = link(page, name);
       await expect(a).toHaveAttribute('href', href);
       await expect(a).toHaveAttribute('rel', /noopener/);
     }
-    await expect(page.getByRole('link', { name: 'Email', exact: true })).toHaveAttribute('href', /^mailto:/);
+    await expect(link(page, 'Email')).toHaveAttribute('href', /^mailto:/);
     await expect(page.locator('li a')).toHaveCount(LINKS.length + 1);
   });
 
   test('the list is centred', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/');
-    const box = await page.locator('ul').boundingBox();
+    const box = await page.locator('ul').first().boundingBox();
     expect(box).not.toBeNull();
     expect(Math.abs(box!.x + box!.width / 2 - 640)).toBeLessThan(2);
   });
 
-  test('day/night toggle swaps the symbol and the colours', async ({ page }) => {
+  test('day/night toggle swaps the symbol, the colours and the gif, and is remembered', async ({ page }) => {
     await page.goto('/');
+    const toggle = page.locator('#theme-toggle');
     const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     const day = await bg();
-    await expect(page.locator('.mode .moon')).toBeVisible();
-    await expect(page.locator('.mode .sun')).toBeHidden();
+    const moon = await toggle.innerHTML();
+    await expect(page.locator('html')).not.toHaveClass(/dark/);
     await expect(page.locator('img.hero.day')).toBeVisible();
     await expect(page.locator('img.hero.night')).toBeHidden();
-    await page.locator('label.mode').click();
-    await expect(page.locator('.mode .sun')).toBeVisible();
-    await expect(page.locator('.mode .moon')).toBeHidden();
+    await toggle.click();
+    await expect(page.locator('html')).toHaveClass(/dark/);
+    expect(await toggle.innerHTML()).not.toBe(moon);
     expect(await bg()).not.toBe(day);
     await expect(page.locator('img.hero.night')).toBeVisible();
     await expect(page.locator('img.hero.day')).toBeHidden();
     expect(await page.locator('img.hero.night').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
+    await page.reload();
+    await expect(page.locator('html')).toHaveClass(/dark/);
+    await toggle.click();
+    await expect(page.locator('html')).not.toHaveClass(/dark/);
   });
 
-  test('ships no scripts, forbids them in the CSP and makes no external requests', async ({ page }) => {
+  test('the colour picker recolours the page, is remembered and resets', async ({ page }) => {
+    await page.goto('/');
+    const tile = () => page.evaluate(() => getComputedStyle(document.querySelector('a.k0')!).backgroundColor);
+    const before = await tile();
+    await page.locator('#jmpa-palette-trigger').click();
+    await expect(page.locator('#jmpa-palette-popup')).toBeVisible();
+    await page.locator('#jmpa-custom-primary').fill('#2288dd');
+    await expect.poll(tile).not.toBe(before);
+    const picked = await tile();
+    await page.reload();
+    expect(await tile()).toBe(picked);
+    await page.locator('#jmpa-palette-trigger').click();
+    await page.locator('#jmpa-custom-reset').click();
+    await expect.poll(tile).toBe(before);
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#jmpa-palette-popup')).toBeHidden();
+  });
+
+  test('only same-origin scripts, no inline script, and no external requests', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    await expect(page.locator('script')).toHaveCount(0);
-    await expect(page.locator('meta[http-equiv="Content-Security-Policy"]')).toHaveAttribute('content', /script-src 'none'/);
+    expect(await page.locator('script:not([src])').count()).toBe(0);
+    await expect(page.locator('meta[http-equiv="Content-Security-Policy"]')).toHaveAttribute('content', /script-src 'self';/);
     expect(external(page)).toEqual([]);
   });
 
   test('links are reachable by keyboard', async ({ page }) => {
     await page.goto('/');
-    await page.keyboard.press('Tab'); // the hidden theme checkbox
+    await page.keyboard.press('Tab'); // colours
+    await page.keyboard.press('Tab'); // day / night
     await page.keyboard.press('Tab');
-    await expect(page.getByRole('link', { name: 'Resume', exact: true })).toBeFocused();
+    await expect(link(page, 'Resume')).toBeFocused();
   });
 
   test('does not scroll sideways on a phone', async ({ page }) => {
