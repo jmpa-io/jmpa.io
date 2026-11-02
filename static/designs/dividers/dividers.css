@@ -1,0 +1,37 @@
+body { padding: 1.5rem 1rem 3rem; }
+.wrap { max-width: 40rem; margin: 0 auto; display: grid; gap: 2.4rem; }
+.wrap > h1 { font-size: 1.3rem; text-align: center; }
+.wrap > p { text-align: center; margin: 0; opacity: .75; font-size: .85rem; }
+.demo { display: grid; gap: .9rem; padding: 1rem; border: 3px solid var(--edge); border-radius: 18px; background: oklch(from var(--s) 0.98 0.02 h); }
+html.dark .demo { background: oklch(from var(--s) 0.2 0.05 h); }
+.demo > .tag { font-size: .72rem; font-weight: 700; opacity: .7; }
+.demo .grid { margin: 0; }
+.demo hr { margin: .3rem 0; }
+.demo .dv { display: flex; align-items: center; gap: .8rem; margin: .5rem 0; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--fg); }
+.demo .dv::before, .demo .dv::after { content: ''; flex: 1; }
+
+/* 1 pill: thick solid line, label in a bordered pill */
+.d1 { gap: 0; }
+.d1::before, .d1::after { border-top: 4px solid var(--edge); }
+.d1 span { padding: .25rem .9rem; border: 3px solid var(--edge); border-radius: 999px; background: oklch(from var(--p) var(--tile-l) var(--tile-c) h); box-shadow: 0 3px 0 var(--edge); }
+
+/* 2 pixel dots: a run of square pixels either side */
+.d2::before, .d2::after { height: 8px; background: repeating-linear-gradient(90deg, var(--edge) 0 8px, transparent 8px 16px); opacity: .6; }
+
+/* 3 tab: label is a tab sitting on a thick line */
+.d3 { gap: 0; align-items: flex-end; }
+.d3::before { display: none; }
+.d3::after { border-bottom: 4px solid var(--edge); height: 0; margin-bottom: 0; }
+.d3 span { padding: .3rem 1rem; border: 3px solid var(--edge); border-bottom: 0; border-radius: 12px 12px 0 0; background: oklch(from var(--s) var(--tile-l) var(--tile-c) h); margin-bottom: -2px; }
+.d3 { border-bottom: 0; }
+
+/* 4 left label with a heavy line and a little block */
+.demo .d4::before { flex: 0 0 .8rem; height: .8rem; background: var(--p); border: 3px solid var(--edge); border-radius: 4px; }
+.d4::after { border-top: 4px solid var(--edge); opacity: .5; }
+
+/* 5 stitched: double dashed lines */
+.d5::before, .d5::after { height: 9px; border-top: 3px dashed var(--edge); border-bottom: 3px dashed var(--edge); opacity: .45; }
+
+/* 6 diamonds: thin line, pixel diamonds around the label */
+.d6::before, .d6::after { border-top: 2px solid var(--edge); opacity: .4; }
+.d6 span::before, .d6 span::after { content: ''; display: inline-block; width: .5rem; height: .5rem; background: var(--p); border: 2px solid var(--edge); transform: rotate(45deg); margin: 0 .7rem; vertical-align: middle; }
