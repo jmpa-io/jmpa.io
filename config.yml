@@ -3,6 +3,8 @@ languageCode: en-us
 title: jmpa
 
 Params:
+  # Theme variant: 1 midnight terminal, 2 deep ocean, 3 blueprint. Change this one value to pick the default (?v=1|2|3 previews another).
+  variant: 1
   description: "jmpa.io - the front door to my corner of the internet: art, blog, portfolio and start page."
   eyebrow: "Jordan Cleal · Melbourne"
   heading: "Everything, in one place."
