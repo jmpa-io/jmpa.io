@@ -14,7 +14,7 @@ const LINKS: [string, string][] = [
 test.describe('jmpa.io simple page', () => {
   test('shows the programming gif and every link as a button', async ({ page }) => {
     await page.goto('/');
-    const hero = page.locator('img.hero');
+    const hero = page.locator('img.hero.day');
     await expect(hero).toBeVisible();
     expect(await hero.evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
     for (const [name, href] of LINKS) {
@@ -40,10 +40,15 @@ test.describe('jmpa.io simple page', () => {
     const day = await bg();
     await expect(page.locator('.mode .moon')).toBeVisible();
     await expect(page.locator('.mode .sun')).toBeHidden();
+    await expect(page.locator('img.hero.day')).toBeVisible();
+    await expect(page.locator('img.hero.night')).toBeHidden();
     await page.locator('label.mode').click();
     await expect(page.locator('.mode .sun')).toBeVisible();
     await expect(page.locator('.mode .moon')).toBeHidden();
     expect(await bg()).not.toBe(day);
+    await expect(page.locator('img.hero.night')).toBeVisible();
+    await expect(page.locator('img.hero.day')).toBeHidden();
+    expect(await page.locator('img.hero.night').evaluate((i: HTMLImageElement) => i.naturalWidth)).toBeGreaterThan(0);
   });
 
   test('ships no scripts, forbids them in the CSP and makes no external requests', async ({ page }) => {
@@ -74,7 +79,7 @@ test.describe('jmpa.io simple page', () => {
     for (const s of slugs) {
       await page.goto(`/designs/${s}`);
       await expect(page.locator('li a')).toHaveCount(LINKS.length + 1);
-      await expect(page.locator('img.hero')).toBeVisible();
+      await expect(page.locator('img.hero.day')).toBeVisible();
     }
   });
 });
