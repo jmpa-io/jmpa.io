@@ -53,7 +53,8 @@ header p { margin: 0; font-size: .85rem; opacity: .75; }
 html.dark .night { display: block; }
 
 section { width: 100%; }
-h2 { margin: 0 0 .6rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-align: center; opacity: .7; }
+h2 { display: flex; align-items: center; gap: .8rem; margin: 0 0 .9rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+h2::before, h2::after { content: ''; flex: 1; border-top: 3px dashed var(--edge); opacity: .45; }
 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
 ul.social { display: flex; flex-direction: row; gap: .6rem; margin-top: .6rem; }
 ul.social a { flex-direction: row; padding: .35rem .8rem .35rem .4rem; gap: .5rem; border-radius: 14px; box-shadow: 0 4px 0 var(--edge); }
@@ -62,6 +63,9 @@ ul.social .ico svg { width: 1rem; height: 1rem; }
 ul.grid { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; width: 100%; }
 .hero { max-width: 100%; display: block; }
 .hero-btn { padding: 0; border: 0; background: none; cursor: pointer; width: 100%; border-radius: 18px; }
+.hero { transition: transform .08s, box-shadow .08s; }
+.hero-btn:hover .hero { transform: translate(2px, 2px); box-shadow: 6px 6px 0 var(--shadow); }
+.hero-btn:active .hero { transform: translate(8px, 8px); box-shadow: 0 0 0 var(--shadow); }
 .hero-btn:focus-visible { outline: 3px solid var(--edge); outline-offset: 4px; }
 .ico { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; margin-bottom: .2rem; border: 3px solid var(--edge); border-radius: 12px; background: var(--bg); }
 .ico svg { width: 1.3rem; height: 1.3rem; }
