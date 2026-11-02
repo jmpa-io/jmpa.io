@@ -1,0 +1,13 @@
+import { chromium } from '@playwright/test';
+const url = process.argv[2] || 'http://localhost:8102/';
+const out = process.argv[3] || 'probe.png';
+const b = await chromium.launch({ channel: 'chrome' });
+const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+p.on('console', (m) => console.log('console:', m.text()));
+p.on('pageerror', (e) => console.log('pageerror:', e.message));
+await p.route(/^https?:\/\/(?!localhost)/, (r) => r.abort());
+await p.goto(url);
+await p.waitForTimeout(1500);
+await p.screenshot({ path: out });
+console.log(await p.evaluate(() => ({ crt: !!window.jmpaCrt, k: window.jmpaCrt && window.jmpaCrt.curvature() })));
+await b.close();
