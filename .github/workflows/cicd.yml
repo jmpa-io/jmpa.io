@@ -37,6 +37,7 @@ jobs:
       - name: Checkout.
         uses: actions/checkout@v4
 
+      # Needs the themes/jmpa entry in .gitmodules, or this fails with "No url found for submodule path".
       - name: Checkout theme submodule.
         run: git submodule update --init themes/jmpa
 
