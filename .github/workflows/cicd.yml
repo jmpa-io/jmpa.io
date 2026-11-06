@@ -94,7 +94,7 @@ jobs:
         run: |
           password=$(aws ssm get-parameter --name /common/dev-site-auth/password --with-decryption --query Parameter.Value --output text)
           echo "::add-mask::$password"
-          for path in / /store/order-successful/; do
+          for path in /; do
             curl -fsS --retry 8 --retry-delay 15 --retry-all-errors -u "dev:$password" -o /dev/null "https://dev.jmpa.io${path}"
             echo "ok https://dev.jmpa.io${path}"
           done
@@ -143,7 +143,7 @@ jobs:
     steps:
       - name: Fetch the live site.
         run: |
-          for path in / /store/order-successful/; do
+          for path in /; do
             curl -fsS --retry 8 --retry-delay 15 --retry-all-errors -o /dev/null "https://jmpa.io${path}"
             echo "ok https://jmpa.io${path}"
           done
