@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout.
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Needs the themes/jmpa entry in .gitmodules, or this fails with "No url found for submodule path".
       - name: Checkout theme submodule.
