@@ -109,7 +109,7 @@ compile-website: dist/public
 		-v "$(PWD)/public" \
 		-v "$(PWD)/resources" \
 		$(REPO)/hugo \
-		--log --destination $<
+		--logLevel info --destination $<
 	@test -z "$(CI)" || echo "##[endgroup]"
 
 serve: ## Serves this website locally, mounted inside a Docker container.
