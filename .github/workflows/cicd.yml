@@ -54,8 +54,10 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  # Deploys only run from main; every other branch stops after lint/build.
+  # Only deploy from main. Without this guard every branch push (every Dependabot branch) updated the dev stack at once and the
+  # runs collided: 'Stack is in UPDATE_IN_PROGRESS state and can not be updated'.
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: [build-website]
     uses: jmpa-io/pipelines/.github/workflows/40-deploy-to-aws.yml@0877ff2d3aa9a4add377ad679135ab5a5c3e2b8a # main (adds account_id)
     with:
