@@ -26,8 +26,8 @@ categories:
         icon: art
         key: art
         external: true
-      - name: portfolio.jcleal.me
-        url: https://portfolio.jcleal.me
+      - name: desktop.jmpa.io
+        url: https://desktop.jmpa.io
         desc: A selection of projects and case studies.
         icon: projects
         key: work

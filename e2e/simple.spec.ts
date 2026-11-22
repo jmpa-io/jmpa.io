@@ -7,7 +7,7 @@ const LINKS: [string, string][] = [
   ['Resume & Blog', 'https://jcleal.me'],
   ['github.com/jcleal', 'https://github.com/jcleal'],
   ['github.com/jmpa-io', 'https://github.com/jmpa-io'],
-  ['portfolio.jcleal.me', 'https://portfolio.jcleal.me'],
+  ['desktop.jmpa.io', 'https://desktop.jmpa.io'],
   ['art.jmpa.io', 'https://art.jmpa.io'],
   ['startpage.jcleal.me', 'https://startpage.jcleal.me'],
   ['Instagram', 'https://instagram.com/jmpa.io'],
@@ -154,7 +154,7 @@ test.describe('jmpa.io simple page', () => {
     await expect(page.locator('section h2')).toHaveText(['Sites', 'Me']);
     await expect(page.locator('header ul.social li a')).toHaveText(['Instagram', 'Email', 'github.com/jmpa-io']);
     const order = await page.locator('ul.grid li a b').allTextContents();
-    expect(order).toEqual(['art.jmpa.io', 'portfolio.jcleal.me', 'startpage.jcleal.me', 'Resume & Blog', 'github.com/jcleal']);
+    expect(order).toEqual(['art.jmpa.io', 'desktop.jmpa.io', 'startpage.jcleal.me', 'Resume & Blog', 'github.com/jcleal']);
   });
 
   test('does not scroll sideways on a phone', async ({ page }) => {
